@@ -1,0 +1,20 @@
+name: Python application
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jetify-dev/devbox-action@v0.0.4
+      - name: Type check
+        run: |
+          cd api/
+          devbox run -- uv sync
+          devbox run -- mypy .
