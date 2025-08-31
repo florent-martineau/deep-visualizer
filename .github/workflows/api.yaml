@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jetify-dev/devbox-action@v0.0.4
+      - uses: jetify-com/devbox-install-action@v0.12.0
       - name: Type check
         run: |
           cd api/
