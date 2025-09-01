@@ -8,11 +8,14 @@ permissions:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: jetify-com/devbox-install-action@v0.12.0
       - name: Type check
         run: |
-          devbox run -- uv sync api/
-          devbox run -- mypy api/
+          devbox run -- uv sync
+          devbox run -- mypy .
