@@ -20,4 +20,4 @@ jobs:
       - name: Type check
         run: |
           devbox run -- uv sync
-          devbox run -- mypy .
+          devbox run -- uv run mypy .
