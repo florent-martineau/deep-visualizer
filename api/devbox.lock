@@ -5,6 +5,70 @@
       "last_modified": "2025-08-28T11:50:14Z",
       "resolved": "github:NixOS/nixpkgs/aca2499b79170038df0dbaec8bf2f689b506ad32?lastModified=1756381814&narHash=sha256-tzo7YvAsGlzo4WiIHT0ooR59VHu%2BaKRQdHk7sIyoia4%3D"
     },
+    "mypy@latest": {
+      "last_modified": "2025-07-28T17:09:23Z",
+      "resolved": "github:NixOS/nixpkgs/648f70160c03151bc2121d179291337ad6bc564b#mypy",
+      "source": "devbox-search",
+      "version": "1.15.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/7a9f2hpz53nk6r2wv4ra9ycnqmmr4k02-python3.13-mypy-1.15.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/5lbz3czdkm6wgggkmqpyp149yazvby80-python3.13-mypy-1.15.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/7a9f2hpz53nk6r2wv4ra9ycnqmmr4k02-python3.13-mypy-1.15.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/wrma7wfalir4gybgwqfcj1cgq2yahypm-python3.13-mypy-1.15.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/pbdsda4jp8ypyr7p8jig2gfq4y7lzqah-python3.13-mypy-1.15.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/wrma7wfalir4gybgwqfcj1cgq2yahypm-python3.13-mypy-1.15.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/l5gicbnkl29nz6y2443qvyjbd9ckcnya-python3.13-mypy-1.15.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/skb14lw0cwx1fsqj1dp92ss2a9h7004j-python3.13-mypy-1.15.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/l5gicbnkl29nz6y2443qvyjbd9ckcnya-python3.13-mypy-1.15.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/w79qiz0h11ik38pmsx664asyfg0f3q4d-python3.13-mypy-1.15.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/frq422f19rfdjpd3gplmkgxfbqpf3x7v-python3.13-mypy-1.15.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/w79qiz0h11ik38pmsx664asyfg0f3q4d-python3.13-mypy-1.15.0"
+        }
+      }
+    },
     "uv@0.8": {
       "last_modified": "2025-07-28T17:09:23Z",
       "resolved": "github:NixOS/nixpkgs/648f70160c03151bc2121d179291337ad6bc564b#uv",
