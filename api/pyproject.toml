@@ -10,6 +10,7 @@ dependencies = [
     "tensorflow>=2.06",
     "transformers[tf]>=4.30",
     "sqlmodel==0.0.24",
+    "py-pglite~=0.4",
     "timm",
     "torch"
 ]
