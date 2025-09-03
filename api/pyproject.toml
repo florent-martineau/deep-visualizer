@@ -3,10 +3,14 @@ name = "api"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "fastapi[standard]~=0.116",
-    "transformers~=4.56",
+    "httpx~=0.28",
+    "tensorflow>=2.06",
+    "transformers[tf]>=4.30",
+    "timm",
+    "torch"
 ]
 
 [dependency-groups]
