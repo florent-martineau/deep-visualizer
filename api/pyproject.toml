@@ -9,6 +9,7 @@ dependencies = [
     "httpx~=0.28",
     "tensorflow>=2.06",
     "transformers[tf]>=4.30",
+    "sqlmodel==0.0.24",
     "timm",
     "torch"
 ]
