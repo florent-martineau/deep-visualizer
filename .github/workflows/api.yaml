@@ -10,6 +10,7 @@ defaults:
 
 jobs:
   setup:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: jetify-com/devbox-install-action@v0.12.0
@@ -19,12 +20,14 @@ jobs:
 
   check-dependencies:
     needs: setup
+    runs-on: ubuntu-latest
     steps:
       - name: Check dependencies
         run: devbox run -- uv run scripts/check_dependencies.py
 
   check-types:
     needs: setup
+    runs-on: ubuntu-latest
     steps:
       - name: Static type checking
         run: devbox run -- uv run mypy .
