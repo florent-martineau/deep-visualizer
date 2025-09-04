@@ -63,10 +63,10 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = "~=0.116" },
     { name = "httpx", specifier = "~=0.28" },
     { name = "sqlmodel", specifier = "==0.0.24" },
-    { name = "tensorflow", specifier = ">=2.6" },
-    { name = "timm" },
-    { name = "torch" },
-    { name = "transformers", extras = ["tf"], specifier = ">=4.30" },
+    { name = "tensorflow", specifier = "~=2.15" },
+    { name = "timm", specifier = "~=1.0" },
+    { name = "torch", specifier = "~=2.8" },
+    { name = "transformers", extras = ["tf"], specifier = "~=4.56" },
 ]
 
 [package.metadata.requires-dev]
