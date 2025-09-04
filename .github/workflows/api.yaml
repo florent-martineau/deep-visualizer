@@ -2,22 +2,67 @@ name: API
 
 on:
   pull_request:
+    paths:
+      - "api/**"
+      - ".github/workflows/api.yml"
+  push:
+    branches: [main]
+    paths:
+      - "api/**"
 
 permissions:
   contents: read
 
 jobs:
   build:
+    name: Type Check & Build
     defaults:
       run:
         working-directory: api
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: jetify-com/devbox-install-action@v0.12.0
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Devbox
+        uses: jetify-com/devbox-install-action@v0.12.0
         with:
           project-path: ./api
+          enable-cache: true
+
+      - name: Cache UV dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            api/.venv
+          key: ${{ runner.os }}-uv-${{ hashFiles('api/uv.lock', 'api/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: Install dependencies
+        run: devbox run -- uv sync --frozen
+
+      - name: Check for dependency changes
+        id: deps-changed
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            deps:
+              - 'api/pyproject.toml'
+
+      - name: Check dependencies
+        if: steps.deps-changed.outputs.deps == 'true'
+        run: devbox run -- uv run scripts/check_dependencies.py
+
       - name: Type check
-        run: |
-          devbox run -- uv sync
-          devbox run -- uv run mypy .
+        run: devbox run -- uv run mypy . --cache-dir=.mypy_cache
+
+      - name: Cache MyPy
+        uses: actions/cache@v4
+        with:
+          path: api/.mypy_cache
+          key: ${{ runner.os }}-mypy-${{ hashFiles('api/**/*.py') }}
+          restore-keys: |
+            ${{ runner.os }}-mypy-
