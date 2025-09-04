@@ -8,8 +8,6 @@ defaults:
   run:
     working-directory: "./api"
 
-runs-on: ubuntu-latest
-
 jobs:
   setup:
     steps:
