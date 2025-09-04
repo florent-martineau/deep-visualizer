@@ -39,7 +39,7 @@ jobs:
             api/.venv
           key: ${{ runner.os }}-uv-${{ hashFiles('api/uv.lock', 'api/pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-uv-
+            ${{ runner.os }}-uv-${{ hashFiles('api/uv.lock', 'api/pyproject.toml') }}
 
       - name: Install dependencies
         run: devbox run -- uv sync --frozen
@@ -54,7 +54,7 @@ jobs:
 
       - name: Check dependencies
         if: steps.deps-changed.outputs.deps == 'true'
-        run: uv run scripts/check_dependencies.py
+        run: devbox run -- uv run scripts/check_dependencies.py
 
       - name: Type check
         run: devbox run -- uv run mypy . --cache-dir=.mypy_cache
