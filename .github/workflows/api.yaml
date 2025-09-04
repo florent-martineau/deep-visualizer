@@ -4,13 +4,14 @@ on:
   pull_request:
   push:
 
-jobs:
-  build:
-    defaults:
-      run:
-        working-directory: "./api"
-    runs-on: ubuntu-latest
+defaults:
+  run:
+    working-directory: "./api"
 
+runs-on: ubuntu-latest
+
+jobs:
+  setup:
     steps:
       - uses: actions/checkout@v4
       - uses: jetify-com/devbox-install-action@v0.12.0
@@ -18,8 +19,14 @@ jobs:
       - name: Install dependencies
         run: devbox run -- uv sync
 
+  check-dependencies:
+    needs: setup
+    steps:
       - name: Check dependencies
         run: devbox run -- uv run scripts/check_dependencies.py
 
-      - name: Type check
+  check-types:
+    needs: setup
+    steps:
+      - name: Static type checking
         run: devbox run -- uv run mypy .
