@@ -48,12 +48,9 @@ jobs:
         id: deps-changed
         uses: dorny/paths-filter@v3
         with:
-          working-directory: api
           filters: |
             deps:
-              - 'pyproject.toml'
-              - 'uv.lock'
-              - 'requirements*.txt'
+              - 'api/pyproject.toml'
 
       - name: Check dependencies
         if: steps.deps-changed.outputs.deps == 'true'
