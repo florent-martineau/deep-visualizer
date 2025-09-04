@@ -14,7 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jetify-com/devbox-install-action@v0.12.0
-
+        with:
+          project-path: ./api
       - name: Install dependencies
         run: devbox run -- uv sync
 
