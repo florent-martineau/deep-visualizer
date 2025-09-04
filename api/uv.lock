@@ -70,7 +70,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "mypy", specifier = "~=1.17" }]
+dev = [{ name = "mypy", specifier = ">=1.17" }]
 
 [[package]]
 name = "astunparse"
