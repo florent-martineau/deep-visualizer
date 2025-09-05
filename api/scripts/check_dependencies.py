@@ -37,11 +37,11 @@ def check_dependencies_are_sorted_alphabetically():
         data = tomllib.load(f)
     
     dependencies = data.get("project", {}).get("dependencies", [])
-    check_alphabetically_sorted(dependencies=dependencies)
+    check_alphabetically_sorted(dependencies)
 
     dependency_groups = data.get("dependency-groups", {})
-    for deps in dependency_groups.values():
-        check_alphabetically_sorted(dependencies=deps)
+    for dependencies in dependency_groups.values():
+        check_alphabetically_sorted(dependencies)
 
     return True
 
