@@ -12,7 +12,7 @@ dependencies = [
     "sqlmodel==0.0.24",
     "timm~=1.0",
     "torch~=2.8",
-    "alembic~=1.16"
+    "alembic>=1.16"
 ]
 
 [dependency-groups]
