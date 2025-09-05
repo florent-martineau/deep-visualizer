@@ -18,6 +18,6 @@ jobs:
       - name: Install dependencies
         run: devbox run -- uv sync
       - name: Check dependencies
-        run: devbox run -- uv run scripts/check_dependencies.py
+        run: devbox run -- uv run ./scripts/check_dependencies.py
       - name: Static type checking
         run: devbox run -- uv run mypy .
