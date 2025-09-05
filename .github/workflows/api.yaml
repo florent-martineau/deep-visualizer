@@ -15,9 +15,9 @@ jobs:
       - uses: jetify-com/devbox-install-action@v0.12.0
         with:
           project-path: ./api
-      - name: Check dependencies
-        run: devbox run -- uv run scripts/check_dependencies.py
       - name: Install dependencies
         run: devbox run -- uv sync
+      - name: Check dependencies
+        run: devbox run -- uv run scripts/check_dependencies.py
       - name: Static type checking
         run: devbox run -- uv run mypy .
