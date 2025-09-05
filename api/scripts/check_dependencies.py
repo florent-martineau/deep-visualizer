@@ -5,7 +5,14 @@ class DependencyNotPinnedError(Exception):
     def __init__(self, dependency):            
         super().__init__(f"Dependency {dependency} should be pinned using either ~= or ==")
             
-def check_dependencies():
+
+class DependenciesNotSortedError(Exception):
+    def __init__(self, dependencies):            
+        received = ','.join(dependencies)
+        expected = ','.join(sorted(dependencies))
+        super().__init__(f"Dependencies are not sorted alphabetically.\nReceived:{received}\nExpected: {expected}")
+            
+def check_dependencies_are_pinned():
     with open("pyproject.toml", "rb") as f:
         data = tomllib.load(f)
     
@@ -21,6 +28,26 @@ def check_dependencies():
         
     return True
 
+def check_alphabetically_sorted(deps):
+    if sorted(deps) != deps:
+        raise DependenciesNotSortedError(deps)
+            
+def check_dependencies_are_sorted_alphabetically():
+    with open("pyproject.toml", "rb") as f:
+        data = tomllib.load(f)
+    
+    dependencies = data.get("project", {}).get("dependencies", [])
+    check_alphabetically_sorted(dependencies)
+
+    dependency_groups = data.get("dependency-groups", {})
+    for dependencies in dependency_groups.values():
+        check_alphabetically_sorted(dependencies)
+
+    return True
+
 if __name__ == "__main__":
-    if not check_dependencies():
+    if not check_dependencies_are_pinned():
+        sys.exit(1)
+
+    if not check_dependencies_are_sorted_alphabetically():
         sys.exit(1)
