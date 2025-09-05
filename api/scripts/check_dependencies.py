@@ -18,6 +18,8 @@ def check_dependencies():
     for dependency in dependencies:
         if not ("~=" in dependency or "==" in dependency):
             raise DependencyNotPinnedError(dependency=dependency)
+        
+    return True
 
 if __name__ == "__main__":
     if not check_dependencies():
