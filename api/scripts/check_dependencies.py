@@ -10,7 +10,7 @@ class DependenciesNotSortedError(Exception):
     def __init__(self, dependencies):            
         received = ','.join(dependencies)
         expected = ','.join(sorted(dependencies))
-        super().__init__(f"Dependencies are not sorted alphabetically.\nReceived:{received}\nExpected {expected}")
+        super().__init__(f"Dependencies are not sorted alphabetically.\nReceived:{received}\nExpected: {expected}")
             
 def check_dependencies_are_pinned():
     with open("pyproject.toml", "rb") as f:
