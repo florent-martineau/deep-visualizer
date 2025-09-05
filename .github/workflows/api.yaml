@@ -8,41 +8,16 @@ defaults:
     working-directory: api
 
 jobs:
-  setup:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: jetify-com/devbox-install-action@v0.12.0
         with:
           project-path: ./api
-      - name: Install dependencies
-        run: devbox run -- uv sync
-      - name: Upload project as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: api
-          path: api/
-
-  check-dependencies:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download project artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: api
-          path: api/
       - name: Check dependencies
         run: devbox run -- uv run scripts/check_dependencies.py
-
-  check-types:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download project artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: api
-          path: api/
+      - name: Install dependencies
+        run: devbox run -- uv sync
       - name: Static type checking
         run: devbox run -- uv run mypy .
