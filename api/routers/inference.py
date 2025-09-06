@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.get("/hello/{name}")
 async def hello(name: str):
-    logger.info("Saying hello")
+    logger.info("Saying hello", extra={"extra_context": {"name": name}})
     return f"Hello, {name}!"
 
 
