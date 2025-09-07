@@ -9,6 +9,7 @@ dependencies = [
     "fastapi[standard]~=0.116",
     "httpx~=0.28",
     "logtail-python~=0.3",
+    "pydantic-settings~=2.10",
     "python-dotenv~=1.1",
     "sqlmodel==0.0.24",
     "tensorflow~=2.15",
@@ -25,3 +26,6 @@ dev = [
     # If you change this, don't forget to change the pre-commit hook as well
     "ruff==0.12.12",
 ]
+
+[tool.mypy]
+plugins = ['pydantic.mypy']

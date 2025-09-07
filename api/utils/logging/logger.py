@@ -2,11 +2,8 @@ from .json_formatter import JsonFormatter
 import logging
 
 from logging.config import dictConfig
-import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from ...settings import settings
 
 log_config = {
     "version": 1,
@@ -37,8 +34,8 @@ log_config = {
         "logtail": {
             "class": "logtail.LogtailHandler",
             "level": "INFO",
-            "source_token": os.environ["BETTERSTACK_TOKEN"],
-            "host": os.environ["BETTERSTACK_INGESTING_HOST"],
+            "source_token": settings.betterstack_token,
+            "host": settings.betterstack_ingesting_host,
         },
     },
     "root": {"handlers": ["console", "file", "logtail"], "level": "DEBUG"},
