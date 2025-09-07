@@ -26,3 +26,6 @@ dev = [
     # If you change this, don't forget to change the pre-commit hook as well
     "ruff==0.12.12",
 ]
+
+[tool.mypy]
+plugins = ['pydantic.mypy']
