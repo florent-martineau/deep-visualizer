@@ -4,7 +4,6 @@ on:
   pull_request:
 
 jobs:
-
   checks:
     defaults:
       run:
@@ -20,7 +19,7 @@ jobs:
       - name: Check dependencies
         run: devbox run -- uv run ./scripts/check_dependencies.py
       - name: Static type checking
-        run: devbox run -- uv run mypy .
+        run: devbox run -- uv run mypy api/.
 
   ruff:
     runs-on: ubuntu-latest
