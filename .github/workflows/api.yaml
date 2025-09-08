@@ -19,7 +19,7 @@ jobs:
       - name: Check dependencies
         run: devbox run -- uv run ./scripts/check_dependencies.py
       - name: Static type checking
-        run: devbox run -- uv run mypy api/.
+        run: devbox run -- uv run mypy .
 
   ruff:
     runs-on: ubuntu-latest
