@@ -37,10 +37,10 @@ jobs:
         run: uv sync
 
       - name: Check dependencies
-        run: uv run --active ./api/scripts/check_dependencies.py
+        run: cd api && uv run --active ./scripts/check_dependencies.py
 
       - name: Static type checking
-        run: uv run --active mypy ./api
+        run: cd api && uv run --active mypy ./api
 
   ruff:
     runs-on: ubuntu-latest
