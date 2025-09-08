@@ -29,7 +29,7 @@ jobs:
       - name: Check dependencies
         run: cd api && uv run --active ./scripts/check_dependencies.py
 
-      - name: Type checking
+      - name: Static type checking
         run: cd api && uv run --active mypy .
 
   ruff:
