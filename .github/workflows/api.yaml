@@ -25,6 +25,7 @@ jobs:
           uv-version: ${{ steps.uv-version.outputs.version }}
 
       - name: Install dependencies
+        if: steps.setup-uv.outputs.cache-hit == 'false'
         run: uv sync
           
       - name: Check dependencies
