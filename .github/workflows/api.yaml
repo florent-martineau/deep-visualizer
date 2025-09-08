@@ -12,7 +12,7 @@ jobs:
       - name: Get UV version from devbox
         id: uv-version
         run: |
-          UV_VERSION=$(jq -r '.packages[] | select(startswith("uv@")) | sub("uv@"; "")' devbox.json)
+          UV_VERSION=$(jq -r '.packages[] | select(startswith("uv@")) | sub("uv@"; "")' ./api/devbox.json)
           echo "version=$UV_VERSION" >> $GITHUB_OUTPUT
 
       - uses: astral-sh/setup-uv@v6
