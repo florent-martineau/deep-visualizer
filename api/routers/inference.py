@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 # from transformers import pipeline
-from ..utils.logging.logger import logger
+from utils.logging.logger import logger
 
 router = APIRouter()
 
