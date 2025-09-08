@@ -4,7 +4,6 @@ on:
   pull_request:
 
 jobs:
-
   checks:
     defaults:
       run:

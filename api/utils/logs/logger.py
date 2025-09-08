@@ -3,7 +3,7 @@ import logging
 
 from logging.config import dictConfig
 
-from ...settings import settings
+from utils.settings import settings
 
 log_config = {
     "version": 1,
