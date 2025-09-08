@@ -22,19 +22,9 @@ jobs:
           version: ${{ steps.uv-version.outputs.version }}
           working-directory: ./api
 
-      - name: Cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v4
-        with:
-          path: ./api/.venv
-          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}-
-            ${{ runner.os }}-uv-
-
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: uv sync
+        working-directory: ./api
+        run: uv sync --frozen
 
       - name: Check dependencies
         run: cd api && uv run --active ./scripts/check_dependencies.py
