@@ -24,9 +24,19 @@ jobs:
           activate-environment: true
           enable-cache: true
           uv-version: ${{ steps.uv-version.outputs.version }}
+      
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}-
+            ${{ runner.os }}-uv-
 
       - name: Install dependencies
-        if: steps.setup-uv.outputs.cache-hit == 'false'
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: uv sync
           
       - name: Check dependencies
