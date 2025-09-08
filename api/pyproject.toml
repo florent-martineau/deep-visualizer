@@ -31,3 +31,6 @@ dev = [
 plugins = ['pydantic.mypy']
 explicit_package_bases = true
 namespace_packages = true
+
+[tool.ruff]
+select = ["E", "F", "TID"]
