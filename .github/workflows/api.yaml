@@ -40,7 +40,7 @@ jobs:
         run: cd api && uv run --active ./scripts/check_dependencies.py
 
       - name: Static type checking
-        run: cd api && uv run --active mypy ./api
+        run: cd api && uv run --active mypy .
 
   ruff:
     runs-on: ubuntu-latest
