@@ -7,7 +7,7 @@ jobs:
   checks:
     defaults:
       run:
-        working-directory: api
+        working-directory: ./api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,14 +17,13 @@ jobs:
         run: |
           UV_VERSION=$(jq -r '.packages[] | select(startswith("uv@")) | sub("uv@"; "")' devbox.json)
           echo "version=$UV_VERSION" >> $GITHUB_OUTPUT
-        working-directory: ./api
-        
+
       - uses: astral-sh/setup-uv@v6
         with:
           activate-environment: true
           enable-cache: true
           uv-version: ${{ steps.uv-version.outputs.version }}
-      
+
       - name: Cache dependencies
         id: cache-dependencies
         uses: actions/cache@v4
@@ -38,10 +37,10 @@ jobs:
       - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: uv sync
-          
+
       - name: Check dependencies
         run: uv run --active ./scripts/check_dependencies.py
-        
+
       - name: Static type checking
         run: uv run --active mypy .
 
