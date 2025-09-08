@@ -30,10 +30,10 @@ jobs:
         run: uv sync
           
       - name: Check dependencies
-        run: uv run ./scripts/check_dependencies.py
+        run: uv run --active ./scripts/check_dependencies.py
         
       - name: Static type checking
-        run: uv run mypy .
+        run: uv run --active mypy .
 
   ruff:
     runs-on: ubuntu-latest
