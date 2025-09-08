@@ -19,7 +19,7 @@ jobs:
         with:
           activate-environment: true
           enable-cache: true
-          uv-version: ${{ steps.uv-version.outputs.version }}
+          version: ${{ steps.uv-version.outputs.version }}
           working-directory: ./api
 
       - name: Cache dependencies
