@@ -5,17 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "alembic~=1.16",
     "fastapi[standard]~=0.116",
     "httpx~=0.28",
     "logtail-python~=0.3",
     "pydantic-settings~=2.10",
     "python-dotenv~=1.1",
-    "sqlmodel==0.0.24",
-    "tensorflow~=2.15",
-    "timm~=1.0",
-    "torch~=2.8",
-    "transformers[tf]~=4.56",
 ]
 
 [dependency-groups]
