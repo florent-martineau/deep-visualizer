@@ -1,9 +1,9 @@
-from .json_formatter import JsonFormatter
 import logging
-
 from logging.config import dictConfig
 
 from utils.settings import settings
+
+from .json_formatter import JsonFormatter
 
 log_config = {
     "version": 1,

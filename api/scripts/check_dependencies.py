@@ -1,5 +1,5 @@
-import tomllib
 import sys
+import tomllib
 
 
 class DependencyNotPinnedError(Exception):
