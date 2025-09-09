@@ -1,13 +1,14 @@
 from fastapi import APIRouter
 
-# from transformers import pipeline
 from utils.logs.logger import logger
+
+# from transformers import pipeline
 
 router = APIRouter()
 
 
 @router.get("/hello/{name}")
-async def hello(name: str):
+async def hello(name: str) -> str:
     logger.info("Saying hello", extra={"extra_context": {"name": name}})
     return f"Hello, {name}!"
 
