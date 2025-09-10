@@ -1,0 +1,2 @@
+ACCESS_TOKEN_COOKIE_NAME = "access_token"
+ACCESS_TOKEN_COOKIE_HEADER = "X-Access-Token"
