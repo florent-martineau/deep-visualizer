@@ -37,9 +37,16 @@ class AccessTokenMetadata(BaseModel):
     ] = None
 
 
-@router.put("/access-token")
+@router.put(
+    "/access-token",
+    response_model=AccessTokenMetadata,
+    description=(
+        "Store HF Hub User Access Token as an httpOnly secure cookie."
+        "This does *NOT* check the access token is valid."
+    ),
+)
 async def put_access_token(
-    response: Response, x_access_token: str = Header(None, pattern="^hf_.{34, 37}")
+    response: Response, x_access_token: str = Header()
 ) -> AccessTokenMetadata:
     response.set_cookie(
         key=ACCESS_TOKEN_COOKIE_NAME,
