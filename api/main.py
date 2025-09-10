@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from routers import inference
+from routers import access_token
 
 app = FastAPI()
 
-app.include_router(inference.router)
+app.include_router(access_token.router)

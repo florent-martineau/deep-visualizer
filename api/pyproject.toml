@@ -16,6 +16,7 @@ dependencies = [
 dev = [
     "mypy~=1.17",
     "pre-commit~=4.3.0",
+    "pytest~=8.4",
 
     # If you change this, don't forget to change the pre-commit hook as well
     "ruff==0.12.12",
@@ -28,3 +29,8 @@ namespace_packages = true
 
 [tool.ruff]
 lint.select = ["E", "F", "I", "TID"]
+
+[tool.pytest.ini_options]
+python_classes = ["*"]
+python_functions = ["should_*"]
+python_files = ["*_test.py"]
