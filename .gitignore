@@ -1,3 +1,6 @@
 .devbox
 
 fastapi.log*
+
+.pytest_cache
+.ruff_cache
