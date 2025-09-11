@@ -50,11 +50,15 @@ class PostAccessToken:
     def should_return_422_if_token_is_invalid(self):
         response, access_token_cookie = make_post_request("hf_doesnotexist")
         assert response.status_code == 422
+        # TODO: assert response.json().reason == "access-token-invalid"
         assert access_token_cookie is None
 
     def should_return_422_if_fine_grained_token_cannot_access_gated_repositories(
         self,
     ):
-        response, access_token_cookie = make_post_request("hf_doesnotexist")
+        response, access_token_cookie = make_post_request(
+            test_settings().hf_access_token_fine_grained_without_access_to_gated_repos
+        )
         assert response.status_code == 422
+        # TODO: assert response.json().reason == "requires-access-to-gated-repositories"
         assert access_token_cookie is None
