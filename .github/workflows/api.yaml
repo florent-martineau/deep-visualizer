@@ -6,6 +6,7 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    environment: CI
     steps:
       - uses: actions/checkout@v4
 
@@ -34,6 +35,13 @@ jobs:
 
       - name: Run tests
         run: cd api && uv run pytest
+        env:
+          BETTERSTACK_TOKEN: ${{ secrets.BETTERSTACK_TOKEN }}
+          BETTERSTACK_INGESTING_HOST: ${{ vars.BETTERSTACK_INGESTING_HOST }}
+          HF_ACCESS_TOKEN_FINE_GRAINED: ${{ secrets.HF_ACCESS_TOKEN_FINE_GRAINED }}
+          HF_ACCESS_TOKEN_FINE_GRAINED_WITHOUT_ACCESS_TO_GATED_REPOS: ${{ secrets.HF_ACCESS_TOKEN_FINE_GRAINED_WITHOUT_ACCESS_TO_GATED_REPOS }}
+          HF_ACCESS_TOKEN_READ: ${{ secrets.HF_ACCESS_TOKEN_READ }}
+          HF_ACCESS_TOKEN_WRITE: ${{ secrets.HF_ACCESS_TOKEN_WRITE }}
 
   ruff:
     runs-on: ubuntu-latest
