@@ -8,9 +8,9 @@ from main import app
 client = TestClient(app)
 
 
-def make_put_request(token: str | None):
+def make_post_request(token: str | None):
     headers = {ACCESS_TOKEN_COOKIE_HEADER: token} if token else {}
-    response = client.put("/access-token", headers=headers)
+    response = client.post("/access-token", headers=headers)
 
     if "Set-Cookie" in response.headers:
         cookie = SimpleCookie()
@@ -24,9 +24,9 @@ def make_put_request(token: str | None):
 VALID_TOKEN = "hf_123456789abcdefghijklmnopqrstuvwxy"
 
 
-class PutAccessToken:
+class PostAccessToken:
     def should_set_a_secure_httponly_cookie(self):
-        response, access_token_cookie = make_put_request(VALID_TOKEN)
+        response, access_token_cookie = make_post_request(VALID_TOKEN)
         assert response.status_code == 200
         assert access_token_cookie is not None
         assert access_token_cookie["httponly"]
@@ -35,6 +35,6 @@ class PutAccessToken:
         assert access_token_cookie.value == VALID_TOKEN
 
     def should_return_400_if_no_header_is_sent(self):
-        response, access_token_cookie = make_put_request(None)
+        response, access_token_cookie = make_post_request(None)
         assert response.status_code == 422
         assert access_token_cookie is None
