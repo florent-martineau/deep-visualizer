@@ -8,10 +8,6 @@ class Settings(BaseSettings):
     betterstack_token: str
     betterstack_ingesting_host: str
 
-    @classmethod
-    def get(cls):
-        return
-
 
 settings = Settings.model_validate({})
 
