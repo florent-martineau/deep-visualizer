@@ -80,7 +80,7 @@ async def post_access_token(response: Response, x_access_token: str = Header()):
         )
         raise HTTPException(
             status_code=422,
-            detail=("Fine grained tokens need to be able to read gated repositories."),
+            detail="Fine grained tokens need to be able to read gated repositories.",
         )
 
     logger.info(
