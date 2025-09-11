@@ -35,7 +35,7 @@ class WhoAmIResponse(BaseModel):
 
 @router.post(
     "/access-token",
-    description="Store HF Hub User Access Token as an httpOnly secure cookie.",
+    description="Stores HF Hub User Access Token as an httpOnly secure cookie.",
 )
 async def post_access_token(response: Response, x_access_token: str = Header()):
     logger.info("Received User Access Token")
