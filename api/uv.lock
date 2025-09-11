@@ -68,7 +68,7 @@ dev = [
     { name = "pre-commit", specifier = "~=4.3.0" },
     { name = "pytest", specifier = "~=8.4" },
     { name = "ruff", specifier = "==0.12.12" },
-    { name = "types-requests", specifier = ">=2.32.4.20250809" },
+    { name = "types-requests", specifier = "~=2.32" },
 ]
 
 [[package]]
