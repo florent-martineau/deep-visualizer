@@ -16,7 +16,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mypy~=1.17",
-    "pre-commit~=4.3.0", 
+    "pre-commit~=4.3.0",
     "pytest~=8.4",
 
     # If you change this, don't forget to change the pre-commit hook as well
