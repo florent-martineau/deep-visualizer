@@ -53,7 +53,7 @@ async def post_access_token(response: Response, x_access_token: str = Header()):
         )
         raise HTTPException(
             status_code=422,
-            detail=("User Access Token is invalid"),
+            detail="User Access Token is invalid",
         )
     except Exception as e:
         logger.error(
