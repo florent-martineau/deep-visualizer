@@ -18,9 +18,9 @@ dev = [
     "mypy~=1.17",
     "pre-commit~=4.3.0",
     "pytest~=8.4",
-
     # If you change this, don't forget to change the pre-commit hook as well
     "ruff==0.12.12",
+    "types-requests~=2.32",
 ]
 
 [tool.mypy]
