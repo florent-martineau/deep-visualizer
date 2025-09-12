@@ -1,6 +1,8 @@
 import logging
 from logging.config import dictConfig
 
+import logtail  # type: ignore
+
 from utils.env import settings
 
 from .json_formatter import JsonFormatter
@@ -32,15 +34,17 @@ dictConfig(
                 "maxBytes": 10485760,  # 10 MB
                 "backupCount": 5,
             },
-            "logtail": {
-                "class": "logtail.LogtailHandler",
-                "level": "INFO",
-                "source_token": settings.betterstack_token,
-                "host": settings.betterstack_ingesting_host,
-            },
         },
-        "root": {"handlers": ["console", "file", "logtail"], "level": "DEBUG"},
+        "root": {"handlers": ["console", "file"], "level": "DEBUG"},
     }
 )
 
 logger = logging.getLogger("api")
+
+if settings.environment == "production":
+    logtailHandler = logtail.LogtailHandler(
+        source_token=settings.betterstack_token,
+        host=settings.betterstack_ingesting_host,
+    )
+    logger.addHandler(logtailHandler)
+    logger.root.addHandler(logtailHandler)
