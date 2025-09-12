@@ -1,7 +1,7 @@
 import logging
 from logging.config import dictConfig
 
-import logtail
+import logtail  # type: ignore
 
 from utils.env import settings
 
@@ -35,16 +35,16 @@ dictConfig(
                 "backupCount": 5,
             },
         },
-        "root": {"handlers": ["console", "file", "logtail"], "level": "DEBUG"},
+        "root": {"handlers": ["console", "file"], "level": "DEBUG"},
     }
 )
 
 logger = logging.getLogger("api")
 
 if settings.environment == "production":
-    logger.addHandler(
-        logtail.LogtailHandler(
-            source_token=settings.betterstack_token,
-            host=settings.betterstack_ingesting_host,
-        )
+    logtailHandler = logtail.LogtailHandler(
+        source_token=settings.betterstack_token,
+        host=settings.betterstack_ingesting_host,
     )
+    logger.addHandler(logtailHandler)
+    logger.root.addHandler(logtailHandler)
