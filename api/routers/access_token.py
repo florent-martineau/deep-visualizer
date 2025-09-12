@@ -97,3 +97,13 @@ async def post_access_token(response: Response, x_access_token: str = Header()):
         secure=True,
         samesite="strict",
     )
+
+
+@router.delete(
+    "/access-token",
+    description="Deletes the HF Hub User Access Token "
+    "stored as an httpOnly secure cookie.",
+    status_code=204,
+)
+async def delete_access_token(response: Response):
+    response.delete_cookie(ACCESS_TOKEN_COOKIE_NAME)
