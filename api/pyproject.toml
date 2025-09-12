@@ -35,6 +35,6 @@ lint.select = ["E", "F", "I", "TID"]
 pythonpath = [
   "."
 ]
-python_classes = ["*"]
+python_classes = ["*Test"]
 python_functions = ["should_*"]
 python_files = ["*_test.py"]

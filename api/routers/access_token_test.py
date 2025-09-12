@@ -23,7 +23,7 @@ def make_post_request(token: str | None):
     return response, None
 
 
-class PostAccessToken:
+class PostAccessTokenTest:
     @pytest.mark.parametrize(
         "token",
         [
