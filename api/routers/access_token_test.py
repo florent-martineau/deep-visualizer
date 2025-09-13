@@ -91,3 +91,24 @@ class DeleteAccessTokenTest:
         response = self._make_request(has_cookie)
         response_access_token_cookie = response.cookies.get(ACCESS_TOKEN_COOKIE_NAME)
         assert response_access_token_cookie is None
+
+
+class GetAccessTokenTest:
+    def _make_request(self, has_cookie: bool):
+        client = TestClient(app)
+
+        if has_cookie:
+            client.cookies.set(
+                ACCESS_TOKEN_COOKIE_NAME, test_settings().hf_access_token_fine_grained
+            )
+
+        response = client.get("/access-token")
+        return response
+
+    def should_return_204_if_cookie_is_present(self):
+        response = self._make_request(True)
+        assert response.status_code == 204
+
+    def should_return_404_if_cookie_is_missing(self):
+        response = self._make_request(False)
+        assert response.status_code == 404

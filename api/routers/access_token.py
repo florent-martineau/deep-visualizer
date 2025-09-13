@@ -1,6 +1,6 @@
-from typing import Literal
+from typing import Literal, Optional
 
-from fastapi import APIRouter, Header, HTTPException, Response
+from fastapi import APIRouter, Cookie, Header, HTTPException, Response
 from huggingface_hub import HfApi
 from pydantic import BaseModel, Field
 from requests import HTTPError
@@ -106,4 +106,26 @@ async def post_access_token(response: Response, x_access_token: str = Header()):
     status_code=204,
 )
 async def delete_access_token(response: Response):
+    logger.info(
+        "Deleting access token cookie, regardless of whether it is present or not."
+    )
     response.delete_cookie(ACCESS_TOKEN_COOKIE_NAME)
+
+
+@router.get(
+    "/access-token",
+    description="Checks whether the user has an HF Hub User Access Token "
+    "stored as an httpOnly cookie, or not. It does **NOT** check the validity of "
+    "this token. Validity is checked when setting up the cookie, and can be verified "
+    "when the token is used.",
+    status_code=204,
+)
+async def get_access_token(
+    access_token: Optional[str] = Cookie(
+        None,
+        alias=ACCESS_TOKEN_COOKIE_NAME,
+        description="Optional HF Hub User Access Token",
+    ),
+):
+    if not access_token:
+        raise HTTPException(status_code=404)
