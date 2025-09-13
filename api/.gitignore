@@ -13,5 +13,5 @@ wheels/
 .mypy_cache
 
 # Environment variables
-.env
-.env.test
+.env*
+!.env*.example
