@@ -41,10 +41,10 @@ dictConfig(
 
 logger = logging.getLogger("api")
 
-if settings.environment == "production":
+if settings().environment == "production":
     logtailHandler = logtail.LogtailHandler(
-        source_token=settings.betterstack_token,
-        host=settings.betterstack_ingesting_host,
+        source_token=settings().betterstack_token,
+        host=settings().betterstack_ingesting_host,
     )
     logger.addHandler(logtailHandler)
     logger.root.addHandler(logtailHandler)
