@@ -27,25 +27,24 @@ jobs:
         working-directory: ./api
         run: uv sync --frozen
 
+      - name: Check environment example files are in sync with settings
+        run: cd api && uv run --active ./scripts/check_example_env_files_are_in_sync_with_settings.py
+
       - name: Check dependencies
         run: cd api && uv run --active ./scripts/check_dependencies.py
 
       - name: Static type checking
         run: cd api && uv run --active mypy .
 
+      - name: Load secrets
+        uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+
       - name: Run tests
         run: cd api && uv run pytest
         env:
-          BETTERSTACK_TOKEN: ${{ secrets.BETTERSTACK_TOKEN }}
-          BETTERSTACK_INGESTING_HOST: ${{ vars.BETTERSTACK_INGESTING_HOST }}
           ENVIRONMENT: development
-          HF_ACCESS_TOKEN_FINE_GRAINED: ${{ secrets.HF_ACCESS_TOKEN_FINE_GRAINED }}
-          HF_ACCESS_TOKEN_FINE_GRAINED_WITHOUT_ACCESS_TO_GATED_REPOS: ${{ secrets.HF_ACCESS_TOKEN_FINE_GRAINED_WITHOUT_ACCESS_TO_GATED_REPOS }}
-          HF_ACCESS_TOKEN_READ: ${{ secrets.HF_ACCESS_TOKEN_READ }}
-          HF_ACCESS_TOKEN_WRITE: ${{ secrets.HF_ACCESS_TOKEN_WRITE }}
-
-      - name: Check environment example files are in sync with settings
-        run: cd api && uv run --active ./scripts/check_example_env_files_are_in_sync_with_settings.py
 
   ruff:
     runs-on: ubuntu-latest
