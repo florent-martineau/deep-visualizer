@@ -2,7 +2,7 @@ import sys
 import tomllib
 from typing import Dict, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class DependencyNotPinnedError(Exception):
@@ -26,7 +26,7 @@ class Config(BaseModel):
         dependencies: List[str] = []
 
     project: Project
-    dependency_groups: Dict[str, List[str]]
+    dependency_groups: Dict[str, List[str]] = Field(alias="dependency-groups")
 
 
 def load_config():
