@@ -29,14 +29,19 @@ class Config(BaseModel):
     dependency_groups: Dict[str, List[str]]
 
 
-def check_dependencies_are_pinned():
+def load_config():
     with open("pyproject.toml", "rb") as f:
         data = tomllib.load(f)
 
-    dependencies = data.get("project", {}).get("dependencies", [])
+    return Config(**data)
 
-    dependency_groups = data.get("dependency-groups", {})
-    for deps in dependency_groups.values():
+
+def check_dependencies_are_pinned():
+    config = load_config()
+
+    dependencies = config.project.dependencies
+
+    for deps in config.dependency_groups.values():
         dependencies += deps
 
     for dependency in dependencies:
@@ -52,12 +57,9 @@ def check_alphabetically_sorted(deps: List[str]):
 
 
 def check_dependencies_are_sorted_alphabetically():
-    with open("pyproject.toml", "rb") as f:
-        data = tomllib.load(f)
+    config = load_config()
 
-    config = Config(**data)
-
-    check_alphabetically_sorted(config.dependencies)
+    check_alphabetically_sorted(config.project.dependencies)
 
     for dependencies in config.dependency_groups.values():
         check_alphabetically_sorted(dependencies)
