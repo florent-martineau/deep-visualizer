@@ -34,6 +34,8 @@ jobs:
 
       - name: Check environment example files are in sync with settings
         run: cd api && uv run --active ./scripts/check_example_env_files_are_in_sync_with_settings.py
+        env:
+          ENVIRONMENT: development
 
       - name: Check dependencies
         run: cd api && uv run --active ./scripts/check_dependencies.py
