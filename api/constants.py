@@ -1,2 +1,4 @@
-ACCESS_TOKEN_COOKIE_NAME = "access_token"
-ACCESS_TOKEN_COOKIE_HEADER = "X-Access-Token"
+from typing import Final
+
+ACCESS_TOKEN_COOKIE_NAME: Final[str] = "access_token"
+ACCESS_TOKEN_COOKIE_HEADER: Final[str] = "X-Access-Token"
