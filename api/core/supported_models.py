@@ -1,6 +1,6 @@
-from typing import Final, Tuple
+from typing import Final
 
-SUPPORTED_MODELS: Final[Tuple[str, ...]] = (
+SUPPORTED_MODELS: Final[tuple[str, ...]] = (
     "openai-community/openai-gpt",
     "openai-community/gpt2",
     "openai/gpt-oss-20b",
