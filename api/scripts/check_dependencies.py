@@ -1,16 +1,19 @@
 import sys
 import tomllib
+from typing import Dict, List
+
+from pydantic import BaseModel, Field
 
 
 class DependencyNotPinnedError(Exception):
-    def __init__(self, dependency):
+    def __init__(self, dependency: str):
         super().__init__(
             f"Dependency {dependency} should be pinned using either ~= or =="
         )
 
 
 class DependenciesNotSortedError(Exception):
-    def __init__(self, dependencies):
+    def __init__(self, dependencies: List[str]):
         received = ",".join(dependencies)
         expected = ",".join(sorted(dependencies))
         super().__init__(f"""Dependencies are not sorted alphabetically.
@@ -18,14 +21,27 @@ Received:{received}
 Expected: {expected}""")
 
 
-def check_dependencies_are_pinned():
+class Config(BaseModel):
+    class Project(BaseModel):
+        dependencies: List[str] = []
+
+    project: Project
+    dependency_groups: Dict[str, List[str]] = Field(alias="dependency-groups")
+
+
+def load_config():
     with open("pyproject.toml", "rb") as f:
         data = tomllib.load(f)
 
-    dependencies = data.get("project", {}).get("dependencies", [])
+    return Config(**data)
 
-    dependency_groups = data.get("dependency-groups", {})
-    for deps in dependency_groups.values():
+
+def check_dependencies_are_pinned():
+    config = load_config()
+
+    dependencies = config.project.dependencies
+
+    for deps in config.dependency_groups.values():
         dependencies += deps
 
     for dependency in dependencies:
@@ -35,20 +51,17 @@ def check_dependencies_are_pinned():
     return True
 
 
-def check_alphabetically_sorted(deps):
+def check_alphabetically_sorted(deps: List[str]):
     if sorted(deps) != deps:
         raise DependenciesNotSortedError(deps)
 
 
 def check_dependencies_are_sorted_alphabetically():
-    with open("pyproject.toml", "rb") as f:
-        data = tomllib.load(f)
+    config = load_config()
 
-    dependencies = data.get("project", {}).get("dependencies", [])
-    check_alphabetically_sorted(dependencies)
+    check_alphabetically_sorted(config.project.dependencies)
 
-    dependency_groups = data.get("dependency-groups", {})
-    for dependencies in dependency_groups.values():
+    for dependencies in config.dependency_groups.values():
         check_alphabetically_sorted(dependencies)
 
     return True
