@@ -33,6 +33,9 @@ jobs:
       - name: Check dependencies
         run: cd api && uv run --active ./scripts/check_dependencies.py
 
+      - name: Check supported models do exist
+        run: cd api && uv run --active ./scripts/check_supported_models_exist.py
+
       - name: Static type checking
         run: cd api && uv run --active mypy .
 
