@@ -17,8 +17,8 @@ def main():
 
     models_not_found: List[str] = []
     for model in SUPPORTED_MODELS:
-        if not hf_api.repo_exists(model):
-            models_not_found.append(model)
+        if not hf_api.repo_exists(model.id):
+            models_not_found.append(model.id)
             logger.error("❌ Unable to find supported model", extra={"model": model})
 
     if len(models_not_found) > 0:
