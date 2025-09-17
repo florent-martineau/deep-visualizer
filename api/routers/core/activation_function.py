@@ -1,17 +1,28 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-from core.activation_function import ActivationFunction
+from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS
 from utils.logs.logger import logger
 
 router = APIRouter()
 
 
 @router.get(
-    "/activation-function/{name}",
+    "/activation-function/{activation_function}",
     description="This function takes as input a range (min, max) and a step. "
     "For each value in this interval, it will apply the activation function, "
     "and return all the associated results. "
     "This allows you to plot the activation function.",
+    status_code=200,
 )
-async def get_activation_function(name: ActivationFunction):
-    logger.info("Retrieving activation function", extra={"name": name})
+async def get_activation_function(activation_function: str):
+    logger.info(
+        "Retrieving activation function",
+        extra={"activation_function": activation_function},
+    )
+
+    if activation_function not in SUPPORTED_ACTIVATION_FUNCTIONS:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Activation function '{activation_function}' not found. "
+            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTIONS)}",
+        )
