@@ -17,6 +17,7 @@ dependencies = [
 dev = [
     "mypy~=1.17",
     "pre-commit~=4.3.0",
+    "pytest-cov~=7.0",
     "pytest~=8.4",
     # If you change this, don't forget to change the pre-commit hook as well
     "ruff==0.12.12",
@@ -42,3 +43,9 @@ pythonpath = [
 python_classes = ["*Test"]
 python_functions = ["should_*"]
 python_files = ["*_test.py"]
+
+[tool.coverage.report]
+source=["."]
+fail_under = 93
+show_missing = true
+precision = 2
