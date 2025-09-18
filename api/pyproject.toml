@@ -43,9 +43,13 @@ pythonpath = [
 python_classes = ["*Test"]
 python_functions = ["should_*"]
 python_files = ["*_test.py"]
+addopts = ["--cov=.", "--cov-report=xml"]
 
 [tool.coverage.report]
-source=["."]
 fail_under = 93
 show_missing = true
 precision = 2
+
+
+[tool.coverage.xml]
+output = "coverage.xml"
