@@ -43,6 +43,7 @@ pythonpath = [
 python_classes = ["*Test"]
 python_functions = ["should_*"]
 python_files = ["*_test.py"]
+addopts = ["--cov-report=xml"]
 
 [tool.coverage.report]
 source=["."]
