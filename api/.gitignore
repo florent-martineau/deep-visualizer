@@ -11,6 +11,7 @@ wheels/
 
 # Testing
 .mypy_cache
+.coverage
 
 # Environment variables
 .env*

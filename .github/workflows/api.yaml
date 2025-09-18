@@ -47,7 +47,7 @@ jobs:
         run: cd api && uv run --active mypy .
 
       - name: Run tests
-        run: cd api && uv run pytest
+        run: cd api && uv run pytest --cov=.
         env:
           ENVIRONMENT: development
 
