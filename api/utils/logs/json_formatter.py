@@ -42,7 +42,7 @@ class JsonFormatter(logging.Formatter):
 
         for key, value in record.__dict__.items():
             if key not in self.STANDARD_ATTRS:
-                log_record[key] = str(value)
+                log_record[key] = value
 
         if record.exc_info:
             log_record["exception"] = self.formatException(record.exc_info)
