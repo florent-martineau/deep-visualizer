@@ -8,7 +8,7 @@ from huggingface_hub import HfApi
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.supported_models import SUPPORTED_MODELS
-from utils.logs.logger import logger
+from utils.logs import logger
 
 
 def main():
