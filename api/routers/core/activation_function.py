@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 
 from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS
-from utils.logs.logger import logger
+from utils.logs import logger
 
 router = APIRouter()
 
