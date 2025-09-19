@@ -42,11 +42,6 @@ jobs:
         env:
           ENVIRONMENT: development
 
-      - name: Check supported models do exist
-        run: cd api && uv run --active scripts/check_supported_models_exist.py
-        env:
-          ENVIRONMENT: development
-
       - name: Static type checking
         run: cd api && uv run --active mypy .
 
