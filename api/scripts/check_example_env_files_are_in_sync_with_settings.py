@@ -5,6 +5,8 @@ valid configuration."""
 import sys
 from pathlib import Path
 
+from utils.logs import logger
+
 # Add root to path in order to import other modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -18,10 +20,10 @@ def main():
             test_settings(".env.test.example").hf_access_token_fine_grained is not None
         )
 
-        print("✅ All example environment files are valid")
+        logger.info("✅ All example environment files are valid")
         return 0
     except Exception as e:
-        print(f"❌ Environment file validation failed: {e}")
+        logger.error(f"❌ Environment file validation failed: {e}")
         return 1
 
 
