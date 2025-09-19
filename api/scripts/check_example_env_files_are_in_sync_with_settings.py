@@ -5,12 +5,11 @@ valid configuration."""
 import sys
 from pathlib import Path
 
-from utils.logs import logger
-
 # Add root to path in order to import other modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.env import settings, test_settings
+from utils.logs import logger
 
 
 def main():
