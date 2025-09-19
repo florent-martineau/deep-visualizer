@@ -1,12 +1,38 @@
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
+from typing import Dict
 
 
 class JsonFormatter(logging.Formatter):
-    def format(self, record):
-        log_record = {
-            "timestamp": datetime.utcnow().isoformat(),
+    STANDARD_ATTRS = {
+        "name",
+        "msg",
+        "args",
+        "levelname",
+        "levelno",
+        "pathname",
+        "filename",
+        "module",
+        "exc_info",
+        "exc_text",
+        "stack_info",
+        "lineno",
+        "funcName",
+        "created",
+        "msecs",
+        "relativeCreated",
+        "thread",
+        "threadName",
+        "processName",
+        "process",
+        "getMessage",
+        "message",
+    }
+
+    def format(self, record: logging.LogRecord):
+        log_record: Dict[str, str | int] = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger": record.name,
             "module": record.module,
@@ -14,10 +40,10 @@ class JsonFormatter(logging.Formatter):
             "message": record.getMessage(),
         }
 
-        if hasattr(record, "extra_context"):
-            log_record.update(record.extra_context)
+        for key, value in record.__dict__.items():
+            if key not in self.STANDARD_ATTRS:
+                log_record[key] = value
 
-        # Add exception info if available
         if record.exc_info:
             log_record["exception"] = self.formatException(record.exc_info)
 
