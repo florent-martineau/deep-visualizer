@@ -1,10 +1,11 @@
-from typing import Dict, get_args
+from typing import Dict, List, get_args
 
 import pytest
 from fastapi.testclient import TestClient
 
 from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS, ActivationFunction
 from main import app
+from routers.core.activation_function import ActivationFunctionResponse
 
 
 def _make_request(
@@ -66,3 +67,62 @@ def should_not_return_422_if_mandatory_parameter_is_missing(
     )
 
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize(
+    "min, max, step",
+    [
+        (-1, 1, 0.1),
+        (-1, 1, 1 / 3.0),
+        (-1, 1, 0.15),
+    ],
+    ids=[
+        "Step divides ranges perfectly",
+        "Step almost divides range properly",
+        "Step doesn't divide range properly",
+    ],
+)
+def should_include_the_extremums_in_activation_inputs(
+    min: float, max: float, step: float
+):
+    activation_function = SUPPORTED_ACTIVATION_FUNCTIONS[0]
+    response = _make_request(
+        name=activation_function,
+        min=min,
+        max=max,
+        step=step,
+    )
+
+    parsed_response = ActivationFunctionResponse.model_validate(response.json())
+    inputs = list(map(lambda activation: activation.input, parsed_response.activations))
+
+    assert min in inputs
+    assert max in inputs
+
+
+@pytest.mark.parametrize(
+    "min, max, step, expected_inputs",
+    [
+        (-1, 1, 1, [-1, 0, 1]),
+        (-1, 1, 0.42, [-1, -0.58, -0.16, 0.26, 0.68, 1]),
+    ],
+    ids=[
+        "Step divides ranges perfectly",
+        "Step doesn't divide range properly",
+    ],
+)
+def should_have_correct_inputs(
+    min: float, max: float, step: float, expected_inputs: List[float]
+):
+    activation_function = SUPPORTED_ACTIVATION_FUNCTIONS[0]
+    response = _make_request(
+        name=activation_function,
+        min=min,
+        max=max,
+        step=step,
+    )
+
+    parsed_response = ActivationFunctionResponse.model_validate(response.json())
+    inputs = list(map(lambda activation: activation.input, parsed_response.activations))
+
+    assert set(inputs) == set(expected_inputs)
