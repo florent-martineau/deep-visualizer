@@ -3,7 +3,7 @@ from typing import List, Set
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS
+from core.activation_function import SUPPORTED_ACTIVATION_FUNCTION_NAMES
 from utils.logs import logger
 
 router = APIRouter()
@@ -45,11 +45,11 @@ async def get_activation_function(
         extra={"activation_function": activation_function},
     )
 
-    if activation_function not in SUPPORTED_ACTIVATION_FUNCTIONS:
+    if activation_function not in SUPPORTED_ACTIVATION_FUNCTION_NAMES:
         raise HTTPException(
             status_code=404,
             detail=f"Activation function '{activation_function}' not found. "
-            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTIONS)}",
+            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTION_NAMES)}",
         )
 
     if min >= max:
