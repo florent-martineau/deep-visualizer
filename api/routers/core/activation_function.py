@@ -49,7 +49,10 @@ async def get_activation_function(
             f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTIONS)}",
         )
 
-    # TODO: return error if min >= max
+    if min >= max:
+        raise HTTPException(
+            status_code=422, detail=f"min ({min}) should be less than max ({max})"
+        )
 
     inputs: Set[float] = set([min, max])
     curr = min + step

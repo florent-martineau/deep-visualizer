@@ -9,7 +9,10 @@ from routers.core.activation_function import ActivationFunctionResponse
 
 
 def _make_request(
-    name: str, min: float | None = -1, max: float | None = 1, step: float | None = 0.1
+    name: str = SUPPORTED_ACTIVATION_FUNCTIONS[0],
+    min: float | None = -1,
+    max: float | None = 1,
+    step: float | None = 0.1,
 ):
     client = TestClient(app)
 
@@ -114,9 +117,7 @@ def should_include_the_extremums_in_activation_inputs(
 def should_have_correct_inputs(
     min: float, max: float, step: float, expected_inputs: List[float]
 ):
-    activation_function = SUPPORTED_ACTIVATION_FUNCTIONS[0]
     response = _make_request(
-        name=activation_function,
         min=min,
         max=max,
         step=step,
@@ -126,3 +127,8 @@ def should_have_correct_inputs(
     inputs = list(map(lambda activation: activation.input, parsed_response.activations))
 
     assert set(inputs) == set(expected_inputs)
+
+
+def should_return_422_if_min_is_greater_than_or_equal_to_max():
+    response = _make_request(min=1, max=0)
+    assert response.status_code == 422
