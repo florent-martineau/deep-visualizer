@@ -8,6 +8,9 @@ from utils.logs import logger
 
 router = APIRouter()
 
+# Maximum number of activations to be computed by the activation function route
+ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE = 10_000
+
 
 class Activation(BaseModel):
     input: float
@@ -58,6 +61,14 @@ async def get_activation_function(
     curr = min + step
     while curr <= max:
         inputs.add(round(curr, 6))
+
+        if len(inputs) > ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE:
+            raise HTTPException(
+                status_code=422,
+                detail="The total number of activations to compute must not be greater "
+                "than " + str(ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE),
+            )
+
         curr += step
 
     return ActivationFunctionResponse(
