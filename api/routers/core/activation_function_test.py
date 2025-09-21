@@ -5,7 +5,10 @@ from fastapi.testclient import TestClient
 
 from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS, ActivationFunction
 from main import app
-from routers.core.activation_function import ActivationFunctionResponse
+from routers.core.activation_function import (
+    ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE,
+    ActivationFunctionResponse,
+)
 
 
 def _make_request(
@@ -132,3 +135,15 @@ def should_have_correct_inputs(
 def should_return_422_if_min_is_greater_than_or_equal_to_max():
     response = _make_request(min=1, max=0)
     assert response.status_code == 422
+
+
+def should_return_422_if_number_of_activations_to_compute_is_too_large():
+    response_below_threshold = _make_request(
+        min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE, step=1
+    )
+    assert response_below_threshold.status_code == 200
+
+    response_below_threshold = _make_request(
+        min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE + 1, step=1
+    )
+    assert response_below_threshold.status_code == 422
