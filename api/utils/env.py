@@ -3,9 +3,11 @@ from typing import Literal
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
+Environment = Literal["production", "development"]
+
 
 class Settings(BaseSettings):
-    environment: Literal["production", "development"]
+    environment: Environment
     betterstack_token: str
     betterstack_ingesting_host: str
 
