@@ -37,7 +37,9 @@ def setup_logger():
                     "backupCount": 5,
                 },
             },
-            "api": {"handlers": ["console", "file"], "level": "DEBUG"},
+            "loggers": {
+                "api": {"handlers": ["console", "file"], "level": "DEBUG"},
+            },
         }
     )
 

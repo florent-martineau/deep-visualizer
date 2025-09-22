@@ -25,6 +25,8 @@ def should_not_have_logtail_handler_outside_of_production(
 
     monkeypatch.setenv("ENVIRONMENT", environment)
     assert settings().environment != "production"
+
+    assert len(setup_logger().handlers) > 0
     assert all(
         not isinstance(handler, logtail.LogtailHandler)
         for handler in setup_logger().handlers
