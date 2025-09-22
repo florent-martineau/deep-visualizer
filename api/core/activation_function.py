@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List, Literal, get_args
+from typing import Callable, Dict, List, Literal, TypeGuard, get_args
 
 import torch
 from pydantic import BaseModel
@@ -46,3 +46,7 @@ ACTIVATION_FUNCTIONS: Dict[ActivationFunctionName, ActivationFunction] = {
 SUPPORTED_ACTIVATION_FUNCTION_NAMES: tuple[ActivationFunctionName] = get_args(
     ActivationFunctionName
 )
+
+
+def is_supported_activation(name: str) -> TypeGuard[ActivationFunctionName]:
+    return name in SUPPORTED_ACTIVATION_FUNCTION_NAMES
