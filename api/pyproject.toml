@@ -11,6 +11,8 @@ dependencies = [
     "logtail-python~=0.3",
     "pydantic-settings~=2.10",
     "python-dotenv~=1.1",
+    "torch~=2.8",
+    "transformers~=4.56",
 ]
 
 [dependency-groups]

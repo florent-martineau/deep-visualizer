@@ -1,9 +1,14 @@
 from typing import List, Set
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Path, Query
 from pydantic import BaseModel
 
-from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS
+from core.activation_function import (
+    ACTIVATION_FUNCTIONS,
+    SUPPORTED_ACTIVATION_FUNCTION_NAMES,
+    Activation,
+    is_supported_activation,
+)
 from utils.logs import logger
 
 router = APIRouter()
@@ -12,17 +17,12 @@ router = APIRouter()
 ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE = 10_000
 
 
-class Activation(BaseModel):
-    input: float
-    activation: float
-
-
 class ActivationFunctionResponse(BaseModel):
     activations: List[Activation]
 
 
 @router.get(
-    "/activation-function/{activation_function}",
+    "/activation-function/{activation_function_name}",
     description="This function takes as input a range (min, max) and a step. "
     "For each value in this interval, it will apply the activation function, "
     "and return all the associated activations. "
@@ -31,7 +31,10 @@ class ActivationFunctionResponse(BaseModel):
     response_model=ActivationFunctionResponse,
 )
 async def get_activation_function(
-    activation_function: str,
+    activation_function_name: str = Path(
+        description="Name of the activation function",
+        examples=list(SUPPORTED_ACTIVATION_FUNCTION_NAMES),
+    ),
     min: float = Query(description="Minimum value to generate activations from."),
     max: float = Query(description="Maximum value to generate activations from."),
     step: float = Query(
@@ -42,15 +45,22 @@ async def get_activation_function(
 ):
     logger.info(
         "Retrieving activation function",
-        extra={"activation_function": activation_function},
+        extra={
+            "activation_function": activation_function_name,
+            "min": min,
+            "max": max,
+            "step": step,
+        },
     )
 
-    if activation_function not in SUPPORTED_ACTIVATION_FUNCTIONS:
+    if not is_supported_activation(activation_function_name):
         raise HTTPException(
             status_code=404,
-            detail=f"Activation function '{activation_function}' not found. "
-            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTIONS)}",
+            detail=f"Activation function '{activation_function_name}' not found. "
+            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTION_NAMES)}",
         )
+
+    activation_function = ACTIVATION_FUNCTIONS[activation_function_name]
 
     if min >= max:
         raise HTTPException(
@@ -72,5 +82,5 @@ async def get_activation_function(
         curr += step
 
     return ActivationFunctionResponse(
-        activations=[Activation(input=input, activation=0.0) for input in inputs]
+        activations=activation_function.get_activations(list(inputs))
     )

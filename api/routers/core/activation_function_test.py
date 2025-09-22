@@ -1,9 +1,14 @@
-from typing import Dict, List, get_args
+from typing import Dict, List
 
 import pytest
+import torch
 from fastapi.testclient import TestClient
 
-from core.activation_function import SUPPORTED_ACTIVATION_FUNCTIONS, ActivationFunction
+from core.activation_function import (
+    ACTIVATION_FUNCTIONS,
+    SUPPORTED_ACTIVATION_FUNCTION_NAMES,
+    ActivationFunction,
+)
 from main import app
 from routers.core.activation_function import (
     ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE,
@@ -12,7 +17,7 @@ from routers.core.activation_function import (
 
 
 def _make_request(
-    name: str = SUPPORTED_ACTIVATION_FUNCTIONS[0],
+    name: str = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0],
     min: float | None = -1,
     max: float | None = 1,
     step: float | None = 0.1,
@@ -37,15 +42,15 @@ def should_return_404_if_activation_function_is_not_supported():
     name = "does-not-exist"
     response = _make_request(name=name)
 
-    assert name not in SUPPORTED_ACTIVATION_FUNCTIONS
+    assert name not in SUPPORTED_ACTIVATION_FUNCTION_NAMES
     assert response.status_code == 404
 
 
-@pytest.mark.parametrize("name", SUPPORTED_ACTIVATION_FUNCTIONS)
+@pytest.mark.parametrize("name", SUPPORTED_ACTIVATION_FUNCTION_NAMES)
 def should_not_return_404_if_activation_function_is_supported(name: str):
     response = _make_request(name=name)
 
-    assert name in get_args(ActivationFunction)
+    assert name in SUPPORTED_ACTIVATION_FUNCTION_NAMES
     assert response.status_code != 404
 
 
@@ -64,7 +69,7 @@ def should_not_return_422_if_mandatory_parameter_is_missing(
     if has_min and has_max and has_step:
         pytest.skip("All mandatory parameters are provided")
 
-    activation_function = SUPPORTED_ACTIVATION_FUNCTIONS[0]
+    activation_function = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0]
     response = _make_request(
         name=activation_function,
         min=-1 if has_min else None,
@@ -91,7 +96,7 @@ def should_not_return_422_if_mandatory_parameter_is_missing(
 def should_include_the_extremums_in_activation_inputs(
     min: float, max: float, step: float
 ):
-    activation_function = SUPPORTED_ACTIVATION_FUNCTIONS[0]
+    activation_function = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0]
     response = _make_request(
         name=activation_function,
         min=min,
@@ -129,7 +134,7 @@ def should_have_correct_inputs(
     parsed_response = ActivationFunctionResponse.model_validate(response.json())
     inputs = list(map(lambda activation: activation.input, parsed_response.activations))
 
-    assert set(inputs) == set(expected_inputs)
+    assert inputs == pytest.approx(expected_inputs)
 
 
 def should_return_422_if_min_is_greater_than_or_equal_to_max():
@@ -147,3 +152,36 @@ def should_return_422_if_number_of_activations_to_compute_is_too_large():
         min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE + 1, step=1
     )
     assert response_below_threshold.status_code == 422
+
+
+@pytest.mark.parametrize(
+    "activation_function",
+    ACTIVATION_FUNCTIONS.values(),
+    ids=map(lambda activation: activation.name, ACTIVATION_FUNCTIONS.values()),
+)
+def should_return_correct_activations(activation_function: ActivationFunction):
+    response = _make_request(name=activation_function.name, min=-1, max=1, step=0.5)
+    parsed_response = ActivationFunctionResponse.model_validate(response.json())
+
+    actual_inputs = list(
+        map(
+            lambda activation_object: activation_object.input,
+            parsed_response.activations,
+        )
+    )
+    expected_inputs: List[float] = [-1, -0.5, 0, 0.5, 1]
+    assert actual_inputs == pytest.approx(expected_inputs)
+
+    expected_activations = activation_function.activation_fn(
+        torch.Tensor(expected_inputs)
+    )
+    expected_outputs = list(
+        map(lambda activation: activation.item(), expected_activations)
+    )
+    actual_outputs = list(
+        map(
+            lambda activation_object: activation_object.activation,
+            parsed_response.activations,
+        )
+    )
+    assert actual_outputs == pytest.approx(expected_outputs)
