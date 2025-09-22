@@ -52,14 +52,14 @@ async def get_activation_function(
         },
     )
 
-    if activation_function_name not in SUPPORTED_ACTIVATION_FUNCTION_NAMES:
+    if activation_function_name in SUPPORTED_ACTIVATION_FUNCTION_NAMES:
+        activation_function = ACTIVATION_FUNCTIONS[activation_function_name]
+    else:
         raise HTTPException(
             status_code=404,
             detail=f"Activation function '{activation_function_name}' not found. "
             f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTION_NAMES)}",
         )
-
-    activation_function = ACTIVATION_FUNCTIONS[activation_function_name]
 
     if min >= max:
         raise HTTPException(
