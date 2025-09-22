@@ -185,3 +185,17 @@ def should_return_correct_activations(activation_function: ActivationFunction):
         )
     )
     assert actual_outputs == pytest.approx(expected_outputs)
+
+
+def should_return_activations_sorted_by_input():
+    response = _make_request(step=0.5)
+    parsed_response = ActivationFunctionResponse.model_validate(response.json())
+
+    actual_inputs = list(
+        map(
+            lambda activation_object: activation_object.input,
+            parsed_response.activations,
+        )
+    )
+
+    assert actual_inputs == [-1, -0.5, 0, 0.5, 1]
