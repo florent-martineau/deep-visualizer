@@ -1,4 +1,5 @@
 from http.cookies import SimpleCookie
+from unittest.mock import MagicMock, patch
 
 import pytest
 from fastapi.testclient import TestClient
@@ -59,6 +60,20 @@ class PostAccessTokenTest:
         assert response.status_code == 422
         # TODO: assert response.json().reason == "requires-access-to-gated-repositories"
         assert access_token_cookie is None
+
+    @patch("routers.access_token.HfApi")
+    def should_return_500_if_an_unexpected_hugginface_whoami_error_occurs(
+        self, mock_hf_api: MagicMock
+    ):
+        mock_hf_api_instance = MagicMock()
+        mock_hf_api_instance.whoami.side_effect = Exception(
+            "An unexpected error occurred!"
+        )
+        mock_hf_api.return_value = mock_hf_api_instance
+
+        response, _ = self._make_post_request(test_settings().hf_access_token_read)
+        assert mock_hf_api.called
+        assert response.status_code == 500
 
 
 class DeleteAccessTokenTest:
