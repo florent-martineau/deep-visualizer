@@ -37,7 +37,7 @@ def setup_logger():
                     "backupCount": 5,
                 },
             },
-            "root": {"handlers": ["console", "file"], "level": "DEBUG"},
+            "api": {"handlers": ["console", "file"], "level": "DEBUG"},
         }
     )
 
@@ -49,6 +49,5 @@ def setup_logger():
             host=settings().betterstack_ingesting_host,
         )
         logger.addHandler(logtailHandler)
-        logger.root.addHandler(logtailHandler)
 
     return logger
