@@ -31,3 +31,6 @@ def should_not_have_logtail_handler_outside_of_production(
         not isinstance(handler, logtail.LogtailHandler)
         for handler in setup_logger().handlers
     )
+
+
+# TODO: add more comprehensive testing
