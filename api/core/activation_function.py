@@ -1,5 +1,6 @@
-from typing import Callable, Dict, Literal, get_args
+from typing import Callable, Dict, List, Literal, get_args
 
+import torch
 from pydantic import BaseModel
 from torch import Tensor
 from transformers.activations import get_activation  # type: ignore
@@ -7,20 +8,37 @@ from transformers.activations import get_activation  # type: ignore
 ActivationFunctionName = Literal["gelu", "gelu_new", "silu"]
 
 
+class Activation(BaseModel):
+    input: float
+    activation: float
+
+
 class ActivationFunction(BaseModel):
     name: ActivationFunctionName
-    activation: Callable[[Tensor], Tensor]
+    activation_fn: Callable[[Tensor], Tensor]
+
+    def get_activations(self, inputs: List[float]) -> List[Activation]:
+        inputs_tensor = torch.tensor(inputs)
+        activations_tensor = self.activation_fn(inputs_tensor)
+
+        activations = [
+            Activation(input=input_val.item(), activation=activation_val.item())
+            for input_val, activation_val in zip(inputs_tensor, activations_tensor)
+        ]
+        activations.sort(key=lambda activation: activation.input)
+
+        return activations
 
 
 ACTIVATION_FUNCTIONS: Dict[ActivationFunctionName, ActivationFunction] = {
     "gelu": ActivationFunction.model_validate(
-        {"name": "gelu", "activation": get_activation("gelu")}
+        {"name": "gelu", "activation_fn": get_activation("gelu")}
     ),
     "gelu_new": ActivationFunction.model_validate(
-        {"name": "gelu", "activation": get_activation("gelu_new")}
+        {"name": "gelu_new", "activation_fn": get_activation("gelu_new")}
     ),
     "silu": ActivationFunction.model_validate(
-        {"name": "gelu", "activation": get_activation("silu")}
+        {"name": "silu", "activation_fn": get_activation("silu")}
     ),
 }
 
