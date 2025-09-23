@@ -1,15 +1,23 @@
 from typing import Dict, List, Literal, TypeGuard, get_args
 
 import torch
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
 
 ActivationFunctionName = Literal["gelu", "gelu_new", "silu"]
 
 
 class Activation(BaseModel):
-    input: float
-    activation: float
+    """
+    Represents the output of an activation function given a particular input.
+
+    More details: [here](https://stats.stackexchange.com/a/391685)
+    """
+
+    pre_activation: float = Field(
+        description="Input to an activation function",
+    )
+    activation: float = Field(description="Output of an activation function")
 
 
 class ActivationFunction(BaseModel):
@@ -23,10 +31,12 @@ class ActivationFunction(BaseModel):
         activations_tensor = self.module.forward(inputs_tensor)
 
         activations = [
-            Activation(input=input_val.item(), activation=activation_val.item())
+            Activation(
+                pre_activation=input_val.item(), activation=activation_val.item()
+            )
             for input_val, activation_val in zip(inputs_tensor, activations_tensor)
         ]
-        activations.sort(key=lambda activation: activation.input)
+        activations.sort(key=lambda activation: activation.pre_activation)
 
         return activations
 
