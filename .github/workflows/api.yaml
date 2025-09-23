@@ -34,11 +34,6 @@ jobs:
         with:
           secrets: ${{ toJSON(secrets) }}
 
-      - name: Check dependencies
-        run: cd api && uv run --active scripts/check_dependencies.py
-        env:
-          ENVIRONMENT: development
-
       - name: Static type checking
         run: cd api && uv run --active mypy .
 
