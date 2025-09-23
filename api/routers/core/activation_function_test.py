@@ -105,7 +105,9 @@ def should_include_the_extremums_in_activation_inputs(
     )
 
     parsed_response = ActivationFunctionResponse.model_validate(response.json())
-    inputs = list(map(lambda activation: activation.input, parsed_response.activations))
+    inputs = list(
+        map(lambda activation: activation.pre_activation, parsed_response.activations)
+    )
 
     assert min in inputs
     assert max in inputs
@@ -132,7 +134,9 @@ def should_have_correct_inputs(
     )
 
     parsed_response = ActivationFunctionResponse.model_validate(response.json())
-    inputs = list(map(lambda activation: activation.input, parsed_response.activations))
+    inputs = list(
+        map(lambda activation: activation.pre_activation, parsed_response.activations)
+    )
 
     assert inputs == pytest.approx(expected_inputs)
 
@@ -165,7 +169,7 @@ def should_return_correct_activations(activation_function: ActivationFunction):
 
     actual_inputs = list(
         map(
-            lambda activation_object: activation_object.input,
+            lambda activation_object: activation_object.pre_activation,
             parsed_response.activations,
         )
     )
@@ -191,7 +195,7 @@ def should_return_activations_sorted_by_input():
 
     actual_inputs = list(
         map(
-            lambda activation_object: activation_object.input,
+            lambda activation_object: activation_object.pre_activation,
             parsed_response.activations,
         )
     )
