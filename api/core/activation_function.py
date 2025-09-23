@@ -7,7 +7,7 @@ from transformers.activations import GELUActivation, NewGELUActivation
 ActivationFunctionName = Literal["gelu", "gelu_new", "silu"]
 
 
-class Activation(BaseModel):
+class ActivationInputOutputPair(BaseModel):
     """
     Represents the output of an activation function given a particular input.
 
@@ -26,12 +26,12 @@ class ActivationFunction(BaseModel):
     name: ActivationFunctionName
     module: torch.nn.Module
 
-    def get_activations(self, inputs: List[float]) -> List[Activation]:
+    def get_activations(self, inputs: List[float]) -> List[ActivationInputOutputPair]:
         inputs_tensor = torch.tensor(inputs)
         activations_tensor = self.module.forward(inputs_tensor)
 
         activations = [
-            Activation(
+            ActivationInputOutputPair(
                 pre_activation=input_val.item(), activation=activation_val.item()
             )
             for input_val, activation_val in zip(inputs_tensor, activations_tensor)

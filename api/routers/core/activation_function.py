@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from core.activation_function import (
     ACTIVATION_FUNCTIONS,
     SUPPORTED_ACTIVATION_FUNCTION_NAMES,
-    Activation,
+    ActivationInputOutputPair,
     is_supported_activation,
 )
 from utils.logs import logger
@@ -18,7 +18,7 @@ ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE = 10_000
 
 
 class ActivationFunctionResponse(BaseModel):
-    activations: List[Activation]
+    activations: List[ActivationInputOutputPair]
 
 
 @router.get(
