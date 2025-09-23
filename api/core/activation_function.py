@@ -1,9 +1,8 @@
-from typing import Callable, Dict, List, Literal, TypeGuard, get_args
+from typing import Dict, List, Literal, TypeGuard, get_args
 
 import torch
-from pydantic import BaseModel
-from torch import Tensor
-from transformers.activations import get_activation  # type: ignore
+from pydantic import BaseModel, ConfigDict
+from transformers.activations import GELUActivation, NewGELUActivation
 
 ActivationFunctionName = Literal["gelu", "gelu_new", "silu"]
 
@@ -14,12 +13,14 @@ class Activation(BaseModel):
 
 
 class ActivationFunction(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     name: ActivationFunctionName
-    activation_fn: Callable[[Tensor], Tensor]
+    module: torch.nn.Module
 
     def get_activations(self, inputs: List[float]) -> List[Activation]:
         inputs_tensor = torch.tensor(inputs)
-        activations_tensor = self.activation_fn(inputs_tensor)
+        activations_tensor = self.module.forward(inputs_tensor)
 
         activations = [
             Activation(input=input_val.item(), activation=activation_val.item())
@@ -30,16 +31,15 @@ class ActivationFunction(BaseModel):
         return activations
 
 
+_ACTIVATION_FUNCTIONS_TUPLE: List[tuple[ActivationFunctionName, torch.nn.Module]] = [
+    ("gelu", GELUActivation()),
+    ("gelu_new", NewGELUActivation()),
+    ("silu", torch.nn.SiLU()),
+]
+
 ACTIVATION_FUNCTIONS: Dict[ActivationFunctionName, ActivationFunction] = {
-    "gelu": ActivationFunction.model_validate(
-        {"name": "gelu", "activation_fn": get_activation("gelu")}
-    ),
-    "gelu_new": ActivationFunction.model_validate(
-        {"name": "gelu_new", "activation_fn": get_activation("gelu_new")}
-    ),
-    "silu": ActivationFunction.model_validate(
-        {"name": "silu", "activation_fn": get_activation("silu")}
-    ),
+    name: ActivationFunction(name=name, module=module)
+    for name, module in _ACTIVATION_FUNCTIONS_TUPLE
 }
 
 
