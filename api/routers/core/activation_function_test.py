@@ -172,9 +172,7 @@ def should_return_correct_activations(activation_function: ActivationFunction):
     expected_inputs: List[float] = [-1, -0.5, 0, 0.5, 1]
     assert actual_inputs == pytest.approx(expected_inputs)
 
-    expected_activations = activation_function.activation_fn(
-        torch.Tensor(expected_inputs)
-    )
+    expected_activations = activation_function.module(torch.Tensor(expected_inputs))
     expected_outputs = list(
         map(lambda activation: activation.item(), expected_activations)
     )
