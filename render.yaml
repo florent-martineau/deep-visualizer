@@ -10,3 +10,11 @@ services:
       - key: ENVIRONMENT
         value: "production"
       - fromGroup: betterstack
+
+  - type: web
+    name: frontend
+    env: node
+    plan: free
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    rootDir: front/
