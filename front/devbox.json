@@ -1,4 +1,4 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
-  "packages": ["uv@0.8"]
+  "packages": ["bun@1.2"]
 }
