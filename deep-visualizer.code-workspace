@@ -21,6 +21,21 @@
           "panel": "new"
         },
         "problemMatcher": []
+      },
+      {
+        "label": "Front Shell",
+        "type": "shell",
+        "command": "devbox shell",
+        "options": {
+          "cwd": "${workspaceFolder}/front"
+        },
+        "presentation": {
+          "echo": false,
+          "reveal": "always",
+          "focus": true,
+          "panel": "new"
+        },
+        "problemMatcher": []
       }
     ]
   }
