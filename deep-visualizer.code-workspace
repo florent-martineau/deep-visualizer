@@ -1,30 +1,27 @@
 {
-    "folders": [
-      {
-        "path": "."
-      },
-      {
-        "path": "api"
-      }
-    ],
-    "tasks": {
-      "version": "2.0.0",
-      "tasks": [
-		{
-			"label": "API Shell",
-			"type": "shell",
-			"command": "devbox shell",
-			"options": {
-				"cwd": "${workspaceFolder}/api"
-			},
-			"presentation": {
-				"echo": false,
-				"reveal": "always",
-				"focus": true,
-				"panel": "new"
-			},
-			"problemMatcher": []
-		}
-	]
+  "folders": [
+    {
+      "path": "."
     }
+  ],
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "API Shell",
+        "type": "shell",
+        "command": "devbox shell",
+        "options": {
+          "cwd": "${workspaceFolder}/api"
+        },
+        "presentation": {
+          "echo": false,
+          "reveal": "always",
+          "focus": true,
+          "panel": "new"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
 }
