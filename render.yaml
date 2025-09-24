@@ -1,3 +1,11 @@
+envVarGroups:
+  - name: betterstack
+    envVars:
+      - key: BETTERSTACK_TOKEN
+        sync: false
+      - key: BETTERSTACK_INGESTING_HOST
+        sync: false
+
 services:
   - type: web
     name: api
@@ -6,3 +14,8 @@ services:
     buildCommand: "uv sync"
     startCommand: "uv run uvicorn main:app --host 0.0.0.0 --port $PORT"
     rootDir: api/
+    envVars:
+      - key: ENVIRONMENT
+        value: "production"
+    envVarGroups:
+      - name: betterstack
