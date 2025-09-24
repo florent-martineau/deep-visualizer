@@ -1,11 +1,3 @@
-envVarGroups:
-  - name: betterstack
-    envVars:
-      - key: BETTERSTACK_TOKEN
-        sync: false
-      - key: BETTERSTACK_INGESTING_HOST
-        sync: false
-
 services:
   - type: web
     name: api
