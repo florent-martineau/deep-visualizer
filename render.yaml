@@ -9,5 +9,4 @@ services:
     envVars:
       - key: ENVIRONMENT
         value: "production"
-    envVarGroups:
-      - name: betterstack
+      - fromGroup: betterstack
