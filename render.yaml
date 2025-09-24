@@ -15,6 +15,6 @@ services:
     name: frontend
     env: node
     plan: free
-    buildCommand: "npm install && npm run build"
-    startCommand: "npm start"
+    buildCommand: "bun run build"
+    startCommand: "bun start"
     rootDir: front/
