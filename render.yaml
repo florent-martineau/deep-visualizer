@@ -9,7 +9,10 @@ services:
     envVars:
       - key: ENVIRONMENT
         value: "production"
-      - fromGroup: betterstack
+      - key: BETTERSTACK_TOKEN
+        sync: false
+      - key: BETTERSTACK_INGESTING_HOST
+        sync: false
 
   - type: web
     name: frontend
@@ -18,3 +21,14 @@ services:
     buildCommand: "bun i && bun run build"
     startCommand: "bun start"
     rootDir: front/
+    envVars:
+      - key: ENVIRONMENT
+        value: "production"
+      - key: BETTERSTACK_TOKEN
+        sync: false
+      - key: BETTERSTACK_INGESTING_HOST
+        sync: false
+      - key: VITE_BETTERSTACK_TOKEN
+        sync: false
+      - key: VITE_BETTERSTACK_INGESTING_HOST
+        sync: false
