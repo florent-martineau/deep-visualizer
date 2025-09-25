@@ -2,8 +2,10 @@ name: API
 
 on:
   pull_request:
+    paths: ["api/**"]
   push:
     branches: [main]
+    paths: ["api/**"]
 
 jobs:
   checks:
