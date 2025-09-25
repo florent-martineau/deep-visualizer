@@ -7,7 +7,7 @@ import z from "zod";
 const filePath = "todos.json";
 
 async function readTodos() {
-  return z.object({ id: z.number(), name: z.string() }).parse(
+  return z.array(z.object({ id: z.number(), name: z.string() })).parse(
     JSON.parse(
       await fs.promises.readFile(filePath, "utf-8").catch(() =>
         JSON.stringify(
