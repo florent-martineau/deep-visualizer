@@ -6,6 +6,10 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./front
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
