@@ -6,4 +6,4 @@
 
 You will need to:
 
-1. Install pre-commit hook: `pre-commit install`
+1. Install pre-commit hook: `uv run pre-commit install`
