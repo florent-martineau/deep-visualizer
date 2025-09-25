@@ -1,0 +1,21 @@
+name: Front
+
+on:
+  pull_request:
+    paths: ["front/**"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get bun version from devbox
+        id: bun-version
+        run: |
+          BUN_VERSION=$(jq -r '.packages[] | select(startswith("bun@")) | sub("bun@"; "")' ./front/devbox.json)
+          echo "version=$BUN_VERSION" >> $GITHUB_OUTPUT
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: ${{ steps.bun-version.outputs.version }}
