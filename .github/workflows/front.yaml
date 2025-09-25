@@ -2,7 +2,7 @@ name: Front
 
 on:
   pull_request:
-    paths: ["front/**"]
+    # paths: ["front/**"]
 
 jobs:
   build:
