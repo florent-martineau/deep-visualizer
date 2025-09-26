@@ -22,7 +22,7 @@ function SimpleForm() {
     validators: {
       onBlur: schema,
     },
-    onSubmit: ({ value }) => {
+    onSubmit: () => {
       clientLogger.info("Form submitted successfully");
       // Show success message
       alert("Form submitted successfully!");
