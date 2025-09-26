@@ -1,4 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
-  "packages": ["uv@0.8"]
+  "packages": ["uv@0.8"],
+  "shell": {
+    "init_hook": "export PS1='[devbox-api] $ '"
+  }
 }
