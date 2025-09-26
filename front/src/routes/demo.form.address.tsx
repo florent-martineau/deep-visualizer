@@ -33,8 +33,7 @@ function AddressForm() {
 				return errors;
 			},
 		},
-		onSubmit: ({ value }) => {
-			console.log(value);
+		onSubmit: () => {
 			// Show success message
 			alert("Form submitted successfully!");
 		},
