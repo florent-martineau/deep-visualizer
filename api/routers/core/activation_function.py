@@ -53,6 +53,8 @@ async def get_activation_function(
         },
     )
 
+    raise Exception("Error from API router")
+
     if not is_supported_activation(activation_function_name):
         raise HTTPException(
             status_code=404,

@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     environment: Environment
     betterstack_token: str
     betterstack_ingesting_host: str
+    sentry_dsn: str
 
 
 def settings(env_file: str = ".env"):
