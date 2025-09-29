@@ -39,6 +39,7 @@
 			"source.organizeImports.ruff": "always"
 		}
 	},
+	"python.terminal.activateEnvironment": false,
 	"python.analysis.typeCheckingMode": "strict",
 	"python.analysis.autoImportCompletions": true,
 	"python.analysis.inlayHints.pytestParameters": true,
