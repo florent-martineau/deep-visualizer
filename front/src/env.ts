@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const env = createEnv({
 	server: {
+		NODE_ENV: z.enum(["production", "development", "test"]),
 		SERVER_URL: z.string().url().optional(),
 		BETTERSTACK_TOKEN: z.string(),
 		BETTERSTACK_INGESTING_HOST: z.string(),
@@ -15,6 +16,8 @@ export const env = createEnv({
 	clientPrefix: "VITE_",
 
 	client: {
+		VITE_NODE_ENV: z.enum(["production", "development", "test"]),
+		VITE_SENTRY_DSN: z.string(),
 		VITE_APP_TITLE: z.string().min(1).optional(),
 		VITE_BETTERSTACK_TOKEN: z.string(),
 		VITE_BETTERSTACK_INGESTING_HOST: z.string(),
