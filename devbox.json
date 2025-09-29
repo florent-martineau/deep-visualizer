@@ -2,6 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": ["uv@0.8", "bun@1.2"],
   "shell": {
-    "init_hook": "export PS1='[devbox-root] $ '"
+    "init_hook": [
+      "export PS1='[devbox-root] $ '",
+      "set -a",
+      "[ -f .env ] && source .env",
+      "set +a"
+    ]
   }
 }
