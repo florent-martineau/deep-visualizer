@@ -1,9 +1,9 @@
 import sentry_sdk
 from fastapi import FastAPI
 
-from api.utils.env import settings
 from routers import access_token
 from routers.core import activation_function
+from utils.env import settings
 
 sentry_sdk.init(
     dsn=settings().sentry_dsn,
