@@ -1,8 +1,5 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
-import { clientLogger } from "./utils/logger.client";
-
-clientLogger.info("Foo");
 
 export const env = createEnv({
 	server: {
