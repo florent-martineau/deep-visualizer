@@ -7,6 +7,7 @@ export const env = createEnv({
 		SERVER_URL: z.string().url().optional(),
 		BETTERSTACK_TOKEN: z.string(),
 		BETTERSTACK_INGESTING_HOST: z.string(),
+		SENTRY_DSN: z.string(),
 	},
 
 	/**
