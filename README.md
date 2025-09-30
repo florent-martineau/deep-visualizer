@@ -4,6 +4,6 @@
 
 ## Contribute
 
-You will need to:
+### Pre-commit hook
 
-1. Install pre-commit hook: `uv run pre-commit install`
+In order to install the pre-commit hook, run: `uv run pre-commit install`
