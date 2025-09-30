@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from openapi_core import OpenAPI
+from openapi_core import OpenAPI  # type: ignore
 from pytest import MonkeyPatch
 
 from api.utils.open_api.generate_json_file import generate_openapi_json_file
