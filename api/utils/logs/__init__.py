@@ -1,6 +1,6 @@
 import logging
 
-from utils.logs.setup_logger import setup_logger
+from api.utils.logs.setup_logger import setup_logger
 
 logger: logging.Logger = setup_logger()
 

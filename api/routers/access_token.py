@@ -5,8 +5,8 @@ from huggingface_hub import HfApi
 from pydantic import BaseModel, Field
 from requests import HTTPError
 
-from constants import ACCESS_TOKEN_COOKIE_NAME
-from utils.logs import logger
+from api.constants import ACCESS_TOKEN_COOKIE_NAME
+from api.utils.logs import logger
 
 router = APIRouter()
 

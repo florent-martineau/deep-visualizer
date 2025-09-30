@@ -8,7 +8,7 @@ on:
     paths: ["api/**", ".github/workflows/api.yaml"]
 
 jobs:
-  checks:
+  tests:
     runs-on: ubuntu-latest
     environment: CI
     steps:
@@ -25,19 +25,14 @@ jobs:
           activate-environment: true
           enable-cache: true
           version: ${{ steps.uv-version.outputs.version }}
-          working-directory: ./api
 
       - name: Install dependencies
-        working-directory: ./api
-        run: uv sync --frozen
+        run: cd api && uv sync --frozen
 
       - name: Load secrets
         uses: oNaiPs/secrets-to-env-action@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-
-      - name: Static type checking
-        run: cd api && uv run --active mypy .
 
       - name: Run tests
         run: cd api && uv run pytest

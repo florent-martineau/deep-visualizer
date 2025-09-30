@@ -1,7 +1,7 @@
 import pytest
 from huggingface_hub import HfApi
 
-from core.supported_models import SUPPORTED_MODELS, SupportedModel
+from api.core.supported_models import SUPPORTED_MODELS, SupportedModel
 
 
 @pytest.mark.parametrize(

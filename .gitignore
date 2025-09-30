@@ -5,4 +5,23 @@ fastapi.log*
 .pytest_cache
 .ruff_cache
 
+# Python-generated files
+__pycache__
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Packages
+.venv
 node_modules
+
+# Testing
+.mypy_cache
+.coverage
+coverage.xml
+
+# Environment variables
+.env*
+!.env*.example
