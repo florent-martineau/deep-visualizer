@@ -3,8 +3,8 @@ from typing import get_args
 import logtail  # type:ignore
 import pytest
 
-from utils.env import Environment, settings
-from utils.logs.setup_logger import setup_logger
+from api.utils.env import Environment, settings
+from api.utils.logs.setup_logger import setup_logger
 
 
 def should_have_logtail_handler_in_production(monkeypatch: pytest.MonkeyPatch):

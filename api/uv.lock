@@ -33,7 +33,7 @@ wheels = [
 [[package]]
 name = "api"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "httpx" },
@@ -63,7 +63,7 @@ requires-dist = [
     { name = "logtail-python", specifier = "~=0.3" },
     { name = "pydantic-settings", specifier = "~=2.10" },
     { name = "python-dotenv", specifier = "~=1.1" },
-    { name = "sentry-sdk", extras = ["fastapi"], specifier = ">=2.35.1" },
+    { name = "sentry-sdk", extras = ["fastapi"], specifier = "~=2.35" },
     { name = "torch", specifier = "~=2.8" },
     { name = "transformers", specifier = "~=4.56" },
 ]

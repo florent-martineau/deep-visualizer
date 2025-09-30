@@ -1,6 +1,6 @@
 import pytest
 
-from core.activation_function import (
+from api.core.activation_function import (
     _ACTIVATION_FUNCTIONS_TUPLE,  # type: ignore[reportPrivateUsage]
     ACTIVATION_FUNCTIONS,
     SUPPORTED_ACTIVATION_FUNCTION_NAMES,
