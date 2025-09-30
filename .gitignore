@@ -5,7 +5,9 @@ fastapi.log*
 .pytest_cache
 .ruff_cache
 
-# Python-generated files
+# Generated files
+
+dist-ssr/
 __pycache__
 *.py[oc]
 build/
@@ -25,3 +27,18 @@ coverage.xml
 # Environment variables
 .env*
 !.env*.example
+
+
+.DS_Store
+*.local
+
+# Tanstack Start files
+.nitro
+.tanstack
+.output
+.vinxi
+
+# Demo Tanstack files
+todos.json
+mcp-todos.json
+count.txt
