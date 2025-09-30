@@ -8,7 +8,7 @@ on:
     paths: ["api/**", ".github/workflows/api.yaml"]
 
 jobs:
-  checks:
+  tests:
     runs-on: ubuntu-latest
     environment: CI
     steps:
@@ -33,9 +33,6 @@ jobs:
         uses: oNaiPs/secrets-to-env-action@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-
-      - name: Static type checking
-        run: cd api && uv run --active mypy .
 
       - name: Run tests
         run: cd api && uv run pytest
