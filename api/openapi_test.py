@@ -13,7 +13,7 @@ class OpenApiSpecTest:
         return OpenAPI.from_path(file_path)
 
     def should_be_up_to_date(self, openapi_file_spec: OpenAPI):
-        from main import app
+        from api.main import app
 
         class Schema(BaseModel):
             value: Mapping[Hashable, Any]
