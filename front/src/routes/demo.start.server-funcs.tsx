@@ -3,7 +3,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useCallback, useState } from "react";
 import z from "zod";
-import { serverLogger } from "@/utils/logger.server";
+import { logger } from "@/utils/logs";
 
 const filePath = "todos.json";
 
@@ -33,7 +33,7 @@ const addTodo = createServerFn({ method: "POST" })
 	.handler(async ({ data }) => {
 		const todos = await readTodos();
 		todos.push({ id: todos.length + 1, name: data });
-		serverLogger.info("Added todo");
+		logger().info("Added todo");
 		await fs.promises.writeFile(filePath, JSON.stringify(todos, null, 2));
 		return todos;
 	});
