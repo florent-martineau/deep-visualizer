@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Any, Hashable, Mapping
 
 import pytest
-from openapi_core import OpenAPI
+from openapi_core import OpenAPI  # type: ignore
 from pydantic import BaseModel
 
 
