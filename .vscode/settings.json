@@ -48,5 +48,6 @@
 	"python.testing.autoTestDiscoverOnSaveEnabled": true,
 	"python.analysis.diagnosticSeverityOverrides": {
 		"reportUnknownMemberType": "none"
-	}
+	},
+	"python.analysis.importFormat": "absolute"
 }
