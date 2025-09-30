@@ -3,6 +3,7 @@
   "packages": ["uv@0.8", "bun@1.2"],
   "shell": {
     "init_hook": [
+      "uv run pre-commit install",
       "export PS1='[devbox-root] $ '",
       "set -a",
       "[ -f .env ] && source .env",
