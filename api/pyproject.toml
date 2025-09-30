@@ -30,9 +30,6 @@ dev = [
 [tool.ruff]
 lint.select = ["E", "F", "I", "TID"]
 
-[tool.ruff.lint.isort]
-known-first-party = ["api"]
-
 [tool.pytest.ini_options]
 pythonpath = [
   "."
