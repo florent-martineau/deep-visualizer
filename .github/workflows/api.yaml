@@ -8,7 +8,7 @@ on:
     paths: ["api/**", ".github/workflows/api.yaml"]
 
 jobs:
-  checks:
+  tests:
     runs-on: ubuntu-latest
     environment: CI
     steps:
@@ -47,7 +47,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./api
 
-  checks:
+  type-checking:
     runs-on: ubuntu-latest
     environment: CI
     steps:
