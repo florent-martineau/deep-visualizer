@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-
-import { clientLogger } from "@/utils/logger.client";
+import { logger } from "@/utils/logs";
 import { useAppForm } from "../hooks/demo.form";
 
 export const Route = createFileRoute("/demo/form/simple")({
@@ -23,7 +22,7 @@ function SimpleForm() {
 			onBlur: schema,
 		},
 		onSubmit: () => {
-			clientLogger.info("Form submitted successfully");
+			logger().info("Form submitted successfully");
 			// Show success message
 			alert("Form submitted successfully!");
 		},
