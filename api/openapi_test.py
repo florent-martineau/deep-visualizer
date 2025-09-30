@@ -1,15 +1,16 @@
-from pathlib import Path
 from typing import Any, Hashable, Mapping
 
 import pytest
 from openapi_core import OpenAPI  # type: ignore
 from pydantic import BaseModel
 
+from api.constants import API_BASE_PATH, OPENAPI_JSON_FILE_NAME
+
 
 class OpenApiSpecTest:
     @pytest.fixture(scope="session")
     def openapi_file_spec(self) -> OpenAPI:
-        file_path = Path(__file__).parent / "openapi.json"
+        file_path = API_BASE_PATH / OPENAPI_JSON_FILE_NAME
         return OpenAPI.from_path(file_path)
 
     def should_be_up_to_date(self, openapi_file_spec: OpenAPI):
