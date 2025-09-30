@@ -40,7 +40,6 @@
 		}
 	},
 	"python.envFile": "${workspaceFolder}/api/.env",
-	// "python.testing.pytestArgs": ["--rootDir", "api"],
 	"python.analysis.extraPaths": ["${workspaceFolder}/api"],
 	"python.autoComplete.extraPaths": ["${workspaceFolder}/api"],
 	"python.terminal.activateEnvironment": false,
