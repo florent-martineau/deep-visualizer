@@ -40,8 +40,6 @@
 		}
 	},
 	"python.envFile": "${workspaceFolder}/api/.env",
-	"python.analysis.extraPaths": ["${workspaceFolder}/api"],
-	"python.autoComplete.extraPaths": ["${workspaceFolder}/api"],
 	"python.terminal.activateEnvironment": false,
 	"python.analysis.typeCheckingMode": "strict",
 	"python.analysis.autoImportCompletions": true,
@@ -50,5 +48,6 @@
 	"python.testing.autoTestDiscoverOnSaveEnabled": true,
 	"python.analysis.diagnosticSeverityOverrides": {
 		"reportUnknownMemberType": "none"
-	}
+	},
+	"python.analysis.importFormat": "absolute"
 }
