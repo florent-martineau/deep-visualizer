@@ -19,6 +19,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mypy~=1.17",
+    "openapi-core~=0.19",
     "pre-commit~=4.3",
     "pydantic~=2.11",
     "pytest~=8.4",
