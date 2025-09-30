@@ -1,0 +1,264 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/access-token": {
+            "post": {
+                "summary": "Post Access Token",
+                "description": "Stores HF Hub User Access Token as an httpOnly secure cookie.",
+                "operationId": "post_access_token_access_token_post",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "X-Access-Token"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Access Token",
+                "description": "Deletes the HF Hub User Access Token stored as an httpOnly secure cookie.",
+                "operationId": "delete_access_token_access_token_delete",
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get Access Token",
+                "description": "Checks whether the user has an HF Hub User Access Token stored as an httpOnly cookie, or not. It does **NOT** check the validity of this token. Validity is checked when setting up the cookie, and can be verified when the token is used.",
+                "operationId": "get_access_token_access_token_get",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "cookie",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Optional HF Hub User Access Token",
+                            "title": "Access Token"
+                        },
+                        "description": "Optional HF Hub User Access Token"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/activation-function/{activation_function_name}": {
+            "get": {
+                "summary": "Get Activation Function",
+                "description": "This function takes as input a range (min, max) and a step. For each value in this interval, it will apply the activation function, and return all the associated activations. This allows you to plot the activation function.",
+                "operationId": "get_activation_function_activation_function__activation_function_name__get",
+                "parameters": [
+                    {
+                        "name": "activation_function_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the activation function",
+                            "examples": [
+                                "gelu",
+                                "gelu_new",
+                                "silu"
+                            ],
+                            "title": "Activation Function Name"
+                        },
+                        "description": "Name of the activation function"
+                    },
+                    {
+                        "name": "min",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "description": "Minimum value to generate activations from.",
+                            "title": "Min"
+                        },
+                        "description": "Minimum value to generate activations from."
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "description": "Maximum value to generate activations from.",
+                            "title": "Max"
+                        },
+                        "description": "Maximum value to generate activations from."
+                    },
+                    {
+                        "name": "step",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "description": "Step between each input value. For instance, a step of 0.1 would generate activations for inputs -1.0, -0.9, ...",
+                            "title": "Step"
+                        },
+                        "description": "Step between each input value. For instance, a step of 0.1 would generate activations for inputs -1.0, -0.9, ..."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivationFunctionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ActivationFunctionResponse": {
+                "properties": {
+                    "activations": {
+                        "items": {
+                            "$ref": "#/components/schemas/ActivationInputOutputPair"
+                        },
+                        "type": "array",
+                        "title": "Activations"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "activations"
+                ],
+                "title": "ActivationFunctionResponse"
+            },
+            "ActivationInputOutputPair": {
+                "properties": {
+                    "pre_activation": {
+                        "type": "number",
+                        "title": "Pre Activation",
+                        "description": "Input to an activation function"
+                    },
+                    "activation": {
+                        "type": "number",
+                        "title": "Activation",
+                        "description": "Output of an activation function"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "pre_activation",
+                    "activation"
+                ],
+                "title": "ActivationInputOutputPair",
+                "description": "Represents the output of an activation function given a particular input.\n\nMore details: [here](https://stats.stackexchange.com/a/391685)"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}
