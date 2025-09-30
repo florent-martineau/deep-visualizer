@@ -25,11 +25,9 @@ jobs:
           activate-environment: true
           enable-cache: true
           version: ${{ steps.uv-version.outputs.version }}
-          working-directory: ./api
 
       - name: Install dependencies
-        working-directory: ./api
-        run: uv sync --frozen
+        run: uv sync ./api
 
       - name: Load secrets
         uses: oNaiPs/secrets-to-env-action@v1
