@@ -7,5 +7,3 @@
 ### Pre-commit hook
 
 In order to install the pre-commit hook, run: `uv run pre-commit install`
-
-Do stuff
