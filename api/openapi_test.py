@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from typing import Any, Hashable, Mapping
 
@@ -17,6 +18,9 @@ class OpenApiSpecTest:
 
         class Schema(BaseModel):
             value: Mapping[Hashable, Any]
+
+        with open(Path(__file__).parent / "openapi.json", "w") as file:
+            json.dump(app.openapi(), file, indent=4)
 
         parsed_spec_from_code = Schema.model_validate(app.openapi())
         spec_from_code = OpenAPI.from_dict(parsed_spec_from_code.value)

@@ -4,9 +4,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from constants import ACCESS_TOKEN_COOKIE_HEADER, ACCESS_TOKEN_COOKIE_NAME
-from main import app
-from utils.env import test_settings
+from api.constants import ACCESS_TOKEN_COOKIE_HEADER, ACCESS_TOKEN_COOKIE_NAME
+from api.main import app
+from api.utils.env import test_settings
 
 
 class PostAccessTokenTest:
@@ -61,7 +61,7 @@ class PostAccessTokenTest:
         # TODO: assert response.json().reason == "requires-access-to-gated-repositories"
         assert access_token_cookie is None
 
-    @patch("routers.access_token.HfApi")
+    @patch("api.routers.access_token.HfApi")
     def should_return_500_if_an_unexpected_hugginface_whoami_error_occurs(
         self, mock_hf_api: MagicMock
     ):

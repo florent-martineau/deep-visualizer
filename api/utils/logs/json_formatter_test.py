@@ -6,13 +6,13 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from utils.logs import logger
-from utils.logs.json_formatter import JsonFormatter
+from api.utils.logs import logger
+from api.utils.logs.json_formatter import JsonFormatter
 
 LEVELS = logging.getLevelNamesMapping().values()
 
 
-@patch("utils.logs.json_formatter.datetime")
+@patch("api.utils.logs.json_formatter.datetime")
 @pytest.mark.parametrize(
     "level", LEVELS, ids=map(lambda level: logging.getLevelName(level), LEVELS)
 )

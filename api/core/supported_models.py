@@ -2,7 +2,7 @@ from typing import Final, List
 
 from pydantic import BaseModel, Field
 
-from core.activation_function import ACTIVATION_FUNCTIONS, ActivationFunction
+from api.core.activation_function import ACTIVATION_FUNCTIONS, ActivationFunction
 
 
 class SupportedModel(BaseModel):

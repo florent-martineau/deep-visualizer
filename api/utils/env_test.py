@@ -1,8 +1,11 @@
 import os
+from pathlib import Path
 
 import pytest
 
-from utils.env import Settings, TestSettings, settings, test_settings
+from api.utils.env import Settings, TestSettings, settings, test_settings
+
+apiPath = Path(__file__).parent.parent
 
 
 class SettingsTest:
@@ -16,9 +19,9 @@ class SettingsTest:
         # Pydantic validation should throw if a wrong env file is provided,
         # since it cannot fallback on environment variables
         with pytest.raises(ValueError):
-            settings(".env.doesnotexist")
+            settings(str(apiPath / ".env.doesnotexist"))
 
-        assert isinstance(settings(".env.example"), Settings)
+        assert isinstance(settings(str(apiPath / ".env.example")), Settings)
 
 
 class TestSettingsTest:
@@ -32,6 +35,9 @@ class TestSettingsTest:
         # Pydantic validation should throw if a wrong env file is provided,
         # since it cannot fallback on environment variables
         with pytest.raises(ValueError):
-            test_settings(".env.test.doesnotexist")
+            test_settings(str(apiPath / ".env.test.doesnotexist"))
 
-        assert isinstance(test_settings(".env.test.example"), TestSettings)
+        assert isinstance(
+            test_settings(str(apiPath / ".env.test.example")),
+            TestSettings,
+        )

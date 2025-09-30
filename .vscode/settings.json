@@ -39,6 +39,7 @@
 			"source.organizeImports.ruff": "always"
 		}
 	},
+	"python.envFile": "${workspaceFolder}/api/.env",
 	"python.analysis.extraPaths": ["${workspaceFolder}/api"],
 	"python.autoComplete.extraPaths": ["${workspaceFolder}/api"],
 	"python.terminal.activateEnvironment": false,

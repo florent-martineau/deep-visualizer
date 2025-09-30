@@ -3,7 +3,7 @@ from logging.config import dictConfig
 
 import logtail  # type: ignore
 
-from utils.env import settings
+from api.utils.env import settings
 
 from .json_formatter import JsonFormatter
 

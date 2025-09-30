@@ -5,4 +5,40 @@ fastapi.log*
 .pytest_cache
 .ruff_cache
 
+# Generated files
+
+dist-ssr/
+__pycache__
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Packages
+.venv
 node_modules
+
+# Testing
+.mypy_cache
+.coverage
+coverage.xml
+
+# Environment variables
+.env*
+!.env*.example
+
+
+.DS_Store
+*.local
+
+# Tanstack Start files
+.nitro
+.tanstack
+.output
+.vinxi
+
+# Demo Tanstack files
+todos.json
+mcp-todos.json
+count.txt

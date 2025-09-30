@@ -2,18 +2,17 @@ from typing import Dict, List
 
 import pytest
 import torch
-from fastapi.testclient import TestClient
-
-from core.activation_function import (
+from api.core.activation_function import (
     ACTIVATION_FUNCTIONS,
     SUPPORTED_ACTIVATION_FUNCTION_NAMES,
     ActivationFunction,
 )
-from main import app
-from routers.core.activation_function import (
+from api.main import app
+from api.routers.core.activation_function import (
     ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE,
     ActivationFunctionResponse,
 )
+from fastapi.testclient import TestClient
 
 
 def _make_request(
