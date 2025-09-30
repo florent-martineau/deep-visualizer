@@ -1,6 +1,8 @@
 from pathlib import Path
 
+import pytest
 from openapi_core import OpenAPI  # type: ignore
+from openapi_core.exceptions import OpenAPIError
 from pytest import MonkeyPatch
 
 from api.utils.open_api.generate_json_file import generate_openapi_json_file
@@ -26,5 +28,8 @@ class GenerateOpenApiJsonFileTest:
         generate_openapi_json_file(file_name)
         assert path.exists(), "OpenAPI JSON file should exist"
 
-        spec = OpenAPI.from_path(path)
-        assert spec.check_spec() is None, "Spec should be valid"
+        with pytest.raises(OpenAPIError):
+            OpenAPI.from_dict({"invalid": "spec"}).check_spec()
+
+        # This would throw if the OpenAPI spec was invalid
+        OpenAPI.from_path(path).check_spec()
