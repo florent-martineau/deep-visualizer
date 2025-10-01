@@ -8,6 +8,8 @@ services:
     envVars:
       - key: ENVIRONMENT
         value: "production"
+      - key: PYTHON_VERSION
+        value: "3.11.13"
       - key: BETTERSTACK_TOKEN
         sync: false
       - key: BETTERSTACK_INGESTING_HOST
