@@ -5,6 +5,7 @@ from openapi_core import OpenAPI  # type: ignore
 from openapi_core.exceptions import OpenAPIError
 from pytest import MonkeyPatch
 
+from api.main import app
 from api.utils.open_api.generate_json_file import generate_openapi_json_file
 
 
@@ -25,7 +26,7 @@ class GenerateOpenApiJsonFileTest:
         path = tmp_path / file_name
         assert not path.exists(), "Test file should not exist already"
 
-        generate_openapi_json_file(file_name)
+        generate_openapi_json_file(app, file_name)
         assert path.exists(), "OpenAPI JSON file should exist"
 
         with pytest.raises(OpenAPIError):
