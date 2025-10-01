@@ -3,6 +3,7 @@ services:
     name: api
     env: python
     plan: free
+    region: frankfurt
     buildCommand: "uv sync && cd api && uv sync"
     startCommand: "uv run --active uvicorn api.main:app --host 0.0.0.0 --port $PORT"
     envVars:
@@ -19,6 +20,7 @@ services:
     name: frontend
     env: node
     plan: free
+    region: frankfurt
     buildCommand: "bun i && bun run build"
     startCommand: "bun start"
     rootDir: front/
