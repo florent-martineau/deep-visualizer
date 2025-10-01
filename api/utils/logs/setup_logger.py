@@ -47,8 +47,8 @@ def setup_logger():
 
     if settings().environment == "production":
         logtailHandler = logtail.LogtailHandler(
-            source_token=settings().betterstack_token,
-            host=settings().betterstack_ingesting_host,
+            source_token=settings().api_betterstack_token,
+            host=settings().api_betterstack_ingesting_host,
         )
         logger.addHandler(logtailHandler)
 
