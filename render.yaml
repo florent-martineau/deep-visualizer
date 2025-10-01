@@ -12,6 +12,8 @@ services:
         sync: false
       - key: BETTERSTACK_INGESTING_HOST
         sync: false
+      - key: SENTRY_DSN
+        sync: false
 
   - type: web
     name: frontend
