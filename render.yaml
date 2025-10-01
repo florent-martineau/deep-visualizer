@@ -1,3 +1,11 @@
+envVarGroups:
+  - name: betterstack
+  - name: sentry
+  - name: environment
+    envVars:
+      - key: ENVIRONMENT
+        value: "production"
+
 services:
   - type: web
     name: api
@@ -7,14 +15,9 @@ services:
     buildCommand: "uv sync && cd api && uv sync"
     startCommand: "uv run --active uvicorn api.main:app --host 0.0.0.0 --port $PORT"
     envVars:
-      - key: ENVIRONMENT
-        value: "production"
-      - key: BETTERSTACK_TOKEN
-        sync: false
-      - key: BETTERSTACK_INGESTING_HOST
-        sync: false
-      - key: SENTRY_DSN
-        sync: false
+      - fromGroup: environment
+      - fromGroup: betterstack
+      - fromGroup: sentry
 
   - type: web
     name: frontend
@@ -25,13 +28,6 @@ services:
     startCommand: "bun start"
     rootDir: front/
     envVars:
-      - key: ENVIRONMENT
-        value: "production"
-      - key: BETTERSTACK_TOKEN
-        sync: false
-      - key: BETTERSTACK_INGESTING_HOST
-        sync: false
-      - key: VITE_BETTERSTACK_TOKEN
-        sync: false
-      - key: VITE_BETTERSTACK_INGESTING_HOST
-        sync: false
+      - fromGroup: environment
+      - fromGroup: betterstack
+      - fromGroup: sentry
