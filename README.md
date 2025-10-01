@@ -10,11 +10,7 @@ The API exports an OpenAPI specification in a json file ([api/openapi.json](api/
 
 This OpenAPI spec is used by [Orval](https://orval.dev/) to generate types, hooks and more, automatically. Generated files can be found in [front/src/openapi.ts](front/src/openapi.ts).
 
-The command to generate files:
-
-```
-To generate files: `bun run orval --input api/openapi.json --output front/src/openapi.ts`
-```
+To generate files, run: `bun run orval --input api/openapi.json --output front/src/openapi.ts`
 
 ## Contribute
 
