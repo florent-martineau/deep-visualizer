@@ -10,8 +10,8 @@ Environment = Literal["production", "development"]
 
 class Settings(BaseSettings):
     environment: Environment
-    betterstack_token: str
-    betterstack_ingesting_host: str
+    api_betterstack_token: str
+    api_betterstack_ingesting_host: str
     sentry_dsn: str
 
 
