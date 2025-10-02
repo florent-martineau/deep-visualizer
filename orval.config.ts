@@ -7,6 +7,7 @@ export const getOrvalConfig: (target: string) => Config = (target) => ({
     output: {
       target,
       client: 'react-query',
+      baseUrl: 'http://localhost:8000'
     },
   },
 })

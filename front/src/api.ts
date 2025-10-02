@@ -85,7 +85,7 @@ export const postAccessTokenAccessTokenPost = (
     
     
     return axios.default.post(
-      `/access-token`,undefined,options
+      `http://localhost:8000/access-token`,undefined,options
     );
   }
 
@@ -147,7 +147,7 @@ export const deleteAccessTokenAccessTokenDelete = (
     
     
     return axios.default.delete(
-      `/access-token`,options
+      `http://localhost:8000/access-token`,options
     );
   }
 
@@ -209,13 +209,13 @@ export const getAccessTokenAccessTokenGet = (
     
     
     return axios.default.get(
-      `/access-token`,options
+      `http://localhost:8000/access-token`,options
     );
   }
 
 
 export const getGetAccessTokenAccessTokenGetQueryKey = () => {
-    return [`/access-token`] as const;
+    return [`http://localhost:8000/access-token`] as const;
     }
 
     
@@ -273,7 +273,7 @@ export const getActivationFunctionActivationFunctionActivationFunctionNameGet = 
     
     
     return axios.default.get(
-      `/activation-function/${activationFunctionName}`,{
+      `http://localhost:8000/activation-function/${activationFunctionName}`,{
     ...options,
         params: {...params, ...options?.params},}
     );
@@ -282,7 +282,7 @@ export const getActivationFunctionActivationFunctionActivationFunctionNameGet = 
 
 export const getGetActivationFunctionActivationFunctionActivationFunctionNameGetQueryKey = (activationFunctionName?: string,
     params?: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams,) => {
-    return [`/activation-function/${activationFunctionName}`, ...(params ? [params]: [])] as const;
+    return [`http://localhost:8000/activation-function/${activationFunctionName}`, ...(params ? [params]: [])] as const;
     }
 
     
