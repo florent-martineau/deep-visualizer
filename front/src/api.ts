@@ -16,7 +16,7 @@ import type {
 } from "@tanstack/react-query";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import axios from "axios";
+import * as axios from "axios";
 
 export interface ActivationFunctionResponse {
 	activations: ActivationInputOutputPair[];
@@ -73,7 +73,7 @@ type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 export const postAccessTokenAccessTokenPost = (
 	options?: AxiosRequestConfig,
 ): Promise<AxiosResponse<unknown>> => {
-	return axios.post(`/access-token`, undefined, options);
+	return axios.default.post(`/access-token`, undefined, options);
 };
 
 export const getPostAccessTokenAccessTokenPostMutationOptions = <
@@ -152,7 +152,7 @@ export const usePostAccessTokenAccessTokenPost = <
 export const deleteAccessTokenAccessTokenDelete = (
 	options?: AxiosRequestConfig,
 ): Promise<AxiosResponse<void>> => {
-	return axios.delete(`/access-token`, options);
+	return axios.default.delete(`/access-token`, options);
 };
 
 export const getDeleteAccessTokenAccessTokenDeleteMutationOptions = <
@@ -231,7 +231,7 @@ export const useDeleteAccessTokenAccessTokenDelete = <
 export const getAccessTokenAccessTokenGet = (
 	options?: AxiosRequestConfig,
 ): Promise<AxiosResponse<void>> => {
-	return axios.get(`/access-token`, options);
+	return axios.default.get(`/access-token`, options);
 };
 
 export const getGetAccessTokenAccessTokenGetQueryKey = () => {
@@ -307,7 +307,7 @@ export const getActivationFunctionActivationFunctionActivationFunctionNameGet =
 		params: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams,
 		options?: AxiosRequestConfig,
 	): Promise<AxiosResponse<ActivationFunctionResponse>> => {
-		return axios.get(`/activation-function/${activationFunctionName}`, {
+		return axios.default.get(`/activation-function/${activationFunctionName}`, {
 			...options,
 			params: { ...params, ...options?.params },
 		});

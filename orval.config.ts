@@ -1,5 +1,5 @@
 import { Config, defineConfig } from 'orval';
-import { FRONT_OPENAPI_GENERATED_FILE_PATH } from 'shared/constants';
+import { FRONT_OPENAPI_GENERATED_FILE_PATH } from './shared/constants';
 
 export const getOrvalConfig: (target: string) => Config = (target) => ({
   'openapi': {
