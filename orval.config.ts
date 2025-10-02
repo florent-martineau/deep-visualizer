@@ -1,11 +1,14 @@
-import { defineConfig } from 'orval';
+import { Config, defineConfig } from 'orval';
+import { FRONT_OPENAPI_GENERATED_FILE_PATH } from './shared/constants';
 
-export default defineConfig({
+export const getOrvalConfig: (target: string) => Config = (target) => ({
   'openapi': {
     input: 'api/openapi.json',
     output: {
-      target: 'front/src/api.ts',
+      target,
       client: 'react-query',
     },
   },
 })
+
+export default defineConfig(getOrvalConfig(FRONT_OPENAPI_GENERATED_FILE_PATH))

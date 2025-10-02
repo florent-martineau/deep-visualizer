@@ -2,10 +2,15 @@
   "name": "root",
   "private": true,
   "type": "module",
-  "scripts": {},
-  "dependencies": {},
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "vite-tsconfig-paths": "^5.1.4"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
-    "orval": "^7.13.0"
+    "orval": "^7.13.0",
+    "vitest": "^3.2.4"
   }
 }

@@ -12,7 +12,8 @@
 			"**/.vscode/**/*",
 			"**/front/index.html",
 			"**/front/vite.config.js",
-			"!**/front/src/routeTree.gen.ts"
+			"!**/front/src/routeTree.gen.ts",
+			"!**/front/src/api.ts"
 		]
 	},
 	"formatter": {
