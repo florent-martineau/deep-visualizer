@@ -15,3 +15,11 @@ repos:
 
       - id: ruff-format
         files: ^api/.*\.py$
+
+  - repo: local
+    hooks:
+      - id: generate-openapi-ts
+        name: Generate OpenAPI typescript files
+        entry: bun run orval
+        language: system
+        files: api/openapi.json
