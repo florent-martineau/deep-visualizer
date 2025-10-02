@@ -22,4 +22,5 @@ repos:
         name: Generate OpenAPI typescript files
         entry: bun run orval
         language: system
+        pass_filenames: false
         files: api/openapi.json
