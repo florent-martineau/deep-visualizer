@@ -6,7 +6,6 @@ export default defineConfig({
     output: {
       target: 'front/src/api.ts',
       client: 'react-query',
-      mock: true,
     },
   },
 })

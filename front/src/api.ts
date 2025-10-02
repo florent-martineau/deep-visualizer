@@ -5,7 +5,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-import { faker } from "@faker-js/faker";
 import type {
 	MutationFunction,
 	QueryFunction,
@@ -18,8 +17,6 @@ import type {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
-import type { RequestHandlerOptions } from "msw";
-import { delay, HttpResponse, http } from "msw";
 
 export interface ActivationFunctionResponse {
 	activations: ActivationInputOutputPair[];
@@ -442,123 +439,3 @@ export function useGetActivationFunctionActivationFunctionActivationFunctionName
 
 	return query;
 }
-
-export const getGetActivationFunctionActivationFunctionActivationFunctionNameGetResponseMock =
-	(
-		overrideResponse: Partial<ActivationFunctionResponse> = {},
-	): ActivationFunctionResponse => ({
-		activations: Array.from(
-			{ length: faker.number.int({ min: 1, max: 10 }) },
-			(_, i) => i + 1,
-		).map(() => ({
-			pre_activation: faker.number.float({
-				min: undefined,
-				max: undefined,
-				fractionDigits: 2,
-			}),
-			activation: faker.number.float({
-				min: undefined,
-				max: undefined,
-				fractionDigits: 2,
-			}),
-		})),
-		...overrideResponse,
-	});
-
-export const getPostAccessTokenAccessTokenPostMockHandler = (
-	overrideResponse?:
-		| unknown
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<unknown> | unknown),
-	options?: RequestHandlerOptions,
-) => {
-	return http.post(
-		"*/access-token",
-		async (info) => {
-			await delay(1000);
-			if (typeof overrideResponse === "function") {
-				await overrideResponse(info);
-			}
-			return new HttpResponse(null, { status: 200 });
-		},
-		options,
-	);
-};
-
-export const getDeleteAccessTokenAccessTokenDeleteMockHandler = (
-	overrideResponse?:
-		| void
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<void> | void),
-	options?: RequestHandlerOptions,
-) => {
-	return http.delete(
-		"*/access-token",
-		async (info) => {
-			await delay(1000);
-			if (typeof overrideResponse === "function") {
-				await overrideResponse(info);
-			}
-			return new HttpResponse(null, { status: 204 });
-		},
-		options,
-	);
-};
-
-export const getGetAccessTokenAccessTokenGetMockHandler = (
-	overrideResponse?:
-		| void
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<void> | void),
-	options?: RequestHandlerOptions,
-) => {
-	return http.get(
-		"*/access-token",
-		async (info) => {
-			await delay(1000);
-			if (typeof overrideResponse === "function") {
-				await overrideResponse(info);
-			}
-			return new HttpResponse(null, { status: 204 });
-		},
-		options,
-	);
-};
-
-export const getGetActivationFunctionActivationFunctionActivationFunctionNameGetMockHandler =
-	(
-		overrideResponse?:
-			| ActivationFunctionResponse
-			| ((
-					info: Parameters<Parameters<typeof http.get>[1]>[0],
-			  ) => Promise<ActivationFunctionResponse> | ActivationFunctionResponse),
-		options?: RequestHandlerOptions,
-	) => {
-		return http.get(
-			"*/activation-function/:activationFunctionName",
-			async (info) => {
-				await delay(1000);
-
-				return new HttpResponse(
-					JSON.stringify(
-						overrideResponse !== undefined
-							? typeof overrideResponse === "function"
-								? await overrideResponse(info)
-								: overrideResponse
-							: getGetActivationFunctionActivationFunctionActivationFunctionNameGetResponseMock(),
-					),
-					{ status: 200, headers: { "Content-Type": "application/json" } },
-				);
-			},
-			options,
-		);
-	};
-export const getFastAPIMock = () => [
-	getPostAccessTokenAccessTokenPostMockHandler(),
-	getDeleteAccessTokenAccessTokenDeleteMockHandler(),
-	getGetAccessTokenAccessTokenGetMockHandler(),
-	getGetActivationFunctionActivationFunctionActivationFunctionNameGetMockHandler(),
-];
