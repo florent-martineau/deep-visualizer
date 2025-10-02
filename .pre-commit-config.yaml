@@ -18,7 +18,7 @@ repos:
 
   - repo: local
     hooks:
-      - id: generate-openapi-ts
+      - id: generate-openapi-ts-files
         name: Generate OpenAPI typescript files
         entry: bun run orval
         language: system
