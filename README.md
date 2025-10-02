@@ -2,6 +2,16 @@
 
 [![codecov](https://codecov.io/gh/florent-martineau/deep-visualizer/branch/main/graph/badge.svg)](https://codecov.io/gh/florent-martineau/deep-visualizer)
 
+## Codebase
+
+### OpenAPI
+
+The API exports an OpenAPI specification in a json file ([api/openapi.json](api/openapi.json)).
+
+This OpenAPI spec is used by [Orval](https://orval.dev/) to generate types, hooks and more, automatically. Generated files can be found in [front/src/api.ts](front/src/api.ts).
+
+To generate files, run: `bun run orval`
+
 ## Contribute
 
 ### Pre-commit hook
