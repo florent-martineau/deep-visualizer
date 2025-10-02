@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ActivationFunctionRouteImport } from './routes/activation-function'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo.table'
@@ -21,6 +22,11 @@ import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api
 import { Route as DemoFormSimpleRouteImport } from './routes/demo.form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo.form.address'
 
+const ActivationFunctionRoute = ActivationFunctionRouteImport.update({
+  id: '/activation-function',
+  path: '/activation-function',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -79,6 +85,7 @@ const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activation-function': typeof ActivationFunctionRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activation-function': typeof ActivationFunctionRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -106,6 +114,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activation-function': typeof ActivationFunctionRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/activation-function'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -134,6 +144,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/activation-function'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/activation-function'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -161,6 +173,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivationFunctionRoute: typeof ActivationFunctionRoute
   ApiDemoNamesRoute: typeof ApiDemoNamesRoute
   ApiDemoTqTodosRoute: typeof ApiDemoTqTodosRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
@@ -175,6 +188,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/activation-function': {
+      id: '/activation-function'
+      path: '/activation-function'
+      fullPath: '/activation-function'
+      preLoaderRoute: typeof ActivationFunctionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -257,6 +277,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivationFunctionRoute: ActivationFunctionRoute,
   ApiDemoNamesRoute: ApiDemoNamesRoute,
   ApiDemoTqTodosRoute: ApiDemoTqTodosRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,

@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 import sentry_sdk
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers import access_token
 from api.routers.core import activation_function
@@ -30,3 +31,17 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(access_token.router)
 app.include_router(activation_function.router)
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
