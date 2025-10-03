@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useGetActivationFunctionActivationFunctionActivationFunctionNameGet } from "@/api";
+import { useGetActivationFunctionApiActivationFunctionActivationFunctionNameGet } from "@/api";
 
 export const Route = createFileRoute("/activation-function")({
 	component: ActivationFunction,
@@ -7,7 +7,7 @@ export const Route = createFileRoute("/activation-function")({
 
 function ActivationFunction() {
 	const { data } =
-		useGetActivationFunctionActivationFunctionActivationFunctionNameGet(
+		useGetActivationFunctionApiActivationFunctionActivationFunctionNameGet(
 			"gelu",
 			{ min: -1, max: 1, step: 0.5 },
 		);

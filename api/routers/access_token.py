@@ -1,14 +1,15 @@
 from typing import Literal, Optional
 
-from fastapi import APIRouter, Cookie, Header, HTTPException, Response
+from fastapi import Cookie, Header, HTTPException, Response
 from huggingface_hub import HfApi
 from pydantic import BaseModel, Field
 from requests import HTTPError
 
 from api.constants import ACCESS_TOKEN_COOKIE_NAME
 from api.utils.logs import logger
+from api.utils.routers.router import getApiRouter
 
-router = APIRouter()
+router = getApiRouter(prefix="/access-token")
 
 
 class WhoAmIResponse(BaseModel):
@@ -34,7 +35,7 @@ class WhoAmIResponse(BaseModel):
 
 
 @router.post(
-    "/access-token",
+    path="",
     description="Stores HF Hub User Access Token as an httpOnly secure cookie.",
 )
 async def post_access_token(response: Response, x_access_token: str = Header()):
@@ -100,7 +101,7 @@ async def post_access_token(response: Response, x_access_token: str = Header()):
 
 
 @router.delete(
-    "/access-token",
+    path="",
     description="Deletes the HF Hub User Access Token "
     "stored as an httpOnly secure cookie.",
     status_code=204,
@@ -113,7 +114,7 @@ async def delete_access_token(response: Response):
 
 
 @router.get(
-    "/access-token",
+    path="",
     description="Checks whether the user has an HF Hub User Access Token "
     "stored as an httpOnly cookie, or not. It does **NOT** check the validity of "
     "this token. Validity is checked when setting up the cookie, and can be verified "

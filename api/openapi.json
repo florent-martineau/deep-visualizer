@@ -5,11 +5,11 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/access-token": {
+    "/api/access-token": {
       "post": {
         "summary": "Post Access Token",
         "description": "Stores HF Hub User Access Token as an httpOnly secure cookie.",
-        "operationId": "post_access_token_access_token_post",
+        "operationId": "post_access_token_api_access_token_post",
         "parameters": [
           {
             "name": "x-access-token",
@@ -45,7 +45,7 @@
       "delete": {
         "summary": "Delete Access Token",
         "description": "Deletes the HF Hub User Access Token stored as an httpOnly secure cookie.",
-        "operationId": "delete_access_token_access_token_delete",
+        "operationId": "delete_access_token_api_access_token_delete",
         "responses": {
           "204": {
             "description": "Successful Response"
@@ -55,7 +55,7 @@
       "get": {
         "summary": "Get Access Token",
         "description": "Checks whether the user has an HF Hub User Access Token stored as an httpOnly cookie, or not. It does **NOT** check the validity of this token. Validity is checked when setting up the cookie, and can be verified when the token is used.",
-        "operationId": "get_access_token_access_token_get",
+        "operationId": "get_access_token_api_access_token_get",
         "parameters": [
           {
             "name": "access_token",
@@ -93,11 +93,11 @@
         }
       }
     },
-    "/activation-function/{activation_function_name}": {
+    "/api/activation-function/{activation_function_name}": {
       "get": {
         "summary": "Get Activation Function",
         "description": "This function takes as input a range (min, max) and a step. For each value in this interval, it will apply the activation function, and return all the associated activations. This allows you to plot the activation function.",
-        "operationId": "get_activation_function_activation_function__activation_function_name__get",
+        "operationId": "get_activation_function_api_activation_function__activation_function_name__get",
         "parameters": [
           {
             "name": "activation_function_name",
