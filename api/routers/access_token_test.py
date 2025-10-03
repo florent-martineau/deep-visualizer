@@ -12,7 +12,7 @@ from api.utils.env import test_settings
 class PostAccessTokenTest:
     def _make_post_request(self, token: str | None):
         headers = {ACCESS_TOKEN_COOKIE_HEADER: token} if token else {}
-        response = TestClient(app).post("/access-token", headers=headers)
+        response = TestClient(app).post("/api/access-token", headers=headers)
 
         if "Set-Cookie" in response.headers:
             cookie = SimpleCookie()
@@ -85,7 +85,7 @@ class DeleteAccessTokenTest:
                 ACCESS_TOKEN_COOKIE_NAME, test_settings().hf_access_token_fine_grained
             )
 
-        response = client.delete("/access-token")
+        response = client.delete("/api/access-token")
         return response
 
     @pytest.mark.parametrize(
@@ -117,7 +117,7 @@ class GetAccessTokenTest:
                 ACCESS_TOKEN_COOKIE_NAME, test_settings().hf_access_token_fine_grained
             )
 
-        response = client.get("/access-token")
+        response = client.get("/api/access-token")
         return response
 
     def should_return_204_if_cookie_is_present(self):

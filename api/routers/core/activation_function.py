@@ -7,10 +7,11 @@ from api.core.activation_function import (
     is_supported_activation,
 )
 from api.utils.logs import logger
-from fastapi import APIRouter, HTTPException, Path, Query
+from api.utils.routers.router import getApiRouter
+from fastapi import HTTPException, Path, Query
 from pydantic import BaseModel
 
-router = APIRouter()
+router = getApiRouter("/activation-function")
 
 # Maximum number of activations to be computed by the activation function route
 ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE = 10_000
@@ -21,7 +22,7 @@ class ActivationFunctionResponse(BaseModel):
 
 
 @router.get(
-    "/activation-function/{activation_function_name}",
+    "/{activation_function_name}",
     description="This function takes as input a range (min, max) and a step. "
     "For each value in this interval, it will apply the activation function, "
     "and return all the associated activations. "

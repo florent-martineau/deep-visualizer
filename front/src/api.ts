@@ -53,7 +53,7 @@ export interface ValidationError {
   type: string;
 }
 
-export type GetActivationFunctionActivationFunctionActivationFunctionNameGetParams = {
+export type GetActivationFunctionApiActivationFunctionActivationFunctionNameGetParams = {
 /**
  * Minimum value to generate activations from.
  */
@@ -79,23 +79,23 @@ type AwaitedInput<T> = PromiseLike<T> | T;
  * Stores HF Hub User Access Token as an httpOnly secure cookie.
  * @summary Post Access Token
  */
-export const postAccessTokenAccessTokenPost = (
+export const postAccessTokenApiAccessTokenPost = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<unknown>> => {
     
     
     return axios.default.post(
-      `http://localhost:8000/access-token`,undefined,options
+      `http://localhost:8000/api/access-token`,undefined,options
     );
   }
 
 
 
-export const getPostAccessTokenAccessTokenPostMutationOptions = <TError = AxiosError<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>, TError,void, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>, TError,void, TContext> => {
+export const getPostAccessTokenApiAccessTokenPostMutationOptions = <TError = AxiosError<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>, TError,void, TContext> => {
 
-const mutationKey = ['postAccessTokenAccessTokenPost'];
+const mutationKey = ['postAccessTokenApiAccessTokenPost'];
 const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -105,10 +105,10 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>, void> = () => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>, void> = () => {
           
 
-          return  postAccessTokenAccessTokenPost(axiosOptions)
+          return  postAccessTokenApiAccessTokenPost(axiosOptions)
         }
 
         
@@ -116,23 +116,23 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type PostAccessTokenAccessTokenPostMutationResult = NonNullable<Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>>
+    export type PostAccessTokenApiAccessTokenPostMutationResult = NonNullable<Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>>
     
-    export type PostAccessTokenAccessTokenPostMutationError = AxiosError<HTTPValidationError>
+    export type PostAccessTokenApiAccessTokenPostMutationError = AxiosError<HTTPValidationError>
 
     /**
  * @summary Post Access Token
  */
-export const usePostAccessTokenAccessTokenPost = <TError = AxiosError<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+export const usePostAccessTokenApiAccessTokenPost = <TError = AxiosError<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>, TError,void, TContext>, axios?: AxiosRequestConfig}
  ): UseMutationResult<
-        Awaited<ReturnType<typeof postAccessTokenAccessTokenPost>>,
+        Awaited<ReturnType<typeof postAccessTokenApiAccessTokenPost>>,
         TError,
         void,
         TContext
       > => {
 
-      const mutationOptions = getPostAccessTokenAccessTokenPostMutationOptions(options);
+      const mutationOptions = getPostAccessTokenApiAccessTokenPostMutationOptions(options);
 
       return useMutation(mutationOptions );
     }
@@ -141,23 +141,23 @@ export const usePostAccessTokenAccessTokenPost = <TError = AxiosError<HTTPValida
  * Deletes the HF Hub User Access Token stored as an httpOnly secure cookie.
  * @summary Delete Access Token
  */
-export const deleteAccessTokenAccessTokenDelete = (
+export const deleteAccessTokenApiAccessTokenDelete = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<void>> => {
     
     
     return axios.default.delete(
-      `http://localhost:8000/access-token`,options
+      `http://localhost:8000/api/access-token`,options
     );
   }
 
 
 
-export const getDeleteAccessTokenAccessTokenDeleteMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>, TError,void, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>, TError,void, TContext> => {
+export const getDeleteAccessTokenApiAccessTokenDeleteMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>, TError,void, TContext> => {
 
-const mutationKey = ['deleteAccessTokenAccessTokenDelete'];
+const mutationKey = ['deleteAccessTokenApiAccessTokenDelete'];
 const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -167,10 +167,10 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>, void> = () => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>, void> = () => {
           
 
-          return  deleteAccessTokenAccessTokenDelete(axiosOptions)
+          return  deleteAccessTokenApiAccessTokenDelete(axiosOptions)
         }
 
         
@@ -178,23 +178,23 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type DeleteAccessTokenAccessTokenDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>>
+    export type DeleteAccessTokenApiAccessTokenDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>>
     
-    export type DeleteAccessTokenAccessTokenDeleteMutationError = AxiosError<unknown>
+    export type DeleteAccessTokenApiAccessTokenDeleteMutationError = AxiosError<unknown>
 
     /**
  * @summary Delete Access Token
  */
-export const useDeleteAccessTokenAccessTokenDelete = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+export const useDeleteAccessTokenApiAccessTokenDelete = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>, TError,void, TContext>, axios?: AxiosRequestConfig}
  ): UseMutationResult<
-        Awaited<ReturnType<typeof deleteAccessTokenAccessTokenDelete>>,
+        Awaited<ReturnType<typeof deleteAccessTokenApiAccessTokenDelete>>,
         TError,
         void,
         TContext
       > => {
 
-      const mutationOptions = getDeleteAccessTokenAccessTokenDeleteMutationOptions(options);
+      const mutationOptions = getDeleteAccessTokenApiAccessTokenDeleteMutationOptions(options);
 
       return useMutation(mutationOptions );
     }
@@ -203,54 +203,54 @@ export const useDeleteAccessTokenAccessTokenDelete = <TError = AxiosError<unknow
  * Checks whether the user has an HF Hub User Access Token stored as an httpOnly cookie, or not. It does **NOT** check the validity of this token. Validity is checked when setting up the cookie, and can be verified when the token is used.
  * @summary Get Access Token
  */
-export const getAccessTokenAccessTokenGet = (
+export const getAccessTokenApiAccessTokenGet = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<void>> => {
     
     
     return axios.default.get(
-      `http://localhost:8000/access-token`,options
+      `http://localhost:8000/api/access-token`,options
     );
   }
 
 
-export const getGetAccessTokenAccessTokenGetQueryKey = () => {
-    return [`http://localhost:8000/access-token`] as const;
+export const getGetAccessTokenApiAccessTokenGetQueryKey = () => {
+    return [`http://localhost:8000/api/access-token`] as const;
     }
 
     
-export const getGetAccessTokenAccessTokenGetQueryOptions = <TData = Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>, TError = AxiosError<HTTPValidationError>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetAccessTokenApiAccessTokenGetQueryOptions = <TData = Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>, TError = AxiosError<HTTPValidationError>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>, TError, TData>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAccessTokenAccessTokenGetQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetAccessTokenApiAccessTokenGetQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>> = ({ signal }) => getAccessTokenAccessTokenGet({ signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>> = ({ signal }) => getAccessTokenApiAccessTokenGet({ signal, ...axiosOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetAccessTokenAccessTokenGetQueryResult = NonNullable<Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>>
-export type GetAccessTokenAccessTokenGetQueryError = AxiosError<HTTPValidationError>
+export type GetAccessTokenApiAccessTokenGetQueryResult = NonNullable<Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>>
+export type GetAccessTokenApiAccessTokenGetQueryError = AxiosError<HTTPValidationError>
 
 
 /**
  * @summary Get Access Token
  */
 
-export function useGetAccessTokenAccessTokenGet<TData = Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>, TError = AxiosError<HTTPValidationError>>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenAccessTokenGet>>, TError, TData>, axios?: AxiosRequestConfig}
+export function useGetAccessTokenApiAccessTokenGet<TData = Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>, TError = AxiosError<HTTPValidationError>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessTokenApiAccessTokenGet>>, TError, TData>, axios?: AxiosRequestConfig}
   
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getGetAccessTokenAccessTokenGetQueryOptions(options)
+  const queryOptions = getGetAccessTokenApiAccessTokenGetQueryOptions(options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -266,60 +266,60 @@ export function useGetAccessTokenAccessTokenGet<TData = Awaited<ReturnType<typeo
  * This function takes as input a range (min, max) and a step. For each value in this interval, it will apply the activation function, and return all the associated activations. This allows you to plot the activation function.
  * @summary Get Activation Function
  */
-export const getActivationFunctionActivationFunctionActivationFunctionNameGet = (
+export const getActivationFunctionApiActivationFunctionActivationFunctionNameGet = (
     activationFunctionName: string,
-    params: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams, options?: AxiosRequestConfig
+    params: GetActivationFunctionApiActivationFunctionActivationFunctionNameGetParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ActivationFunctionResponse>> => {
     
     
     return axios.default.get(
-      `http://localhost:8000/activation-function/${activationFunctionName}`,{
+      `http://localhost:8000/api/activation-function/${activationFunctionName}`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetActivationFunctionActivationFunctionActivationFunctionNameGetQueryKey = (activationFunctionName?: string,
-    params?: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams,) => {
-    return [`http://localhost:8000/activation-function/${activationFunctionName}`, ...(params ? [params]: [])] as const;
+export const getGetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryKey = (activationFunctionName?: string,
+    params?: GetActivationFunctionApiActivationFunctionActivationFunctionNameGetParams,) => {
+    return [`http://localhost:8000/api/activation-function/${activationFunctionName}`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetActivationFunctionActivationFunctionActivationFunctionNameGetQueryOptions = <TData = Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>, TError = AxiosError<HTTPValidationError>>(activationFunctionName: string,
-    params: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryOptions = <TData = Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>, TError = AxiosError<HTTPValidationError>>(activationFunctionName: string,
+    params: GetActivationFunctionApiActivationFunctionActivationFunctionNameGetParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>, TError, TData>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetActivationFunctionActivationFunctionActivationFunctionNameGetQueryKey(activationFunctionName,params);
+  const queryKey =  queryOptions?.queryKey ?? getGetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryKey(activationFunctionName,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>> = ({ signal }) => getActivationFunctionActivationFunctionActivationFunctionNameGet(activationFunctionName,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>> = ({ signal }) => getActivationFunctionApiActivationFunctionActivationFunctionNameGet(activationFunctionName,params, { signal, ...axiosOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(activationFunctionName), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(activationFunctionName), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetActivationFunctionActivationFunctionActivationFunctionNameGetQueryResult = NonNullable<Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>>
-export type GetActivationFunctionActivationFunctionActivationFunctionNameGetQueryError = AxiosError<HTTPValidationError>
+export type GetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryResult = NonNullable<Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>>
+export type GetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryError = AxiosError<HTTPValidationError>
 
 
 /**
  * @summary Get Activation Function
  */
 
-export function useGetActivationFunctionActivationFunctionActivationFunctionNameGet<TData = Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>, TError = AxiosError<HTTPValidationError>>(
+export function useGetActivationFunctionApiActivationFunctionActivationFunctionNameGet<TData = Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>, TError = AxiosError<HTTPValidationError>>(
  activationFunctionName: string,
-    params: GetActivationFunctionActivationFunctionActivationFunctionNameGetParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionActivationFunctionActivationFunctionNameGet>>, TError, TData>, axios?: AxiosRequestConfig}
+    params: GetActivationFunctionApiActivationFunctionActivationFunctionNameGetParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivationFunctionApiActivationFunctionActivationFunctionNameGet>>, TError, TData>, axios?: AxiosRequestConfig}
   
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getGetActivationFunctionActivationFunctionActivationFunctionNameGetQueryOptions(activationFunctionName,params,options)
+  const queryOptions = getGetActivationFunctionApiActivationFunctionActivationFunctionNameGetQueryOptions(activationFunctionName,params,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
