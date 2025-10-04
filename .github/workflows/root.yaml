@@ -8,6 +8,7 @@ on:
       - "!api/**"
       - "front/src/api.ts"
       - "api/openapi.json"
+      - "api/.python-version"
 
 jobs:
   build:
@@ -30,3 +31,10 @@ jobs:
 
       - name: Run tests
         run: bun run test
+
+      - name: Check Python version files match
+        run: |
+          if ! diff .python-version api/.python-version; then
+            echo "Error: .python-version and api/.python-version do not match"
+            exit 1
+          fi
