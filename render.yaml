@@ -33,3 +33,12 @@ services:
       - fromGroup: environment
       - fromGroup: betterstack
       - fromGroup: sentry
+      - key: API_URL
+        fromService:
+          type: web
+          name: api
+          property: host
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://${BACKEND_URL}/api/*
