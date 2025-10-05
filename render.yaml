@@ -27,6 +27,8 @@ services:
     buildCommand: "bun i && bun run build"
     startCommand: "bun start"
     rootDir: front/
+    domains:
+      - neuroscope.florentmartineau.com
     envVars:
       - fromGroup: environment
       - fromGroup: betterstack
