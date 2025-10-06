@@ -32,15 +32,9 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(access_token.router)
 app.include_router(activation_function.router)
 
-
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[settings().front_base_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
