@@ -4,7 +4,7 @@ from api.constants import API_PATH_PREFIX
 from api.utils.routers.router import getApiRouter
 
 
-@pytest.mark.parametrize("prefix", ["foo", None])
+@pytest.mark.parametrize("prefix", ["/foo", None])
 def should_be_correctly_prefixed(prefix: str | None):
     router = getApiRouter(prefix=prefix)
 

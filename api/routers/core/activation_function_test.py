@@ -2,6 +2,7 @@ from typing import Dict, List
 
 import pytest
 import torch
+from api.constants import API_PATH_PREFIX
 from api.core.activation_function import (
     ACTIVATION_FUNCTIONS,
     SUPPORTED_ACTIVATION_FUNCTION_NAMES,
@@ -33,7 +34,9 @@ def _make_request(
     if step is not None:
         params["step"] = step
 
-    response = client.get(f"/api/activation-function/{name}", params=params)
+    response = client.get(
+        f"{API_PATH_PREFIX}/activation-function/{name}", params=params
+    )
     return response
 
 
