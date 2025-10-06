@@ -5,7 +5,7 @@ import torch
 from api.constants import API_PATH_PREFIX
 from api.core.activation_function import (
     ACTIVATION_FUNCTIONS,
-    SUPPORTED_ACTIVATION_FUNCTION_NAMES,
+    SUPPORTED_ACTIVATION_FUNCTION_IDS,
     ActivationFunction,
 )
 from api.main import app
@@ -17,7 +17,7 @@ from fastapi.testclient import TestClient
 
 
 def _make_request(
-    name: str = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0],
+    id: str = SUPPORTED_ACTIVATION_FUNCTION_IDS[0],
     min: float | None = -1,
     max: float | None = 1,
     step: float | None = 0.1,
@@ -34,25 +34,23 @@ def _make_request(
     if step is not None:
         params["step"] = step
 
-    response = client.get(
-        f"{API_PATH_PREFIX}/activation-function/{name}", params=params
-    )
+    response = client.get(f"{API_PATH_PREFIX}/activation-function/{id}", params=params)
     return response
 
 
 def should_return_404_if_activation_function_is_not_supported():
-    name = "does-not-exist"
-    response = _make_request(name=name)
+    id = "does-not-exist"
+    response = _make_request(id=id)
 
-    assert name not in SUPPORTED_ACTIVATION_FUNCTION_NAMES
+    assert id not in SUPPORTED_ACTIVATION_FUNCTION_IDS
     assert response.status_code == 404
 
 
-@pytest.mark.parametrize("name", SUPPORTED_ACTIVATION_FUNCTION_NAMES)
-def should_not_return_404_if_activation_function_is_supported(name: str):
-    response = _make_request(name=name)
+@pytest.mark.parametrize("id", SUPPORTED_ACTIVATION_FUNCTION_IDS)
+def should_not_return_404_if_activation_function_is_supported(id: str):
+    response = _make_request(id=id)
 
-    assert name in SUPPORTED_ACTIVATION_FUNCTION_NAMES
+    assert id in SUPPORTED_ACTIVATION_FUNCTION_IDS
     assert response.status_code != 404
 
 
@@ -71,9 +69,7 @@ def should_not_return_422_if_mandatory_parameter_is_missing(
     if has_min and has_max and has_step:
         pytest.skip("All mandatory parameters are provided")
 
-    activation_function = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0]
     response = _make_request(
-        name=activation_function,
         min=-1 if has_min else None,
         max=1 if has_max else None,
         step=0.1 if has_step else None,
@@ -98,9 +94,7 @@ def should_not_return_422_if_mandatory_parameter_is_missing(
 def should_include_the_extremums_in_activation_inputs(
     min: float, max: float, step: float
 ):
-    activation_function = SUPPORTED_ACTIVATION_FUNCTION_NAMES[0]
     response = _make_request(
-        name=activation_function,
         min=min,
         max=max,
         step=step,
@@ -163,10 +157,10 @@ def should_return_422_if_number_of_activations_to_compute_is_too_large():
 @pytest.mark.parametrize(
     "activation_function",
     ACTIVATION_FUNCTIONS.values(),
-    ids=map(lambda activation: activation.name, ACTIVATION_FUNCTIONS.values()),
+    ids=map(lambda activation: activation.id, ACTIVATION_FUNCTIONS.values()),
 )
 def should_return_correct_activations(activation_function: ActivationFunction):
-    response = _make_request(name=activation_function.name, min=-1, max=1, step=0.5)
+    response = _make_request(id=activation_function.id, min=-1, max=1, step=0.5)
     parsed_response = ActivationFunctionResponse.model_validate(response.json())
 
     actual_inputs = list(

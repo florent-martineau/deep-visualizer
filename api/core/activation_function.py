@@ -4,7 +4,7 @@ import torch
 from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
 
-ActivationFunctionName = Literal["gelu", "approximate-gelu", "silu"]
+ActivationFunctionId = Literal["gelu", "approximate-gelu", "silu"]
 
 
 class ActivationInputOutputPair(BaseModel):
@@ -23,8 +23,8 @@ class ActivationInputOutputPair(BaseModel):
 class ActivationFunction(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    name: Annotated[
-        ActivationFunctionName,
+    id: Annotated[
+        ActivationFunctionId,
         Field(description="Unique identifier for this activation function"),
     ]
     module: Annotated[
@@ -53,25 +53,25 @@ class ActivationFunction(BaseModel):
 
 
 _ACTIVATION_FUNCTIONS: List[ActivationFunction] = [
-    ActivationFunction(name="gelu", module=GELUActivation(), display_name="GELU"),
+    ActivationFunction(id="gelu", module=GELUActivation(), display_name="GELU"),
     ActivationFunction(
-        name="approximate-gelu",
+        id="approximate-gelu",
         module=NewGELUActivation(),
         display_name="Approximate GELU",
     ),
-    ActivationFunction(name="silu", module=torch.nn.SiLU(), display_name="SiLU"),
+    ActivationFunction(id="silu", module=torch.nn.SiLU(), display_name="SiLU"),
 ]
 
-ACTIVATION_FUNCTIONS: Dict[ActivationFunctionName, ActivationFunction] = {
-    activation_function.name: activation_function
+ACTIVATION_FUNCTIONS: Dict[ActivationFunctionId, ActivationFunction] = {
+    activation_function.id: activation_function
     for activation_function in _ACTIVATION_FUNCTIONS
 }
 
 
-SUPPORTED_ACTIVATION_FUNCTION_NAMES: tuple[ActivationFunctionName] = get_args(
-    ActivationFunctionName
+SUPPORTED_ACTIVATION_FUNCTION_IDS: tuple[ActivationFunctionId] = get_args(
+    ActivationFunctionId
 )
 
 
-def is_supported_activation(name: str) -> TypeGuard[ActivationFunctionName]:
-    return name in SUPPORTED_ACTIVATION_FUNCTION_NAMES
+def is_supported_activation(id: str) -> TypeGuard[ActivationFunctionId]:
+    return id in SUPPORTED_ACTIVATION_FUNCTION_IDS
