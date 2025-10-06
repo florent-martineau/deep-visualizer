@@ -6,8 +6,7 @@ export const getOrvalConfig: (target: string) => Config = (target) => ({
     input: 'api/openapi.json',
     output: {
       target,
-      client: 'react-query',
-      baseUrl: 'http://localhost:8000'
+      client: 'react-query'
     },
   },
 })

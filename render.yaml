@@ -38,3 +38,7 @@ services:
           type: web
           name: api
           property: host
+      - key: API_PORT
+        value: 443
+      - key: API_PROTOCOL
+        value: https
