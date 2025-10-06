@@ -18,6 +18,8 @@ services:
       - fromGroup: environment
       - fromGroup: betterstack
       - fromGroup: sentry
+      - key: FRONT_BASE_URL
+        value: https://neuroscope.florentmartineau.com
 
   - type: web
     name: frontend
