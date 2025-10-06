@@ -33,3 +33,12 @@ services:
       - fromGroup: environment
       - fromGroup: betterstack
       - fromGroup: sentry
+      - key: API_URL
+        fromService:
+          type: web
+          name: api
+          property: host
+      - key: API_PORT
+        value: 443
+      - key: API_PROTOCOL
+        value: https

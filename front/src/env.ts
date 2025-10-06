@@ -3,6 +3,12 @@ import { z } from "zod";
 
 export const env = createEnv({
 	server: {
+		API_HOST: z.string().describe("Host of the API, e.g. localhost"),
+		API_PORT: z.string().describe("Port of the API, e.g. 443 or 8000"),
+		API_PROTOCOL: z
+			.enum(["http", "https"])
+			.describe("HTTP protocol to call the API"),
+
 		NODE_ENV: z.enum(["production", "development", "test"]),
 		SERVER_URL: z.string().url().optional(),
 		FRONT_BETTERSTACK_TOKEN: z.string(),
