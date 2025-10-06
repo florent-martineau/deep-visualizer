@@ -18,7 +18,8 @@ SUPPORTED_MODELS: Final[List[SupportedModel]] = [
         activation_function=ACTIVATION_FUNCTIONS["gelu"],
     ),
     SupportedModel(
-        id="openai-community/gpt2", activation_function=ACTIVATION_FUNCTIONS["gelu_new"]
+        id="openai-community/gpt2",
+        activation_function=ACTIVATION_FUNCTIONS["approximate-gelu"],
     ),
     SupportedModel(
         id="openai/gpt-oss-20b", activation_function=ACTIVATION_FUNCTIONS["silu"]

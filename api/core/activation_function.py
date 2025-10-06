@@ -1,10 +1,10 @@
-from typing import Dict, List, Literal, TypeGuard, get_args
+from typing import Annotated, Dict, List, Literal, TypeGuard, get_args
 
 import torch
 from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
 
-ActivationFunctionName = Literal["gelu", "gelu_new", "silu"]
+ActivationFunctionName = Literal["gelu", "approximate-gelu", "silu"]
 
 
 class ActivationInputOutputPair(BaseModel):
@@ -23,8 +23,19 @@ class ActivationInputOutputPair(BaseModel):
 class ActivationFunction(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    name: ActivationFunctionName
-    module: torch.nn.Module
+    name: Annotated[
+        ActivationFunctionName,
+        Field(description="Unique identifier for this activation function"),
+    ]
+    module: Annotated[
+        torch.nn.Module,
+        Field(
+            description="Pytorch module to compute the activation function from tensors"
+        ),
+    ]
+    display_name: Annotated[
+        str, Field(description="User-friendly name to be displayed in a UI")
+    ]
 
     def get_activations(self, inputs: List[float]) -> List[ActivationInputOutputPair]:
         inputs_tensor = torch.tensor(inputs)
@@ -41,15 +52,19 @@ class ActivationFunction(BaseModel):
         return activations
 
 
-_ACTIVATION_FUNCTIONS_TUPLE: List[tuple[ActivationFunctionName, torch.nn.Module]] = [
-    ("gelu", GELUActivation()),
-    ("gelu_new", NewGELUActivation()),
-    ("silu", torch.nn.SiLU()),
+_ACTIVATION_FUNCTIONS: List[ActivationFunction] = [
+    ActivationFunction(name="gelu", module=GELUActivation(), display_name="GELU"),
+    ActivationFunction(
+        name="approximate-gelu",
+        module=NewGELUActivation(),
+        display_name="Approximate GELU",
+    ),
+    ActivationFunction(name="silu", module=torch.nn.SiLU(), display_name="SiLU"),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[ActivationFunctionName, ActivationFunction] = {
-    name: ActivationFunction(name=name, module=module)
-    for name, module in _ACTIVATION_FUNCTIONS_TUPLE
+    activation_function.name: activation_function
+    for activation_function in _ACTIVATION_FUNCTIONS
 }
 
 
