@@ -1,7 +1,7 @@
 import pytest
 
 from api.core.activation_function import (
-    _ACTIVATION_FUNCTIONS_TUPLE,  # type: ignore[reportPrivateUsage]
+    _ACTIVATION_FUNCTIONS,  # type: ignore[reportPrivateUsage]
     ACTIVATION_FUNCTIONS,
     SUPPORTED_ACTIVATION_FUNCTION_NAMES,
     is_supported_activation,
@@ -30,12 +30,12 @@ class IsSupportedActivationTypeGuardTest:
 
 class ActivationFunctionsDictTest:
     def should_contain_exactly_activations_defined_in_config(self):
-        assert len(_ACTIVATION_FUNCTIONS_TUPLE) == len(ACTIVATION_FUNCTIONS)
+        assert len(_ACTIVATION_FUNCTIONS) == len(ACTIVATION_FUNCTIONS)
 
         expected_keys = set(
             map(
-                lambda activation_tuple: activation_tuple[0],
-                _ACTIVATION_FUNCTIONS_TUPLE,
+                lambda activation_function: activation_function.name,
+                _ACTIVATION_FUNCTIONS,
             )
         )
         actual_keys = set(ACTIVATION_FUNCTIONS.keys())
