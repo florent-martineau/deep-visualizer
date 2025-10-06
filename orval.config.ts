@@ -6,7 +6,12 @@ export const getOrvalConfig: (target: string) => Config = (target) => ({
     input: 'api/openapi.json',
     output: {
       target,
-      client: 'react-query'
+      client: 'react-query',
+      override: {
+        operationName: (operation) => {
+          return (operation.summary ?? '').replaceAll(' ', '');
+        }
+      }
     },
   },
 })
