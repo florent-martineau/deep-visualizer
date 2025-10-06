@@ -1,10 +1,8 @@
-from typing import Annotated, Dict, List, Literal, TypeGuard, get_args
+from typing import Annotated, Dict, Final, List
 
 import torch
 from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
-
-ActivationFunctionId = Literal["gelu", "approximate-gelu", "silu"]
 
 
 class ActivationInputOutputPair(BaseModel):
@@ -24,7 +22,7 @@ class ActivationFunction(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     id: Annotated[
-        ActivationFunctionId,
+        str,
         Field(description="Unique identifier for this activation function"),
     ]
     module: Annotated[
@@ -52,7 +50,7 @@ class ActivationFunction(BaseModel):
         return activations
 
 
-_ACTIVATION_FUNCTIONS: List[ActivationFunction] = [
+_ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
     ActivationFunction(id="gelu", module=GELUActivation(), display_name="GELU"),
     ActivationFunction(
         id="approximate-gelu",
@@ -62,16 +60,16 @@ _ACTIVATION_FUNCTIONS: List[ActivationFunction] = [
     ActivationFunction(id="silu", module=torch.nn.SiLU(), display_name="SiLU"),
 ]
 
-ACTIVATION_FUNCTIONS: Dict[ActivationFunctionId, ActivationFunction] = {
+ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {
     activation_function.id: activation_function
     for activation_function in _ACTIVATION_FUNCTIONS
 }
 
 
-SUPPORTED_ACTIVATION_FUNCTION_IDS: tuple[ActivationFunctionId] = get_args(
-    ActivationFunctionId
+SUPPORTED_ACTIVATION_FUNCTION_IDS: tuple[str, ...] = tuple(
+    map(lambda activation_function: activation_function.id, _ACTIVATION_FUNCTIONS)
 )
 
 
-def is_supported_activation(id: str) -> TypeGuard[ActivationFunctionId]:
+def is_supported_activation(id: str) -> bool:
     return id in SUPPORTED_ACTIVATION_FUNCTION_IDS
