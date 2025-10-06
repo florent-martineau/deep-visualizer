@@ -267,42 +267,42 @@ export function useGetAccessToken<TData = Awaited<ReturnType<typeof GetAccessTok
  * @summary Get Activation Function
  */
 export const GetActivationFunction = (
-    activationFunctionName: string,
+    activationFunctionId: string,
     params: GetActivationFunctionParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ActivationFunctionResponse>> => {
     
     
     return axios.default.get(
-      `/activation-function/${activationFunctionName}`,{
+      `/activation-function/${activationFunctionId}`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetActivationFunctionQueryKey = (activationFunctionName?: string,
+export const getGetActivationFunctionQueryKey = (activationFunctionId?: string,
     params?: GetActivationFunctionParams,) => {
-    return [`/activation-function/${activationFunctionName}`, ...(params ? [params]: [])] as const;
+    return [`/activation-function/${activationFunctionId}`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetActivationFunctionQueryOptions = <TData = Awaited<ReturnType<typeof GetActivationFunction>>, TError = AxiosError<HTTPValidationError>>(activationFunctionName: string,
+export const getGetActivationFunctionQueryOptions = <TData = Awaited<ReturnType<typeof GetActivationFunction>>, TError = AxiosError<HTTPValidationError>>(activationFunctionId: string,
     params: GetActivationFunctionParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetActivationFunction>>, TError, TData>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetActivationFunctionQueryKey(activationFunctionName,params);
+  const queryKey =  queryOptions?.queryKey ?? getGetActivationFunctionQueryKey(activationFunctionId,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetActivationFunction>>> = ({ signal }) => GetActivationFunction(activationFunctionName,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetActivationFunction>>> = ({ signal }) => GetActivationFunction(activationFunctionId,params, { signal, ...axiosOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(activationFunctionName), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetActivationFunction>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(activationFunctionId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetActivationFunction>>, TError, TData> & { queryKey: QueryKey }
 }
 
 export type GetActivationFunctionQueryResult = NonNullable<Awaited<ReturnType<typeof GetActivationFunction>>>
@@ -314,12 +314,12 @@ export type GetActivationFunctionQueryError = AxiosError<HTTPValidationError>
  */
 
 export function useGetActivationFunction<TData = Awaited<ReturnType<typeof GetActivationFunction>>, TError = AxiosError<HTTPValidationError>>(
- activationFunctionName: string,
+ activationFunctionId: string,
     params: GetActivationFunctionParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetActivationFunction>>, TError, TData>, axios?: AxiosRequestConfig}
   
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getGetActivationFunctionQueryOptions(activationFunctionName,params,options)
+  const queryOptions = getGetActivationFunctionQueryOptions(activationFunctionId,params,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

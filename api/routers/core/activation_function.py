@@ -2,7 +2,7 @@ from typing import List, Set
 
 from api.core.activation_function import (
     ACTIVATION_FUNCTIONS,
-    SUPPORTED_ACTIVATION_FUNCTION_NAMES,
+    SUPPORTED_ACTIVATION_FUNCTION_IDS,
     ActivationInputOutputPair,
     is_supported_activation,
 )
@@ -22,7 +22,7 @@ class ActivationFunctionResponse(BaseModel):
 
 
 @router.get(
-    "/{activation_function_name}",
+    "/{activation_function_id}",
     description="This function takes as input a range (min, max) and a step. "
     "For each value in this interval, it will apply the activation function, "
     "and return all the associated activations. "
@@ -31,9 +31,9 @@ class ActivationFunctionResponse(BaseModel):
     response_model=ActivationFunctionResponse,
 )
 async def get_activation_function(
-    activation_function_name: str = Path(
-        description="Name of the activation function",
-        examples=list(SUPPORTED_ACTIVATION_FUNCTION_NAMES),
+    activation_function_id: str = Path(
+        description="Id of the activation function",
+        examples=list(SUPPORTED_ACTIVATION_FUNCTION_IDS),
     ),
     min: float = Query(description="Minimum value to generate activations from."),
     max: float = Query(description="Maximum value to generate activations from."),
@@ -46,21 +46,21 @@ async def get_activation_function(
     logger.info(
         "Retrieving activation function",
         extra={
-            "activation_function": activation_function_name,
+            "activation_function": activation_function_id,
             "min": min,
             "max": max,
             "step": step,
         },
     )
 
-    if not is_supported_activation(activation_function_name):
+    if not is_supported_activation(activation_function_id):
         raise HTTPException(
             status_code=404,
-            detail=f"Activation function '{activation_function_name}' not found. "
-            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTION_NAMES)}",
+            detail=f"Activation function '{activation_function_id}' not found. "
+            f"Valid functions are: {', '.join(SUPPORTED_ACTIVATION_FUNCTION_IDS)}",
         )
 
-    activation_function = ACTIVATION_FUNCTIONS[activation_function_name]
+    activation_function = ACTIVATION_FUNCTIONS[activation_function_id]
 
     if min >= max:
         raise HTTPException(
