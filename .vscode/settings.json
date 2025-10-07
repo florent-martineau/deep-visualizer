@@ -1,7 +1,7 @@
 {
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"source.organizeImports": "always"
+		"source.organizeImports.biome": "always"
 	},
 	"files.watcherExclude": {
 		"**/routeTree.gen.ts": true
