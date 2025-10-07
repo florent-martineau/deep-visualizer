@@ -7,6 +7,7 @@ export const getOrvalConfig: (target: string) => Config = (target) => ({
     output: {
       target,
       client: 'react-query',
+      baseUrl: '/api-proxy',
       override: {
         operationName: (operation) => {
           return (operation.summary ?? '').replaceAll(' ', '');

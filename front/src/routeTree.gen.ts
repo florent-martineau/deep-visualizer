@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ApiRouteImport } from './routes/api'
+import { Route as ApiProxyRouteImport } from './routes/api-proxy'
 import { Route as ActivationFunctionRouteImport } from './routes/activation-function'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
@@ -23,9 +23,9 @@ import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api
 import { Route as DemoFormSimpleRouteImport } from './routes/demo.form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo.form.address'
 
-const ApiRoute = ApiRouteImport.update({
-  id: '/api',
-  path: '/api',
+const ApiProxyRoute = ApiProxyRouteImport.update({
+  id: '/api-proxy',
+  path: '/api-proxy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivationFunctionRoute = ActivationFunctionRouteImport.update({
@@ -59,14 +59,14 @@ const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDemoTqTodosRoute = ApiDemoTqTodosRouteImport.update({
-  id: '/demo-tq-todos',
-  path: '/demo-tq-todos',
-  getParentRoute: () => ApiRoute,
+  id: '/api/demo-tq-todos',
+  path: '/api/demo-tq-todos',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDemoNamesRoute = ApiDemoNamesRouteImport.update({
-  id: '/demo-names',
-  path: '/demo-names',
-  getParentRoute: () => ApiRoute,
+  id: '/api/demo-names',
+  path: '/api/demo-names',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
@@ -92,7 +92,7 @@ const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activation-function': typeof ActivationFunctionRoute
-  '/api': typeof ApiRouteWithChildren
+  '/api-proxy': typeof ApiProxyRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -107,7 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activation-function': typeof ActivationFunctionRoute
-  '/api': typeof ApiRouteWithChildren
+  '/api-proxy': typeof ApiProxyRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -123,7 +123,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activation-function': typeof ActivationFunctionRoute
-  '/api': typeof ApiRouteWithChildren
+  '/api-proxy': typeof ApiProxyRoute
   '/api/demo-names': typeof ApiDemoNamesRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -140,7 +140,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/activation-function'
-    | '/api'
+    | '/api-proxy'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -155,7 +155,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/activation-function'
-    | '/api'
+    | '/api-proxy'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -170,7 +170,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/activation-function'
-    | '/api'
+    | '/api-proxy'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
     | '/demo/mcp-todos'
@@ -186,7 +186,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivationFunctionRoute: typeof ActivationFunctionRoute
-  ApiRoute: typeof ApiRouteWithChildren
+  ApiProxyRoute: typeof ApiProxyRoute
+  ApiDemoNamesRoute: typeof ApiDemoNamesRoute
+  ApiDemoTqTodosRoute: typeof ApiDemoTqTodosRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
@@ -199,11 +201,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/api': {
-      id: '/api'
-      path: '/api'
-      fullPath: '/api'
-      preLoaderRoute: typeof ApiRouteImport
+    '/api-proxy': {
+      id: '/api-proxy'
+      path: '/api-proxy'
+      fullPath: '/api-proxy'
+      preLoaderRoute: typeof ApiProxyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activation-function': {
@@ -250,17 +252,17 @@ declare module '@tanstack/react-router' {
     }
     '/api/demo-tq-todos': {
       id: '/api/demo-tq-todos'
-      path: '/demo-tq-todos'
+      path: '/api/demo-tq-todos'
       fullPath: '/api/demo-tq-todos'
       preLoaderRoute: typeof ApiDemoTqTodosRouteImport
-      parentRoute: typeof ApiRoute
+      parentRoute: typeof rootRouteImport
     }
     '/api/demo-names': {
       id: '/api/demo-names'
-      path: '/demo-names'
+      path: '/api/demo-names'
       fullPath: '/api/demo-names'
       preLoaderRoute: typeof ApiDemoNamesRouteImport
-      parentRoute: typeof ApiRoute
+      parentRoute: typeof rootRouteImport
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -293,22 +295,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ApiRouteChildren {
-  ApiDemoNamesRoute: typeof ApiDemoNamesRoute
-  ApiDemoTqTodosRoute: typeof ApiDemoTqTodosRoute
-}
-
-const ApiRouteChildren: ApiRouteChildren = {
-  ApiDemoNamesRoute: ApiDemoNamesRoute,
-  ApiDemoTqTodosRoute: ApiDemoTqTodosRoute,
-}
-
-const ApiRouteWithChildren = ApiRoute._addFileChildren(ApiRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivationFunctionRoute: ActivationFunctionRoute,
-  ApiRoute: ApiRouteWithChildren,
+  ApiProxyRoute: ApiProxyRoute,
+  ApiDemoNamesRoute: ApiDemoNamesRoute,
+  ApiDemoTqTodosRoute: ApiDemoTqTodosRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
