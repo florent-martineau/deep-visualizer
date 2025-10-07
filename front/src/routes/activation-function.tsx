@@ -12,5 +12,9 @@ function ActivationFunction() {
 		step: 0.5,
 	});
 
-	return <div>{JSON.stringify(data)}</div>;
+	return (
+		<div>
+			<p>{JSON.stringify(data)}</p>
+		</div>
+	);
 }
