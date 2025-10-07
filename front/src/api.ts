@@ -85,7 +85,7 @@ export const PostAccessToken = (
     
     
     return axios.default.post(
-      `/access-token`,undefined,options
+      `/api-proxy/access-token`,undefined,options
     );
   }
 
@@ -147,7 +147,7 @@ export const DeleteAccessToken = (
     
     
     return axios.default.delete(
-      `/access-token`,options
+      `/api-proxy/access-token`,options
     );
   }
 
@@ -209,7 +209,7 @@ export const GetAccessToken = (
     
     
     return axios.default.get(
-      `/access-token`,options
+      `/api-proxy/access-token`,options
     );
   }
 
@@ -218,7 +218,7 @@ export const GetAccessToken = (
 
 export const getGetAccessTokenQueryKey = () => {
     return [
-    `/access-token`
+    `/api-proxy/access-token`
     ] as const;
     }
 
@@ -277,7 +277,7 @@ export const GetActivationFunction = (
     
     
     return axios.default.get(
-      `/activation-function/${activationFunctionId}`,{
+      `/api-proxy/activation-function/${activationFunctionId}`,{
     ...options,
         params: {...params, ...options?.params},}
     );
@@ -289,7 +289,7 @@ export const GetActivationFunction = (
 export const getGetActivationFunctionQueryKey = (activationFunctionId?: string,
     params?: GetActivationFunctionParams,) => {
     return [
-    `/activation-function/${activationFunctionId}`, ...(params ? [params]: [])
+    `/api-proxy/activation-function/${activationFunctionId}`, ...(params ? [params]: [])
     ] as const;
     }
 

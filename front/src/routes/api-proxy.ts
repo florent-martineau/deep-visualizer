@@ -12,6 +12,8 @@ const proxy = async ({ request }: { request: Request }) => {
 	const headers = new Headers(request.headers);
 	headers.set("host", env.API_HOST);
 
+	newUrl.pathname = newUrl.pathname.replace(/^\/api-proxy/, "");
+
 	const response = await fetch(newUrl, {
 		method: request.method,
 		headers,
@@ -25,7 +27,7 @@ const proxy = async ({ request }: { request: Request }) => {
 	});
 };
 
-export const Route = createFileRoute("/api")({
+export const Route = createFileRoute("/api-proxy")({
 	server: {
 		handlers: {
 			ALL: proxy,
