@@ -37,8 +37,3 @@ coverage.xml
 .tanstack
 .output
 .vinxi
-
-# Demo Tanstack files
-todos.json
-mcp-todos.json
-count.txt
