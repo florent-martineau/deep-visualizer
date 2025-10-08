@@ -2,7 +2,6 @@ import { Line, OrbitControls, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { Skeleton } from "three";
 import {
 	type ActivationInputOutputPair,
 	useGetActivationFunction,
