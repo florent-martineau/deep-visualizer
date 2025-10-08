@@ -93,11 +93,11 @@
         }
       }
     },
-    "/activation-function/{activation_function_id}": {
+    "/activation-functions/{activation_function_id}": {
       "get": {
         "summary": "Get Activation Function",
         "description": "This function takes as input a range (min, max) and a step. For each value in this interval, it will apply the activation function, and return all the associated activations. This allows you to plot the activation function.",
-        "operationId": "get_activation_function_activation_function__activation_function_id__get",
+        "operationId": "get_activation_function_activation_functions__activation_function_id__get",
         "parameters": [
           {
             "name": "activation_function_id",

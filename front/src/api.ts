@@ -277,7 +277,7 @@ export const GetActivationFunction = (
     
     
     return axios.default.get(
-      `/api-proxy/activation-function/${activationFunctionId}`,{
+      `/api-proxy/activation-functions/${activationFunctionId}`,{
     ...options,
         params: {...params, ...options?.params},}
     );
@@ -289,7 +289,7 @@ export const GetActivationFunction = (
 export const getGetActivationFunctionQueryKey = (activationFunctionId?: string,
     params?: GetActivationFunctionParams,) => {
     return [
-    `/api-proxy/activation-function/${activationFunctionId}`, ...(params ? [params]: [])
+    `/api-proxy/activation-functions/${activationFunctionId}`, ...(params ? [params]: [])
     ] as const;
     }
 

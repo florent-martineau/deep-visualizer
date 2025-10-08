@@ -7,7 +7,7 @@ import {
 	useGetActivationFunction,
 } from "@/api";
 
-export const Route = createFileRoute("/activation-function")({
+export const Route = createFileRoute("/activation-functions")({
 	component: ActivationFunction,
 });
 
