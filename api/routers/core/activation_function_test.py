@@ -34,7 +34,7 @@ def _make_request(
     if step is not None:
         params["step"] = step
 
-    response = client.get(f"{API_PATH_PREFIX}/activation-function/{id}", params=params)
+    response = client.get(f"{API_PATH_PREFIX}/activation-functions/{id}", params=params)
     return response
 
 

@@ -11,7 +11,7 @@ from api.utils.routers.router import getApiRouter
 from fastapi import HTTPException, Path, Query
 from pydantic import BaseModel
 
-router = getApiRouter("/activation-function")
+router = getApiRouter("/activation-functions")
 
 # Maximum number of activations to be computed by the activation function route
 ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE = 10_000
