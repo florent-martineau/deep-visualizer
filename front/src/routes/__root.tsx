@@ -4,8 +4,10 @@ import {
 	createRootRouteWithContext,
 	HeadContent,
 	Scripts,
+	useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { PROJECT_NAME } from "@/constants";
 import Header from "../components/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
@@ -25,7 +27,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: PROJECT_NAME,
 			},
 		],
 		links: [
@@ -40,13 +42,16 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const matches = useMatches();
+	const showHeader = matches.some((match) => match.staticData.showHeader);
+
 	return (
-		<html lang="en" className="dark">
+		<html lang="en" className="dark h-full">
 			<head>
 				<HeadContent />
 			</head>
-			<body>
-				<Header />
+			<body className="h-full">
+				{showHeader && <Header />}
 				{children}
 				<TanstackDevtools
 					config={{
