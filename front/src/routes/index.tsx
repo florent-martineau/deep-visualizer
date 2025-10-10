@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { H1 } from "@/components/ui/typography";
-import { PROJECT_NAME } from "@/constants";
+import { H1, Lead } from "@/components/ui/typography";
+import { DESCRIPTION, PROJECT_NAME } from "@/constants";
 
 export const Route = createFileRoute("/")({
 	staticData: {
@@ -11,8 +11,11 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<div className="flex items-center justify-center h-full">
-			<H1>{PROJECT_NAME}</H1>
+		<div className="flex items-center justify-center h-full flex-col">
+			<div className="space-y-2">
+				<H1>{PROJECT_NAME}</H1>
+				<Lead>{DESCRIPTION}</Lead>
+			</div>
 		</div>
 	);
 }
