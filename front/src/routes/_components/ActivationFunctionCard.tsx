@@ -1,7 +1,7 @@
-import { OrbitControls, useProgress } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Vector3 } from "three";
 import { CurvedLink } from "@/components/3d/curved-link";
 import { Neuron } from "@/components/neural-network/Neuron";
@@ -9,13 +9,11 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRoute } from "@/hooks/useRoute";
-import { cn } from "@/lib/utils";
 
 export const ActivationFunctionCard = () => {
 	const [loaded, setLoaded] = useState(false);
