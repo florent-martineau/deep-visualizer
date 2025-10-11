@@ -1,14 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { createFileRoute } from "@tanstack/react-router";
 import { H1, Lead } from "@/components/ui/typography";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
-import { useRoute } from "@/hooks/useRoute";
+import { ActivationFunctionCard } from "./_components/ActivationFunctionCard";
 
 export const Route = createFileRoute("/")({
 	staticData: {
@@ -20,8 +13,6 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-	const { route, staticData } = useRoute("/activation-functions");
-
 	return (
 		<div className="flex items-center justify-center h-full flex-col gap-8">
 			<div className="space-y-2">
@@ -29,15 +20,7 @@ function App() {
 				<Lead>{PROJECT_DESCRIPTION}</Lead>
 			</div>
 
-			<Link to={route.path}>
-				<Card className="w-92">
-					<CardHeader>
-						<CardTitle>{staticData.title}</CardTitle>
-						<CardDescription>{staticData.description}</CardDescription>
-					</CardHeader>
-					<CardContent></CardContent>
-				</Card>
-			</Link>
+			<ActivationFunctionCard />
 		</div>
 	);
 }
