@@ -18,7 +18,7 @@ export const ActivationFunctionCard = () => {
 
 	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
 	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
-	const ouputNeuronPosition = new Vector3(3, 0, 0);
+	const outputNeuronPosition = new Vector3(3, 0, 0);
 
 	return (
 		<Link to={route.path}>
@@ -41,17 +41,17 @@ export const ActivationFunctionCard = () => {
 
 						<Neuron position={firstInputNeuronPosition} />
 						<Neuron position={secondInputNeuronPosition} />
-						<Neuron position={ouputNeuronPosition} />
+						<Neuron position={outputNeuronPosition} />
 
 						<CurvedLink
 							start={firstInputNeuronPosition}
-							end={ouputNeuronPosition}
+							end={outputNeuronPosition}
 							midOffset={-1.5}
 							lineWidth={2}
 						/>
 						<CurvedLink
 							start={secondInputNeuronPosition}
-							end={ouputNeuronPosition}
+							end={outputNeuronPosition}
 							midOffset={1.5}
 							lineWidth={2}
 						/>
