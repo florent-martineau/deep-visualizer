@@ -1,12 +1,16 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useHover } from "@uidotdev/usehooks";
+import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Vector3 } from "three";
 import { CurvedLink } from "@/components/3d/curved-link";
+import { WithRotation } from "@/components/3d/with-rotation";
 import { Neuron } from "@/components/neural-network/Neuron";
 import {
 	Card,
+	CardAction,
 	CardContent,
 	CardDescription,
 	CardHeader,
@@ -18,34 +22,47 @@ import { useRoute } from "@/hooks/useRoute";
 export const ActivationFunctionCard = () => {
 	const [loaded, setLoaded] = useState(false);
 	const { route, staticData } = useRoute("/activation-functions");
+	const [ref, isHovering] = useHover();
 
 	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
 	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
 	const outputNeuronPosition = new Vector3(3, 0, 0);
 
 	return (
-		<Link to={route.path}>
-			<Card className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300">
-				<CardHeader>
+		<Card
+			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
+			ref={ref}
+		>
+			<Link to={route.path}>
+				<CardHeader className="hover:underline">
 					<CardTitle>{staticData.title}</CardTitle>
 					<CardDescription>{staticData.description}</CardDescription>
+					<CardAction>
+						<ArrowRight />
+					</CardAction>
 				</CardHeader>
-				<CardContent className="relative w-full h-48">
-					<div className="relative h-full w-full">
-						<Canvas
-							camera={{ position: [0, 0, 10], fov: 50 }}
-							onCreated={() => setLoaded(true)}
-						>
-							<ambientLight intensity={0.3} />
-							<directionalLight
-								position={[5, 5, 5]}
-								intensity={1}
-								castShadow
-								shadow-mapSize-width={2048}
-								shadow-mapSize-height={2048}
-							/>
-							<pointLight position={[-5, 5, -5]} intensity={0.5} />
+			</Link>
+			<CardContent className="relative w-full h-48">
+				<div className="relative h-full w-full">
+					<Canvas
+						camera={{ position: [0, 0, 10], fov: 50 }}
+						onCreated={() => setLoaded(true)}
+						className="cursor-pointer"
+					>
+						<ambientLight intensity={0.3} />
+						<directionalLight
+							position={[5, 5, 5]}
+							intensity={1}
+							castShadow
+							shadow-mapSize-width={2048}
+							shadow-mapSize-height={2048}
+						/>
+						<pointLight position={[-5, 5, -5]} intensity={0.5} />
 
+						<WithRotation
+							isRotating={isHovering}
+							timeForFullRotationInSeconds={2}
+						>
 							<Neuron position={firstInputNeuronPosition} />
 							<Neuron position={secondInputNeuronPosition} />
 							<Neuron position={outputNeuronPosition} />
@@ -62,13 +79,14 @@ export const ActivationFunctionCard = () => {
 								midOffset={1.5}
 								lineWidth={2}
 							/>
+						</WithRotation>
 
-							<OrbitControls />
-						</Canvas>
-						{!loaded && <Skeleton className="absolute inset-0 w-full h-full" />}
-					</div>
-				</CardContent>
-			</Card>
-		</Link>
+						<OrbitControls />
+					</Canvas>
+
+					{!loaded && <Skeleton className="absolute inset-0 w-full h-full" />}
+				</div>
+			</CardContent>
+		</Card>
 	);
 };
