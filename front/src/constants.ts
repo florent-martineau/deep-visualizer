@@ -2,4 +2,5 @@
 export const PROJECT_NAME = "Neuroscope";
 
 // Description of the project, e.g. to be displayed in search engine results, on the homepage, etc.
-export const DESCRIPTION = "Visualize each step of a Neural Network inference";
+export const PROJECT_DESCRIPTION =
+	"Visualize each step of a Neural Network inference";

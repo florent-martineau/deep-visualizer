@@ -9,6 +9,10 @@ import {
 
 export const Route = createFileRoute("/activation-functions")({
 	component: ActivationFunction,
+	staticData: {
+		title: "Activation Functions",
+		description: "How does a neuron fire?",
+	},
 });
 
 function ActivationVisualization({
