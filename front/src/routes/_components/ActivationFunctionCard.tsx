@@ -2,6 +2,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { Vector3 } from "three";
+import { CurvedLink } from "@/components/3d/curved-link";
 import { Neuron } from "@/components/neural-network/Neuron";
 import {
 	Card,
@@ -14,6 +15,10 @@ import { useRoute } from "@/hooks/useRoute";
 
 export const ActivationFunctionCard = () => {
 	const { route, staticData } = useRoute("/activation-functions");
+
+	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
+	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
+	const outputNeuronPosition = new Vector3(3, 0, 0);
 
 	return (
 		<Link to={route.path}>
@@ -34,7 +39,22 @@ export const ActivationFunctionCard = () => {
 						/>
 						<pointLight position={[-5, 5, -5]} intensity={0.5} />
 
-						<Neuron position={new Vector3(1, 2, 3)} />
+						<Neuron position={firstInputNeuronPosition} />
+						<Neuron position={secondInputNeuronPosition} />
+						<Neuron position={outputNeuronPosition} />
+
+						<CurvedLink
+							start={firstInputNeuronPosition}
+							end={outputNeuronPosition}
+							midOffset={-1.5}
+							lineWidth={2}
+						/>
+						<CurvedLink
+							start={secondInputNeuronPosition}
+							end={outputNeuronPosition}
+							midOffset={1.5}
+							lineWidth={2}
+						/>
 
 						<OrbitControls />
 					</Canvas>
