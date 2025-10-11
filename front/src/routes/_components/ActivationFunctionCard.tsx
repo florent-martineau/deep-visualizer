@@ -25,7 +25,7 @@ export const ActivationFunctionCard = () => {
 
 	return (
 		<Link to={route.path}>
-			<Card className="w-92 hover:bg-primary/10">
+			<Card className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300">
 				<CardHeader>
 					<CardTitle>{staticData.title}</CardTitle>
 					<CardDescription>{staticData.description}</CardDescription>
