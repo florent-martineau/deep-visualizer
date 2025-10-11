@@ -1,15 +1,19 @@
-import type { Euler, Vector3 } from "three";
+import type { Vector3 } from "three";
 
 type NeuronProps = {
 	position: Vector3;
-	rotation: Euler;
 };
 
 export const Neuron = (props: NeuronProps) => {
 	return (
-		<mesh visible position={props.position}>
-			<sphereGeometry />
-			<meshStandardMaterial transparent />
+		<mesh position={props.position} castShadow receiveShadow>
+			<sphereGeometry args={[1, 64, 64]} />
+			<meshStandardMaterial
+				color="#4a90e2"
+				metalness={0.3}
+				roughness={0.4}
+				transparent={false}
+			/>
 		</mesh>
 	);
 };

@@ -1,6 +1,8 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
+import { Vector3 } from "three";
+import { Neuron } from "@/components/neural-network/Neuron";
 import {
 	Card,
 	CardContent,
@@ -22,15 +24,19 @@ export const ActivationFunctionCard = () => {
 				</CardHeader>
 				<CardContent>
 					<Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
-						<ambientLight intensity={0.5} />
-						<pointLight position={[10, 10, 10]} />
+						<ambientLight intensity={0.3} />
+						<directionalLight
+							position={[5, 5, 5]}
+							intensity={1}
+							castShadow
+							shadow-mapSize-width={2048}
+							shadow-mapSize-height={2048}
+						/>
+						<pointLight position={[-5, 5, -5]} intensity={0.5} />
 
-						<mesh visible position={[1, 2, 3]} rotation={[Math.PI / 2, 0, 0]}>
-							<sphereGeometry args={[1, 16, 16]} />
-							<meshStandardMaterial transparent />
-						</mesh>
+						<Neuron position={new Vector3(1, 2, 3)} />
 
-						<OrbitControls enableDamping />
+						<OrbitControls />
 					</Canvas>
 				</CardContent>
 			</Card>
