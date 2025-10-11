@@ -7,7 +7,7 @@ import {
 	useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { DESCRIPTION, PROJECT_NAME } from "@/constants";
+import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
 import Header from "../components/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
@@ -31,7 +31,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 			{
 				name: "description",
-				content: DESCRIPTION,
+				content: PROJECT_DESCRIPTION,
 			},
 		],
 		links: [
