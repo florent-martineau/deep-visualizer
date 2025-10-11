@@ -6,7 +6,7 @@ type NeuronProps = {
 
 export const Neuron = (props: NeuronProps) => {
 	return (
-		<mesh position={[0, 1, 0]} castShadow receiveShadow>
+		<mesh position={props.position} castShadow receiveShadow>
 			<sphereGeometry args={[1, 64, 64]} />
 			<meshStandardMaterial
 				color="#4a90e2"
