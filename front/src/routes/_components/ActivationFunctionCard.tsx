@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Vector3 } from "three";
 import { CurvedLink } from "@/components/3d/curved-link";
 import { WithRotation } from "@/components/3d/with-rotation";
