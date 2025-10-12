@@ -87,12 +87,14 @@ export const ActivationFunctionCard = () => {
 								end={outputNeuronPosition}
 								midOffset={-1.5}
 								lineWidth={firstInputNeuronToOutputNeuronWeight}
+								isPulsing={isHovering}
 							/>
 							<CurvedLink
 								start={secondInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={1.5}
 								lineWidth={secondInputNeuronToOutputNeuronWeight}
+								isPulsing={isHovering}
 							/>
 						</WithRotation>
 
