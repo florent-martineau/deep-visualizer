@@ -1,6 +1,5 @@
-import { useFrame } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { type RefObject, useRef } from "react";
+import type { RefObject } from "react";
 import type { Mesh } from "three";
 
 type GlowingBallRef = {
