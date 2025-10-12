@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Vector3 } from "three";
 import { CurvedLink } from "@/components/3d/curved-link";
 import { WithRotation } from "@/components/3d/with-rotation";
@@ -23,10 +23,25 @@ export const ActivationFunctionCard = () => {
 	const [loaded, setLoaded] = useState(false);
 	const { route, staticData } = useRoute("/activation-functions");
 	const [ref, isHovering] = useHover();
+	const [
+		firstInputNeuronToOutputNeuronWeight,
+		setFirstInputNeuronToOutputNeuronWeight,
+	] = useState(1);
+	const [
+		secondInputNeuronToOutputNeuronWeight,
+		setSecondInputNeuronToOutputNeuronWeight,
+	] = useState(1);
 
+	// Neurons
 	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
 	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
 	const outputNeuronPosition = new Vector3(3, 0, 0);
+
+	// Links
+	useEffect(() => {
+		setFirstInputNeuronToOutputNeuronWeight(randomWeight());
+		setSecondInputNeuronToOutputNeuronWeight(randomWeight());
+	}, []);
 
 	return (
 		<Card
@@ -71,13 +86,13 @@ export const ActivationFunctionCard = () => {
 								start={firstInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={-1.5}
-								lineWidth={2}
+								lineWidth={firstInputNeuronToOutputNeuronWeight}
 							/>
 							<CurvedLink
 								start={secondInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={1.5}
-								lineWidth={2}
+								lineWidth={secondInputNeuronToOutputNeuronWeight}
 							/>
 						</WithRotation>
 
@@ -89,4 +104,8 @@ export const ActivationFunctionCard = () => {
 			</CardContent>
 		</Card>
 	);
+};
+
+const randomWeight = () => {
+	return 1 + 3 * Math.random();
 };
