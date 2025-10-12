@@ -5,9 +5,9 @@ import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Vector3 } from "three";
-import { CurvedLink } from "@/components/3d/curved-link";
 import { WithRotation } from "@/components/3d/with-rotation";
 import { Neuron } from "@/components/neural-network/Neuron";
+import { NeuralConnection } from "@/components/neural-network/neural-connection";
 import {
 	Card,
 	CardAction,
@@ -82,14 +82,14 @@ export const ActivationFunctionCard = () => {
 							<Neuron position={secondInputNeuronPosition} />
 							<Neuron position={outputNeuronPosition} />
 
-							<CurvedLink
+							<NeuralConnection
 								start={firstInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={-1.5}
 								lineWidth={firstInputNeuronToOutputNeuronWeight}
 								isPulsing={isHovering}
 							/>
-							<CurvedLink
+							<NeuralConnection
 								start={secondInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={1.5}
