@@ -2,7 +2,7 @@ import { QuadraticBezierLine } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
-import { GlowingBall } from "./glowing-ball";
+import { GlowingBall } from "../3d/glowing-ball";
 
 type CurvedLinkProps = {
 	start: Vector3;
@@ -12,7 +12,7 @@ type CurvedLinkProps = {
 	isPulsing: boolean;
 };
 
-export const CurvedLink = (props: CurvedLinkProps) => {
+export const NeuralConnection = (props: CurvedLinkProps) => {
 	const pulseRef = useRef<Mesh>(null);
 
 	const mid = new Vector3(
