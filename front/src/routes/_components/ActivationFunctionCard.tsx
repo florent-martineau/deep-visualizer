@@ -74,6 +74,7 @@ export const ActivationFunctionCard = () => {
 						camera={{ position: [0, 0, 10], fov: 50 }}
 						onCreated={() => setLoaded(true)}
 						className="cursor-pointer"
+						frameloop={isHovering ? "always" : "demand"}
 					>
 						<ambientLight intensity={0.3} />
 						<directionalLight
