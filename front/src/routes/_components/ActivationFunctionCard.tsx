@@ -3,11 +3,14 @@ import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { WithRotation } from "@/components/3d/with-rotation";
 import { Neuron } from "@/components/neural-network/Neuron";
-import { NeuralConnection } from "@/components/neural-network/neural-connection";
+import {
+	NeuralConnection,
+	type NeuralConnectionHandle,
+} from "@/components/neural-network/neural-connection";
 import {
 	Card,
 	CardAction,
@@ -31,6 +34,8 @@ export const ActivationFunctionCard = () => {
 		secondInputNeuronToOutputNeuronWeight,
 		setSecondInputNeuronToOutputNeuronWeight,
 	] = useState(1);
+	const firstNeuronRef = useRef<NeuralConnectionHandle>(null);
+	const secondNeuronRef = useRef<NeuralConnectionHandle>(null);
 
 	// Neurons
 	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
@@ -42,6 +47,12 @@ export const ActivationFunctionCard = () => {
 		setFirstInputNeuronToOutputNeuronWeight(randomWeight());
 		setSecondInputNeuronToOutputNeuronWeight(randomWeight());
 	}, []);
+
+	useEffect(() => {
+		if (isHovering && firstNeuronRef) {
+			firstNeuronRef.current?.activate();
+		}
+	});
 
 	return (
 		<Card
@@ -87,14 +98,14 @@ export const ActivationFunctionCard = () => {
 								end={outputNeuronPosition}
 								midOffset={-1.5}
 								lineWidth={firstInputNeuronToOutputNeuronWeight}
-								isPulsing={isHovering}
+								ref={firstNeuronRef}
 							/>
 							<NeuralConnection
 								start={secondInputNeuronPosition}
 								end={outputNeuronPosition}
 								midOffset={1.5}
 								lineWidth={secondInputNeuronToOutputNeuronWeight}
-								isPulsing={isHovering}
+								ref={secondNeuronRef}
 							/>
 						</WithRotation>
 
