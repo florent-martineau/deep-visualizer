@@ -47,17 +47,22 @@ export const NeuralConnection = forwardRef<
 	useFrame(() => {
 		if (!activatedAt) return;
 
+		const animationDurationInSeconds = 0.75;
+
+		// Reset activatedAt when animation has finished
 		const currentTimeInMilliseconds = Date.now();
 		const activatedAtInMilliseconds = activatedAt.getTime();
 		const timeSinceActivationInSeconds =
 			(currentTimeInMilliseconds - activatedAtInMilliseconds) / 1_000;
-		if (timeSinceActivationInSeconds > 1) {
+		if (timeSinceActivationInSeconds > animationDurationInSeconds) {
 			setActivatedAt(null);
 		}
 
+		// Set position of the glowing ball along the curve
 		if (pulseRef.current) {
-			// Set position of the glowing ball along the curve
-			const position = curve.getPoint(timeSinceActivationInSeconds);
+			const position = curve.getPoint(
+				timeSinceActivationInSeconds / animationDurationInSeconds,
+			);
 			pulseRef.current.position.copy(position);
 		}
 	});
