@@ -1,18 +1,39 @@
 import { QuadraticBezierLine } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
+import {
+	forwardRef,
+	type RefObject,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from "react";
+import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
 import { GlowingBall } from "../3d/glowing-ball";
 
-type CurvedLinkProps = {
+export interface NeuralConnectionHandle {
+	activate: () => void;
+}
+
+type NeuralConnectionProps = {
 	start: Vector3;
 	end: Vector3;
 	lineWidth: number;
 	midOffset: number;
-	isPulsing: boolean;
+	ref: RefObject<Group>;
 };
 
-export const NeuralConnection = (props: CurvedLinkProps) => {
+export const NeuralConnection = forwardRef<
+	NeuralConnectionHandle,
+	NeuralConnectionProps
+>((props, ref) => {
+	const [activatedAt, setActivatedAt] = useState<Date | null>(null);
+
+	useImperativeHandle(ref, () => ({
+		activate: () => {
+			setActivatedAt(new Date());
+		},
+	}));
+
 	const pulseRef = useRef<Mesh>(null);
 
 	const mid = new Vector3(
@@ -23,11 +44,20 @@ export const NeuralConnection = (props: CurvedLinkProps) => {
 
 	const curve = new QuadraticBezierCurve3(props.start, mid, props.end);
 
-	useFrame((state) => {
-		if (props.isPulsing && pulseRef.current) {
+	useFrame(() => {
+		if (!activatedAt) return;
+
+		const currentTimeInMilliseconds = Date.now();
+		const activatedAtInMilliseconds = activatedAt.getTime();
+		const timeSinceActivationInSeconds =
+			(currentTimeInMilliseconds - activatedAtInMilliseconds) / 1_000;
+		if (timeSinceActivationInSeconds > 1) {
+			setActivatedAt(null);
+		}
+
+		if (pulseRef.current) {
 			// Set position of the glowing ball along the curve
-			const t = state.clock.elapsedTime % 1;
-			const position = curve.getPoint(t);
+			const position = curve.getPoint(timeSinceActivationInSeconds);
 			pulseRef.current.position.copy(position);
 		}
 	});
@@ -47,7 +77,7 @@ export const NeuralConnection = (props: CurvedLinkProps) => {
 				lineWidth={props.lineWidth}
 			/>
 
-			<GlowingBall ref={pulseRef} />
+			{activatedAt && <GlowingBall ref={pulseRef} />}
 		</group>
 	);
-};
+});
