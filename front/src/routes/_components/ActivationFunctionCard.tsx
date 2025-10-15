@@ -100,14 +100,23 @@ export const ActivationFunctionCard = () => {
 									<Neuron
 										position={firstInputNeuronPosition}
 										ref={firstInputNeuronRef}
+										onActivationEnd={() =>
+											console.log("Neuron 1 activation is over")
+										}
 									/>
 									<Neuron
 										position={secondInputNeuronPosition}
 										ref={secondInputNeuronRef}
+										onActivationEnd={() =>
+											console.log("Neuron 2 activation is over")
+										}
 									/>
 									<Neuron
 										position={outputNeuronPosition}
 										ref={outputNeuronRef}
+										onActivationEnd={() =>
+											console.log("Output neuron activation is over")
+										}
 									/>
 
 									<NeuralConnection
@@ -117,7 +126,7 @@ export const ActivationFunctionCard = () => {
 										lineWidth={firstInputNeuronToOutputNeuronWeight}
 										ref={firstNeuralConnectionRef}
 										onActivationEnd={() =>
-											console.log("Neuron 1 activation is over")
+											console.log("Neuron connection 1 activation is over")
 										}
 									/>
 									<NeuralConnection
@@ -127,7 +136,7 @@ export const ActivationFunctionCard = () => {
 										lineWidth={secondInputNeuronToOutputNeuronWeight}
 										ref={secondNeuralConnectionRef}
 										onActivationEnd={() =>
-											console.log("Neuron 2 activation is over")
+											console.log("Neural connection 2 activation is over")
 										}
 									/>
 								</WithRotation>

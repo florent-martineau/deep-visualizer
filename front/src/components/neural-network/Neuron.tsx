@@ -9,6 +9,7 @@ export interface NeuronHandle {
 
 type NeuronProps = {
 	position: Vector3;
+	onActivationEnd: () => void;
 };
 
 export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
@@ -31,6 +32,7 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 		const secondsSinceActivation = currentFrame - frameWhenActivated;
 		if (secondsSinceActivation > animationDurationInSeconds) {
 			setFrameWhenActivated(null);
+			props.onActivationEnd();
 		}
 	});
 
