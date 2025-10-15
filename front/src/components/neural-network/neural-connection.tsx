@@ -20,8 +20,10 @@ type NeuralConnectionProps = {
 	lineWidth: number;
 	midOffset: number;
 	ref: RefObject<Group>;
-	onActivationEnd: () => void;
+	onActivationEnd?: () => void;
 };
+
+const ANIMATION_DURATION_IN_SECONDS = 1;
 
 export const NeuralConnection = forwardRef<
 	NeuralConnectionHandle,
@@ -51,19 +53,18 @@ export const NeuralConnection = forwardRef<
 	useFrame((state) => {
 		if (frameWhenActivated === null) return;
 
-		const animationDurationInSeconds = 1;
 		const currentFrame = state.clock.elapsedTime;
 		const secondsSinceActivation = currentFrame - frameWhenActivated;
-		if (secondsSinceActivation > animationDurationInSeconds) {
+		if (secondsSinceActivation > ANIMATION_DURATION_IN_SECONDS) {
 			setFrameWhenActivated(null);
-			props.onActivationEnd();
+			props.onActivationEnd?.();
 		}
 
 		// Set position of the glowing ball along the curve
 		if (pulseRef.current) {
 			const position = curve.getPoint(
 				Math.max(
-					Math.min(secondsSinceActivation / animationDurationInSeconds, 1),
+					Math.min(secondsSinceActivation / ANIMATION_DURATION_IN_SECONDS, 1),
 					0,
 				),
 			);

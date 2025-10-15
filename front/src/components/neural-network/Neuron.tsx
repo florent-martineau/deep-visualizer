@@ -9,14 +9,17 @@ export interface NeuronHandle {
 
 type NeuronProps = {
 	position: Vector3;
-	onActivationEnd: () => void;
+	onActivationEnd?: () => void;
 };
+
+const ANIMATION_DURATION_IN_SECONDS = 0.5;
 
 export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 	const three = useThree();
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
 	);
+	const [glowIntensity, setGlowIntensity] = useState(0);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
@@ -27,19 +30,26 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 	useFrame((state) => {
 		if (frameWhenActivated === null) return;
 
-		const animationDurationInSeconds = 1;
 		const currentFrame = state.clock.elapsedTime;
 		const secondsSinceActivation = currentFrame - frameWhenActivated;
-		if (secondsSinceActivation > animationDurationInSeconds) {
+		if (secondsSinceActivation > ANIMATION_DURATION_IN_SECONDS) {
+			setGlowIntensity(0);
 			setFrameWhenActivated(null);
-			props.onActivationEnd();
+			props.onActivationEnd?.();
+		} else {
+			const animationProgress =
+				secondsSinceActivation / ANIMATION_DURATION_IN_SECONDS;
+			setGlowIntensity(
+				2 *
+					(animationProgress > 0.5 ? 1 - animationProgress : animationProgress),
+			);
 		}
 	});
 
 	return (
 		<GlowingBall
 			position={props.position}
-			glowIntensity={frameWhenActivated !== null ? 5 : 0}
+			glowIntensity={glowIntensity}
 			radius={1}
 			color={"#525252"}
 		/>
