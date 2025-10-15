@@ -1,5 +1,7 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import type { Vector3 } from "three";
+import { GlowingBall } from "../3d/glowing-ball";
 
 export interface NeuronHandle {
 	activate: () => void;
@@ -10,27 +12,34 @@ type NeuronProps = {
 };
 
 export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
-	const [isActivated, setIsActivated] = useState(false);
+	const three = useThree();
+	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
+		null,
+	);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
-			setIsActivated(true);
+			setFrameWhenActivated(three.clock.elapsedTime);
 		},
 	}));
 
-	useEffect(() => {
-		alert(isActivated);
-	}, [isActivated]);
+	useFrame((state) => {
+		if (frameWhenActivated === null) return;
+
+		const animationDurationInSeconds = 1;
+		const currentFrame = state.clock.elapsedTime;
+		const secondsSinceActivation = currentFrame - frameWhenActivated;
+		if (secondsSinceActivation > animationDurationInSeconds) {
+			setFrameWhenActivated(null);
+		}
+	});
 
 	return (
-		<mesh position={props.position} castShadow receiveShadow>
-			<sphereGeometry args={[1, 64, 64]} />
-			<meshStandardMaterial
-				color="#4a90e2"
-				metalness={0.3}
-				roughness={0.4}
-				transparent={false}
-			/>
-		</mesh>
+		<GlowingBall
+			position={props.position}
+			glowIntensity={frameWhenActivated !== null ? 5 : 0}
+			radius={1}
+			color={"#525252"}
+		/>
 	);
 });

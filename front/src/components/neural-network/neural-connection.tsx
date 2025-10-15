@@ -28,12 +28,13 @@ export const NeuralConnection = forwardRef<
 	NeuralConnectionProps
 >((props, ref) => {
 	const three = useThree();
-	const [frameWhenConnectionWasActivated, setFrameWhenConnectionWasActivated] =
-		useState<number | null>(null);
+	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
+		null,
+	);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
-			setFrameWhenConnectionWasActivated(three.clock.elapsedTime);
+			setFrameWhenActivated(three.clock.elapsedTime);
 		},
 	}));
 
@@ -48,14 +49,13 @@ export const NeuralConnection = forwardRef<
 	const curve = new QuadraticBezierCurve3(props.start, mid, props.end);
 
 	useFrame((state) => {
-		if (frameWhenConnectionWasActivated === null) return;
+		if (frameWhenActivated === null) return;
 
 		const animationDurationInSeconds = 1;
 		const currentFrame = state.clock.elapsedTime;
-		const secondsSinceActivation =
-			currentFrame - frameWhenConnectionWasActivated;
+		const secondsSinceActivation = currentFrame - frameWhenActivated;
 		if (secondsSinceActivation > animationDurationInSeconds) {
-			setFrameWhenConnectionWasActivated(null);
+			setFrameWhenActivated(null);
 			props.onActivationEnd();
 		}
 
@@ -86,8 +86,13 @@ export const NeuralConnection = forwardRef<
 				lineWidth={props.lineWidth}
 			/>
 
-			{frameWhenConnectionWasActivated && (
-				<GlowingBall ref={pulseRef} radius={0.2} />
+			{frameWhenActivated && (
+				<GlowingBall
+					ref={pulseRef}
+					radius={0.2}
+					glowIntensity={5}
+					color="#00bbbb"
+				/>
 			)}
 		</group>
 	);
