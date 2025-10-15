@@ -4,6 +4,7 @@ import type { Mesh } from "three";
 
 type GlowingBallRef = {
 	ref: RefObject<Mesh | null>;
+	radius: number;
 };
 
 export const GlowingBall = (props: GlowingBallRef) => {
@@ -12,7 +13,7 @@ export const GlowingBall = (props: GlowingBallRef) => {
 	return (
 		<>
 			<mesh ref={props.ref}>
-				<sphereGeometry args={[0.2, 16, 16]} />
+				<sphereGeometry args={[props.radius, 16, 16]} />
 				<meshStandardMaterial
 					color={pulseColor}
 					emissive={pulseColor}
