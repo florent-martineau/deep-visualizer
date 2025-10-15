@@ -1,5 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import type { Vector3 } from "three";
 import { GlowingBall } from "../3d/glowing-ball";
 
