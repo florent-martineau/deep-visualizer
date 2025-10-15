@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { WithGlow } from "@/components/3d/with-glow";
 import { WithPause } from "@/components/3d/with-pause";
@@ -52,7 +52,23 @@ export const ActivationFunctionCard = () => {
 	useEffect(() => {
 		setFirstInputNeuronToOutputNeuronWeight(randomWeight());
 		setSecondInputNeuronToOutputNeuronWeight(randomWeight());
+
+		firstNeuralConnectionRef.current?.activate();
+		firstInputNeuronRef.current?.activate();
 	}, []);
+
+	const startAnimation = useCallback(() => {
+		firstInputNeuronRef.current?.activate();
+		firstNeuralConnectionRef.current?.activate();
+		secondInputNeuronRef.current?.activate();
+		secondNeuralConnectionRef.current?.activate();
+	}, []);
+
+	useEffect(() => {
+		if (loaded) {
+			startAnimation();
+		}
+	}, [loaded, startAnimation]);
 
 	return (
 		<Card
@@ -68,13 +84,7 @@ export const ActivationFunctionCard = () => {
 					</CardAction>
 				</CardHeader>
 			</Link>
-			<CardContent
-				className="relative w-full h-48"
-				onClick={() => {
-					firstNeuralConnectionRef.current?.activate();
-					firstInputNeuronRef.current?.activate();
-				}}
-			>
+			<CardContent className="relative w-full h-48">
 				<div className="relative h-full w-full">
 					<Canvas
 						ref={canvasRef}
@@ -100,23 +110,15 @@ export const ActivationFunctionCard = () => {
 									<Neuron
 										position={firstInputNeuronPosition}
 										ref={firstInputNeuronRef}
-										onActivationEnd={() =>
-											console.log("Neuron 1 activation is over")
-										}
 									/>
 									<Neuron
 										position={secondInputNeuronPosition}
 										ref={secondInputNeuronRef}
-										onActivationEnd={() =>
-											console.log("Neuron 2 activation is over")
-										}
 									/>
 									<Neuron
 										position={outputNeuronPosition}
 										ref={outputNeuronRef}
-										onActivationEnd={() =>
-											console.log("Output neuron activation is over")
-										}
+										onActivationEnd={startAnimation}
 									/>
 
 									<NeuralConnection
@@ -125,9 +127,6 @@ export const ActivationFunctionCard = () => {
 										midOffset={-1.5}
 										lineWidth={firstInputNeuronToOutputNeuronWeight}
 										ref={firstNeuralConnectionRef}
-										onActivationEnd={() =>
-											console.log("Neuron connection 1 activation is over")
-										}
 									/>
 									<NeuralConnection
 										start={secondInputNeuronPosition}
@@ -135,9 +134,7 @@ export const ActivationFunctionCard = () => {
 										midOffset={1.5}
 										lineWidth={secondInputNeuronToOutputNeuronWeight}
 										ref={secondNeuralConnectionRef}
-										onActivationEnd={() =>
-											console.log("Neural connection 2 activation is over")
-										}
+										onActivationEnd={() => outputNeuronRef.current?.activate()}
 									/>
 								</WithRotation>
 							</WithGlow>
