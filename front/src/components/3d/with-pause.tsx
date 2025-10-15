@@ -1,5 +1,5 @@
 import { useThree } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
 type WithPauseProps = {
 	isRunning: boolean;

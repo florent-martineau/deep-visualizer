@@ -40,7 +40,7 @@ export const ActivationFunctionCard = () => {
 
 	// Neural connections
 	const [firstInputNeuronToOutputNeuronWeight] = useState(randomWeight());
-	const [secondInputNeuronToOutputNeuronWeight] = useState(1);
+	const [secondInputNeuronToOutputNeuronWeight] = useState(randomWeight());
 	const firstNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 	const secondNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 
