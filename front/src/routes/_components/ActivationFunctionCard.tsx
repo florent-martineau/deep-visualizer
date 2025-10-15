@@ -29,16 +29,6 @@ export const ActivationFunctionCard = () => {
 	const [loaded, setLoaded] = useState(false);
 	const { route, staticData } = useRoute("/activation-functions");
 	const [ref, isHovering] = useHover();
-	const [
-		firstInputNeuronToOutputNeuronWeight,
-		setFirstInputNeuronToOutputNeuronWeight,
-	] = useState(1);
-	const [
-		secondInputNeuronToOutputNeuronWeight,
-		setSecondInputNeuronToOutputNeuronWeight,
-	] = useState(1);
-	const firstNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
-	const secondNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 
 	// Neurons
 	const firstInputNeuronRef = useRef<NeuronHandle>(null);
@@ -48,14 +38,11 @@ export const ActivationFunctionCard = () => {
 	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
 	const outputNeuronPosition = new Vector3(3, 0, 0);
 
-	// Links
-	useEffect(() => {
-		setFirstInputNeuronToOutputNeuronWeight(randomWeight());
-		setSecondInputNeuronToOutputNeuronWeight(randomWeight());
-
-		firstNeuralConnectionRef.current?.activate();
-		firstInputNeuronRef.current?.activate();
-	}, []);
+	// Neural connections
+	const [firstInputNeuronToOutputNeuronWeight] = useState(randomWeight());
+	const [secondInputNeuronToOutputNeuronWeight] = useState(1);
+	const firstNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
+	const secondNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 
 	const startAnimation = useCallback(() => {
 		firstInputNeuronRef.current?.activate();
