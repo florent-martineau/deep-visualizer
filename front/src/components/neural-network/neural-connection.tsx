@@ -1,5 +1,5 @@
 import { QuadraticBezierLine } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import {
 	forwardRef,
 	type RefObject,
@@ -26,11 +26,13 @@ export const NeuralConnection = forwardRef<
 	NeuralConnectionHandle,
 	NeuralConnectionProps
 >((props, ref) => {
-	const [activatedAt, setActivatedAt] = useState<Date | null>(null);
+	const three = useThree();
+	const [frameWhenConnectionWasActivated, setFrameWhenConnectionWasActivated] =
+		useState<number | null>(null);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
-			setActivatedAt(new Date());
+			setFrameWhenConnectionWasActivated(three.clock.elapsedTime);
 		},
 	}));
 
@@ -44,24 +46,24 @@ export const NeuralConnection = forwardRef<
 
 	const curve = new QuadraticBezierCurve3(props.start, mid, props.end);
 
-	useFrame(() => {
-		if (!activatedAt) return;
+	useFrame((state) => {
+		if (frameWhenConnectionWasActivated === null) return;
 
-		const animationDurationInSeconds = 0.75;
-
-		// Reset activatedAt when animation has finished
-		const currentTimeInMilliseconds = Date.now();
-		const activatedAtInMilliseconds = activatedAt.getTime();
-		const timeSinceActivationInSeconds =
-			(currentTimeInMilliseconds - activatedAtInMilliseconds) / 1_000;
-		if (timeSinceActivationInSeconds > animationDurationInSeconds) {
-			setActivatedAt(null);
+		const animationDurationInSeconds = 1;
+		const currentFrame = state.clock.elapsedTime;
+		const secondsSinceActivation =
+			currentFrame - frameWhenConnectionWasActivated;
+		if (secondsSinceActivation > animationDurationInSeconds) {
+			setFrameWhenConnectionWasActivated(null);
 		}
 
 		// Set position of the glowing ball along the curve
 		if (pulseRef.current) {
 			const position = curve.getPoint(
-				timeSinceActivationInSeconds / animationDurationInSeconds,
+				Math.max(
+					Math.min(secondsSinceActivation / animationDurationInSeconds, 1),
+					0,
+				),
 			);
 			pulseRef.current.position.copy(position);
 		}
@@ -82,7 +84,9 @@ export const NeuralConnection = forwardRef<
 				lineWidth={props.lineWidth}
 			/>
 
-			{activatedAt && <GlowingBall ref={pulseRef} />}
+			{frameWhenConnectionWasActivated && (
+				<GlowingBall ref={pulseRef} radius={0.2} />
+			)}
 		</group>
 	);
 });
