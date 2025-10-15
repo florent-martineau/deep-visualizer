@@ -99,6 +99,7 @@ export const ActivationFunctionCard = () => {
 									midOffset={-1.5}
 									lineWidth={firstInputNeuronToOutputNeuronWeight}
 									ref={firstNeuronRef}
+									onActivationEnd={() => alert("Neuron 1 activation is over")}
 								/>
 								<NeuralConnection
 									start={secondInputNeuronPosition}
@@ -106,6 +107,7 @@ export const ActivationFunctionCard = () => {
 									midOffset={1.5}
 									lineWidth={secondInputNeuronToOutputNeuronWeight}
 									ref={secondNeuronRef}
+									onActivationEnd={() => alert("Neuron 2 activation is over")}
 								/>
 							</WithRotation>
 						</WithPause>

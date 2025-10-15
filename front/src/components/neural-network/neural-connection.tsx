@@ -20,6 +20,7 @@ type NeuralConnectionProps = {
 	lineWidth: number;
 	midOffset: number;
 	ref: RefObject<Group>;
+	onActivationEnd: () => void;
 };
 
 export const NeuralConnection = forwardRef<
@@ -55,6 +56,7 @@ export const NeuralConnection = forwardRef<
 			currentFrame - frameWhenConnectionWasActivated;
 		if (secondsSinceActivation > animationDurationInSeconds) {
 			setFrameWhenConnectionWasActivated(null);
+			props.onActivationEnd();
 		}
 
 		// Set position of the glowing ball along the curve
