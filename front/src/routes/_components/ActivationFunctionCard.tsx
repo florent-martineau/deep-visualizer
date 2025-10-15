@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { WithPause } from "@/components/3d/with-pause";
 import { WithRotation } from "@/components/3d/with-rotation";
-import { Neuron } from "@/components/neural-network/Neuron";
+import { Neuron, type NeuronHandle } from "@/components/neural-network/Neuron";
 import {
 	NeuralConnection,
 	type NeuralConnectionHandle,
@@ -36,10 +36,13 @@ export const ActivationFunctionCard = () => {
 		secondInputNeuronToOutputNeuronWeight,
 		setSecondInputNeuronToOutputNeuronWeight,
 	] = useState(1);
-	const firstNeuronRef = useRef<NeuralConnectionHandle>(null);
-	const secondNeuronRef = useRef<NeuralConnectionHandle>(null);
+	const firstNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
+	const secondNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 
 	// Neurons
+	const firstInputNeuronRef = useRef<NeuronHandle>(null);
+	const secondInputNeuronRef = useRef<NeuronHandle>(null);
+	const outputNeuronRef = useRef<NeuronHandle>(null);
 	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
 	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
 	const outputNeuronPosition = new Vector3(3, 0, 0);
@@ -66,7 +69,7 @@ export const ActivationFunctionCard = () => {
 			</Link>
 			<CardContent
 				className="relative w-full h-48"
-				onClick={() => firstNeuronRef.current?.activate()}
+				onClick={() => firstNeuralConnectionRef.current?.activate()}
 			>
 				<div className="relative h-full w-full">
 					<Canvas
@@ -89,16 +92,22 @@ export const ActivationFunctionCard = () => {
 								isRotating={isHovering}
 								timeForFullRotationInSeconds={2}
 							>
-								<Neuron position={firstInputNeuronPosition} />
-								<Neuron position={secondInputNeuronPosition} />
-								<Neuron position={outputNeuronPosition} />
+								<Neuron
+									position={firstInputNeuronPosition}
+									ref={firstInputNeuronRef}
+								/>
+								<Neuron
+									position={secondInputNeuronPosition}
+									ref={secondInputNeuronRef}
+								/>
+								<Neuron position={outputNeuronPosition} ref={outputNeuronRef} />
 
 								<NeuralConnection
 									start={firstInputNeuronPosition}
 									end={outputNeuronPosition}
 									midOffset={-1.5}
 									lineWidth={firstInputNeuronToOutputNeuronWeight}
-									ref={firstNeuronRef}
+									ref={firstNeuralConnectionRef}
 									onActivationEnd={() => alert("Neuron 1 activation is over")}
 								/>
 								<NeuralConnection
@@ -106,7 +115,7 @@ export const ActivationFunctionCard = () => {
 									end={outputNeuronPosition}
 									midOffset={1.5}
 									lineWidth={secondInputNeuronToOutputNeuronWeight}
-									ref={secondNeuronRef}
+									ref={secondNeuralConnectionRef}
 									onActivationEnd={() => alert("Neuron 2 activation is over")}
 								/>
 							</WithRotation>
