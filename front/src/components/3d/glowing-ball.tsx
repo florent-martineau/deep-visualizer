@@ -1,35 +1,23 @@
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import type { RefObject } from "react";
-import type { Mesh } from "three";
+import type { Mesh, Vector3 } from "three";
 
 type GlowingBallRef = {
-	ref: RefObject<Mesh | null>;
 	radius: number;
+	glowIntensity: number;
+	color: string;
+	ref?: RefObject<Mesh | null>;
+	position?: Vector3;
 };
 
 export const GlowingBall = (props: GlowingBallRef) => {
-	const pulseColor = "#00ffff";
-
 	return (
-		<>
-			<mesh ref={props.ref}>
-				<sphereGeometry args={[props.radius, 16, 16]} />
-				<meshStandardMaterial
-					color={pulseColor}
-					emissive={pulseColor}
-					emissiveIntensity={2}
-					toneMapped={false}
-				/>
-			</mesh>
-
-			<EffectComposer>
-				<Bloom
-					intensity={5}
-					luminanceThreshold={0.9}
-					luminanceSmoothing={0.9}
-					radius={0.9}
-				/>
-			</EffectComposer>
-		</>
+		<mesh ref={props.ref} position={props.position ?? undefined}>
+			<sphereGeometry args={[props.radius, 32, 32]} />
+			<meshStandardMaterial
+				color={props.color}
+				emissive={props.color}
+				emissiveIntensity={props.glowIntensity}
+			/>
+		</mesh>
 	);
 };

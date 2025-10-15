@@ -5,6 +5,7 @@ import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
+import { WithGlow } from "@/components/3d/with-glow";
 import { WithPause } from "@/components/3d/with-pause";
 import { WithRotation } from "@/components/3d/with-rotation";
 import { Neuron, type NeuronHandle } from "@/components/neural-network/Neuron";
@@ -69,7 +70,10 @@ export const ActivationFunctionCard = () => {
 			</Link>
 			<CardContent
 				className="relative w-full h-48"
-				onClick={() => firstNeuralConnectionRef.current?.activate()}
+				onClick={() => {
+					firstNeuralConnectionRef.current?.activate();
+					firstInputNeuronRef.current?.activate();
+				}}
 			>
 				<div className="relative h-full w-full">
 					<Canvas
@@ -88,37 +92,46 @@ export const ActivationFunctionCard = () => {
 						/>
 						<pointLight position={[-5, 5, -5]} intensity={0.5} />
 						<WithPause isRunning={isHovering}>
-							<WithRotation
-								isRotating={isHovering}
-								timeForFullRotationInSeconds={2}
-							>
-								<Neuron
-									position={firstInputNeuronPosition}
-									ref={firstInputNeuronRef}
-								/>
-								<Neuron
-									position={secondInputNeuronPosition}
-									ref={secondInputNeuronRef}
-								/>
-								<Neuron position={outputNeuronPosition} ref={outputNeuronRef} />
+							<WithGlow>
+								<WithRotation
+									isRotating={isHovering}
+									timeForFullRotationInSeconds={2}
+								>
+									<Neuron
+										position={firstInputNeuronPosition}
+										ref={firstInputNeuronRef}
+									/>
+									<Neuron
+										position={secondInputNeuronPosition}
+										ref={secondInputNeuronRef}
+									/>
+									<Neuron
+										position={outputNeuronPosition}
+										ref={outputNeuronRef}
+									/>
 
-								<NeuralConnection
-									start={firstInputNeuronPosition}
-									end={outputNeuronPosition}
-									midOffset={-1.5}
-									lineWidth={firstInputNeuronToOutputNeuronWeight}
-									ref={firstNeuralConnectionRef}
-									onActivationEnd={() => alert("Neuron 1 activation is over")}
-								/>
-								<NeuralConnection
-									start={secondInputNeuronPosition}
-									end={outputNeuronPosition}
-									midOffset={1.5}
-									lineWidth={secondInputNeuronToOutputNeuronWeight}
-									ref={secondNeuralConnectionRef}
-									onActivationEnd={() => alert("Neuron 2 activation is over")}
-								/>
-							</WithRotation>
+									<NeuralConnection
+										start={firstInputNeuronPosition}
+										end={outputNeuronPosition}
+										midOffset={-1.5}
+										lineWidth={firstInputNeuronToOutputNeuronWeight}
+										ref={firstNeuralConnectionRef}
+										onActivationEnd={() =>
+											console.log("Neuron 1 activation is over")
+										}
+									/>
+									<NeuralConnection
+										start={secondInputNeuronPosition}
+										end={outputNeuronPosition}
+										midOffset={1.5}
+										lineWidth={secondInputNeuronToOutputNeuronWeight}
+										ref={secondNeuralConnectionRef}
+										onActivationEnd={() =>
+											console.log("Neuron 2 activation is over")
+										}
+									/>
+								</WithRotation>
+							</WithGlow>
 						</WithPause>
 						<OrbitControls />
 					</Canvas>
