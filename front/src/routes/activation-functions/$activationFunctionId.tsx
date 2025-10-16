@@ -10,7 +10,7 @@ import {
 export const Route = createFileRoute(
 	"/activation-functions/$activationFunctionId",
 )({
-	component: ActivationFunction,
+	component: RouteComponent,
 	staticData: {
 		title: "Activation Functions",
 		description: "How does a neuron fire?",
@@ -63,7 +63,7 @@ function ActivationVisualization({
 	);
 }
 
-function ActivationFunction() {
+function RouteComponent() {
 	const { activationFunctionId } = Route.useParams();
 
 	const { data } = useGetActivationFunction(activationFunctionId, {

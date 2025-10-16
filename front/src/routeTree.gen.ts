@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ApiProxyRouteImport } from './routes/api-proxy'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivationFunctionsIndexRouteImport } from './routes/activation-functions/index'
 import { Route as ActivationFunctionsActivationFunctionIdRouteImport } from './routes/activation-functions/$activationFunctionId'
 
 const ApiProxyRoute = ApiProxyRouteImport.update({
@@ -23,6 +24,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivationFunctionsIndexRoute =
+  ActivationFunctionsIndexRouteImport.update({
+    id: '/activation-functions/',
+    path: '/activation-functions/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ActivationFunctionsActivationFunctionIdRoute =
   ActivationFunctionsActivationFunctionIdRouteImport.update({
     id: '/activation-functions/$activationFunctionId',
@@ -34,34 +41,47 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
+  '/activation-functions': typeof ActivationFunctionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
+  '/activation-functions': typeof ActivationFunctionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
+  '/activation-functions/': typeof ActivationFunctionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api-proxy' | '/activation-functions/$activationFunctionId'
+  fullPaths:
+    | '/'
+    | '/api-proxy'
+    | '/activation-functions/$activationFunctionId'
+    | '/activation-functions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api-proxy' | '/activation-functions/$activationFunctionId'
+  to:
+    | '/'
+    | '/api-proxy'
+    | '/activation-functions/$activationFunctionId'
+    | '/activation-functions'
   id:
     | '__root__'
     | '/'
     | '/api-proxy'
     | '/activation-functions/$activationFunctionId'
+    | '/activation-functions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiProxyRoute: typeof ApiProxyRoute
   ActivationFunctionsActivationFunctionIdRoute: typeof ActivationFunctionsActivationFunctionIdRoute
+  ActivationFunctionsIndexRoute: typeof ActivationFunctionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -80,6 +100,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activation-functions/': {
+      id: '/activation-functions/'
+      path: '/activation-functions'
+      fullPath: '/activation-functions'
+      preLoaderRoute: typeof ActivationFunctionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/activation-functions/$activationFunctionId': {
       id: '/activation-functions/$activationFunctionId'
       path: '/activation-functions/$activationFunctionId'
@@ -95,6 +122,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiProxyRoute: ApiProxyRoute,
   ActivationFunctionsActivationFunctionIdRoute:
     ActivationFunctionsActivationFunctionIdRoute,
+  ActivationFunctionsIndexRoute: ActivationFunctionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

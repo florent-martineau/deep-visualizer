@@ -27,7 +27,7 @@ import { useRoute } from "@/hooks/useRoute";
 export const ActivationFunctionCard = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [loaded, setLoaded] = useState(false);
-	const { route, staticData } = useRoute("/activation-functions");
+	const { route, staticData } = useRoute("/activation-functions/");
 	const [ref, isHovering] = useHover();
 
 	// Neurons
@@ -62,7 +62,7 @@ export const ActivationFunctionCard = () => {
 			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
 			ref={ref}
 		>
-			<Link to={route.path}>
+			<Link to={route.fullPath}>
 				<CardHeader className="hover:underline">
 					<CardTitle>{staticData.title}</CardTitle>
 					<CardDescription>{staticData.description}</CardDescription>
