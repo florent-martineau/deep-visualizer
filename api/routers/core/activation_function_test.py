@@ -12,188 +12,220 @@ from api.main import app
 from api.routers.core.activation_function import (
     ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE,
     ActivationFunctionResponse,
+    ListActivationFunctionsResponse,
 )
 from fastapi.testclient import TestClient
 
 
-def _make_request(
-    id: str = SUPPORTED_ACTIVATION_FUNCTION_IDS[0],
-    min: float | None = -1,
-    max: float | None = 1,
-    step: float | None = 0.1,
-):
-    client = TestClient(app)
+class GetActivationFunctionTest:
+    def _make_request(
+        self,
+        id: str = SUPPORTED_ACTIVATION_FUNCTION_IDS[0],
+        min: float | None = -1,
+        max: float | None = 1,
+        step: float | None = 0.1,
+    ):
+        client = TestClient(app)
 
-    params: Dict[str, float] = {}
-    if min is not None:
-        params["min"] = min
+        params: Dict[str, float] = {}
+        if min is not None:
+            params["min"] = min
 
-    if max is not None:
-        params["max"] = max
+        if max is not None:
+            params["max"] = max
 
-    if step is not None:
-        params["step"] = step
+        if step is not None:
+            params["step"] = step
 
-    response = client.get(f"{API_PATH_PREFIX}/activation-functions/{id}", params=params)
-    return response
-
-
-def should_return_404_if_activation_function_is_not_supported():
-    id = "does-not-exist"
-    response = _make_request(id=id)
-
-    assert id not in SUPPORTED_ACTIVATION_FUNCTION_IDS
-    assert response.status_code == 404
-
-
-@pytest.mark.parametrize("id", SUPPORTED_ACTIVATION_FUNCTION_IDS)
-def should_not_return_404_if_activation_function_is_supported(id: str):
-    response = _make_request(id=id)
-
-    assert id in SUPPORTED_ACTIVATION_FUNCTION_IDS
-    assert response.status_code != 404
-
-
-@pytest.mark.parametrize(
-    "has_min, has_max, has_step",
-    [
-        (has_min, has_max, has_step)
-        for has_min in [True, False]
-        for has_max in [True, False]
-        for has_step in [True, False]
-    ],
-)
-def should_not_return_422_if_mandatory_parameter_is_missing(
-    has_min: bool, has_max: bool, has_step: bool
-):
-    if has_min and has_max and has_step:
-        pytest.skip("All mandatory parameters are provided")
-
-    response = _make_request(
-        min=-1 if has_min else None,
-        max=1 if has_max else None,
-        step=0.1 if has_step else None,
-    )
-
-    assert response.status_code == 422
-
-
-@pytest.mark.parametrize(
-    "min, max, step",
-    [
-        (-1, 1, 0.1),
-        (-1, 1, 1 / 3.0),
-        (-1, 1, 0.15),
-    ],
-    ids=[
-        "Step divides ranges perfectly",
-        "Step almost divides range properly",
-        "Step doesn't divide range properly",
-    ],
-)
-def should_include_the_extremums_in_activation_inputs(
-    min: float, max: float, step: float
-):
-    response = _make_request(
-        min=min,
-        max=max,
-        step=step,
-    )
-
-    parsed_response = ActivationFunctionResponse.model_validate(response.json())
-    inputs = list(
-        map(lambda activation: activation.pre_activation, parsed_response.activations)
-    )
-
-    assert min in inputs
-    assert max in inputs
-
-
-@pytest.mark.parametrize(
-    "min, max, step, expected_inputs",
-    [
-        (-1, 1, 1, [-1, 0, 1]),
-        (-1, 1, 0.42, [-1, -0.58, -0.16, 0.26, 0.68, 1]),
-    ],
-    ids=[
-        "Step divides ranges perfectly",
-        "Step doesn't divide range properly",
-    ],
-)
-def should_have_correct_inputs(
-    min: float, max: float, step: float, expected_inputs: List[float]
-):
-    response = _make_request(
-        min=min,
-        max=max,
-        step=step,
-    )
-
-    parsed_response = ActivationFunctionResponse.model_validate(response.json())
-    inputs = list(
-        map(lambda activation: activation.pre_activation, parsed_response.activations)
-    )
-
-    assert inputs == pytest.approx(expected_inputs)
-
-
-def should_return_422_if_min_is_greater_than_or_equal_to_max():
-    response = _make_request(min=1, max=0)
-    assert response.status_code == 422
-
-
-def should_return_422_if_number_of_activations_to_compute_is_too_large():
-    response_below_threshold = _make_request(
-        min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE, step=1
-    )
-    assert response_below_threshold.status_code == 200
-
-    response_below_threshold = _make_request(
-        min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE + 1, step=1
-    )
-    assert response_below_threshold.status_code == 422
-
-
-@pytest.mark.parametrize(
-    "activation_function",
-    ACTIVATION_FUNCTIONS.values(),
-    ids=map(lambda activation: activation.id, ACTIVATION_FUNCTIONS.values()),
-)
-def should_return_correct_activations(activation_function: ActivationFunction):
-    response = _make_request(id=activation_function.id, min=-1, max=1, step=0.5)
-    parsed_response = ActivationFunctionResponse.model_validate(response.json())
-
-    actual_inputs = list(
-        map(
-            lambda activation_object: activation_object.pre_activation,
-            parsed_response.activations,
+        response = client.get(
+            f"{API_PATH_PREFIX}/activation-functions/{id}", params=params
         )
-    )
-    expected_inputs: List[float] = [-1, -0.5, 0, 0.5, 1]
-    assert actual_inputs == pytest.approx(expected_inputs)
+        return response
 
-    expected_activations = activation_function.module(torch.Tensor(expected_inputs))
-    expected_outputs = list(
-        map(lambda activation: activation.item(), expected_activations)
+    def should_return_404_if_activation_function_is_not_supported(self):
+        id = "does-not-exist"
+        response = self._make_request(id=id)
+
+        assert id not in SUPPORTED_ACTIVATION_FUNCTION_IDS
+        assert response.status_code == 404
+
+    @pytest.mark.parametrize("id", SUPPORTED_ACTIVATION_FUNCTION_IDS)
+    def should_not_return_404_if_activation_function_is_supported(self, id: str):
+        response = self._make_request(id=id)
+
+        assert id in SUPPORTED_ACTIVATION_FUNCTION_IDS
+        assert response.status_code != 404
+
+    @pytest.mark.parametrize(
+        "has_min, has_max, has_step",
+        [
+            (has_min, has_max, has_step)
+            for has_min in [True, False]
+            for has_max in [True, False]
+            for has_step in [True, False]
+        ],
     )
-    actual_outputs = list(
-        map(
-            lambda activation_object: activation_object.activation,
-            parsed_response.activations,
+    def should_not_return_422_if_mandatory_parameter_is_missing(
+        self, has_min: bool, has_max: bool, has_step: bool
+    ):
+        if has_min and has_max and has_step:
+            pytest.skip("All mandatory parameters are provided")
+
+        response = self._make_request(
+            min=-1 if has_min else None,
+            max=1 if has_max else None,
+            step=0.1 if has_step else None,
         )
+
+        assert response.status_code == 422
+
+    @pytest.mark.parametrize(
+        "min, max, step",
+        [
+            (-1, 1, 0.1),
+            (-1, 1, 1 / 3.0),
+            (-1, 1, 0.15),
+        ],
+        ids=[
+            "Step divides ranges perfectly",
+            "Step almost divides range properly",
+            "Step doesn't divide range properly",
+        ],
     )
-    assert actual_outputs == pytest.approx(expected_outputs)
-
-
-def should_return_activations_sorted_by_input():
-    response = _make_request(step=0.5)
-    parsed_response = ActivationFunctionResponse.model_validate(response.json())
-
-    actual_inputs = list(
-        map(
-            lambda activation_object: activation_object.pre_activation,
-            parsed_response.activations,
+    def should_include_the_extremums_in_activation_inputs(
+        self, min: float, max: float, step: float
+    ):
+        response = self._make_request(
+            min=min,
+            max=max,
+            step=step,
         )
-    )
 
-    assert actual_inputs == [-1, -0.5, 0, 0.5, 1]
+        parsed_response = ActivationFunctionResponse.model_validate(response.json())
+        inputs = list(
+            map(
+                lambda activation: activation.pre_activation,
+                parsed_response.activations,
+            )
+        )
+
+        assert min in inputs
+        assert max in inputs
+
+    @pytest.mark.parametrize(
+        "min, max, step, expected_inputs",
+        [
+            (-1, 1, 1, [-1, 0, 1]),
+            (-1, 1, 0.42, [-1, -0.58, -0.16, 0.26, 0.68, 1]),
+        ],
+        ids=[
+            "Step divides ranges perfectly",
+            "Step doesn't divide range properly",
+        ],
+    )
+    def should_have_correct_inputs(
+        self, min: float, max: float, step: float, expected_inputs: List[float]
+    ):
+        response = self._make_request(
+            min=min,
+            max=max,
+            step=step,
+        )
+
+        parsed_response = ActivationFunctionResponse.model_validate(response.json())
+        inputs = list(
+            map(
+                lambda activation: activation.pre_activation,
+                parsed_response.activations,
+            )
+        )
+
+        assert inputs == pytest.approx(expected_inputs)
+
+    def should_return_422_if_min_is_greater_than_or_equal_to_max(self):
+        response = self._make_request(min=1, max=0)
+        assert response.status_code == 422
+
+    def should_return_422_if_number_of_activations_to_compute_is_too_large(self):
+        response_below_threshold = self._make_request(
+            min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE, step=1
+        )
+        assert response_below_threshold.status_code == 200
+
+        response_below_threshold = self._make_request(
+            min=1, max=ACTIVATION_FUNCTION_ROUTE__MAX_ACTIVATIONS_TO_COMPUTE + 1, step=1
+        )
+        assert response_below_threshold.status_code == 422
+
+    @pytest.mark.parametrize(
+        "activation_function",
+        ACTIVATION_FUNCTIONS.values(),
+        ids=map(lambda activation: activation.id, ACTIVATION_FUNCTIONS.values()),
+    )
+    def should_return_correct_activations(
+        self, activation_function: ActivationFunction
+    ):
+        response = self._make_request(
+            id=activation_function.id, min=-1, max=1, step=0.5
+        )
+        parsed_response = ActivationFunctionResponse.model_validate(response.json())
+
+        actual_inputs = list(
+            map(
+                lambda activation_object: activation_object.pre_activation,
+                parsed_response.activations,
+            )
+        )
+        expected_inputs: List[float] = [-1, -0.5, 0, 0.5, 1]
+        assert actual_inputs == pytest.approx(expected_inputs)
+
+        expected_activations = activation_function.module(torch.Tensor(expected_inputs))
+        expected_outputs = list(
+            map(lambda activation: activation.item(), expected_activations)
+        )
+        actual_outputs = list(
+            map(
+                lambda activation_object: activation_object.activation,
+                parsed_response.activations,
+            )
+        )
+        assert actual_outputs == pytest.approx(expected_outputs)
+
+    def should_return_activations_sorted_by_input(self):
+        response = self._make_request(step=0.5)
+        parsed_response = ActivationFunctionResponse.model_validate(response.json())
+
+        actual_inputs = list(
+            map(
+                lambda activation_object: activation_object.pre_activation,
+                parsed_response.activations,
+            )
+        )
+
+        assert actual_inputs == [-1, -0.5, 0, 0.5, 1]
+
+
+class ListActivationFunctionTest:
+    def _make_request(self):
+        client = TestClient(app)
+        response = client.get(f"{API_PATH_PREFIX}/activation-functions")
+        return response
+
+    def should_return_200(self):
+        response = self._make_request()
+        assert response.status_code == 200
+
+    def should_return_all_activation_functions(self):
+        response = self._make_request()
+        parsed_response = ListActivationFunctionsResponse.model_validate(
+            response.json()
+        )
+
+        received_activation_function_ids = set(
+            map(
+                lambda activation_function: activation_function.id,
+                parsed_response.activation_functions,
+            )
+        )
+        expected_activation_function_ids = set(ACTIVATION_FUNCTIONS.keys())
+        assert received_activation_function_ids == expected_activation_function_ids

@@ -172,10 +172,49 @@
           }
         }
       }
+    },
+    "/activation-functions": {
+      "get": {
+        "summary": "List Activation Functions",
+        "description": "List available activation functions",
+        "operationId": "list_activation_functions_activation_functions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListActivationFunctionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ActivationFunctionMetadata": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Unique identifier for this activation function"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name",
+            "description": "User-friendly name to be displayed in a UI"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "display_name"
+        ],
+        "title": "ActivationFunctionMetadata"
+      },
       "ActivationFunctionResponse": {
         "properties": {
           "activations": {
@@ -225,6 +264,22 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "ListActivationFunctionsResponse": {
+        "properties": {
+          "activation_functions": {
+            "items": {
+              "$ref": "#/components/schemas/ActivationFunctionMetadata"
+            },
+            "type": "array",
+            "title": "Activation Functions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "activation_functions"
+        ],
+        "title": "ListActivationFunctionsResponse"
       },
       "ValidationError": {
         "properties": {
