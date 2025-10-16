@@ -5,7 +5,7 @@ import { ActivationFunctionCard } from "./-components/ActivationFunctionCard";
 
 export const Route = createFileRoute("/")({
 	staticData: {
-		showHeader: false,
+		showBreadcrumb: false,
 		title: PROJECT_NAME,
 		description: PROJECT_DESCRIPTION,
 	},

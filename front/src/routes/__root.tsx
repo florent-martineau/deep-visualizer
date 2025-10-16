@@ -50,15 +50,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	const matches = useMatches();
-	const showHeader = matches.some((match) => match.staticData.showHeader);
+	const showBreadcrumb = matches.some(
+		(match) => match.staticData.showBreadcrumb,
+	);
 
 	return (
 		<html lang="en" className="dark h-full">
 			<head>
 				<HeadContent />
 			</head>
-			<body className="h-full">
-				{showHeader && <Header />}
+			<body className="h-full py-6 px-12">
+				{showBreadcrumb && <Header />}
 				{children}
 				<TanstackDevtools
 					config={{

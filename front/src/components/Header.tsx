@@ -1,5 +1,41 @@
-import { Link } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "./ui/breadcrumb";
 
 export default function Header() {
-	return <Link to="/activation-functions">Activation Function</Link>;
+	const matches = useRouterState({ select: (state) => state.matches });
+
+	return (
+		<Breadcrumb className="mb-6">
+			<BreadcrumbList>
+				{matches.map((match, index) => {
+					const isLastItem = index === matches.length - 1;
+
+					const name = match.staticData.title;
+					if (isLastItem) {
+						return (
+							<BreadcrumbItem>
+								<BreadcrumbPage>{name}</BreadcrumbPage>
+							</BreadcrumbItem>
+						);
+					}
+
+					return (
+						<>
+							<BreadcrumbItem key={match.id}>
+								<BreadcrumbLink href={match.fullPath}>{name}</BreadcrumbLink>
+							</BreadcrumbItem>
+							<BreadcrumbSeparator />
+						</>
+					);
+				})}
+			</BreadcrumbList>
+		</Breadcrumb>
+	);
 }
