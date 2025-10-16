@@ -59,7 +59,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="h-full p-6">
+			<body className="h-full py-6 px-12">
 				{showBreadcrumb && <Header />}
 				{children}
 				<TanstackDevtools

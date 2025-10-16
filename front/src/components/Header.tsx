@@ -12,7 +12,7 @@ export default function Header() {
 	const matches = useRouterState({ select: (state) => state.matches });
 
 	return (
-		<Breadcrumb>
+		<Breadcrumb className="mb-6">
 			<BreadcrumbList>
 				{matches.map((match, index) => {
 					const isLastItem = index === matches.length - 1;
