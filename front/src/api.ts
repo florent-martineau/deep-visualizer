@@ -25,6 +25,13 @@ import type {
   AxiosResponse
 } from 'axios';
 
+export interface ActivationFunctionMetadata {
+  /** Unique identifier for this activation function */
+  id: string;
+  /** User-friendly name to be displayed in a UI */
+  display_name: string;
+}
+
 export interface ActivationFunctionResponse {
   activations: ActivationInputOutputPair[];
 }
@@ -43,6 +50,10 @@ export interface ActivationInputOutputPair {
 
 export interface HTTPValidationError {
   detail?: ValidationError[];
+}
+
+export interface ListActivationFunctionsResponse {
+  activation_functions: ActivationFunctionMetadata[];
 }
 
 export type ValidationErrorLocItem = string | number;
@@ -328,6 +339,73 @@ export function useGetActivationFunction<TData = Awaited<ReturnType<typeof GetAc
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetActivationFunctionQueryOptions(activationFunctionId,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * List available activation functions
+ * @summary List Activation Functions
+ */
+export const ListActivationFunctions = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ListActivationFunctionsResponse>> => {
+    
+    
+    return axios.default.get(
+      `/api-proxy/activation-functions`,options
+    );
+  }
+
+
+
+
+export const getListActivationFunctionsQueryKey = () => {
+    return [
+    `/api-proxy/activation-functions`
+    ] as const;
+    }
+
+    
+export const getListActivationFunctionsQueryOptions = <TData = Awaited<ReturnType<typeof ListActivationFunctions>>, TError = AxiosError<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof ListActivationFunctions>>, TError, TData>, axios?: AxiosRequestConfig}
+) => {
+
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListActivationFunctionsQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof ListActivationFunctions>>> = ({ signal }) => ListActivationFunctions({ signal, ...axiosOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof ListActivationFunctions>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListActivationFunctionsQueryResult = NonNullable<Awaited<ReturnType<typeof ListActivationFunctions>>>
+export type ListActivationFunctionsQueryError = AxiosError<unknown>
+
+
+/**
+ * @summary List Activation Functions
+ */
+
+export function useListActivationFunctions<TData = Awaited<ReturnType<typeof ListActivationFunctions>>, TError = AxiosError<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof ListActivationFunctions>>, TError, TData>, axios?: AxiosRequestConfig}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListActivationFunctionsQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

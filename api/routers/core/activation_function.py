@@ -1,4 +1,4 @@
-from typing import List, Set
+from typing import Annotated, List, Set
 
 from api.core.activation_function import (
     ACTIVATION_FUNCTIONS,
@@ -9,7 +9,7 @@ from api.core.activation_function import (
 from api.utils.logs import logger
 from api.utils.routers.router import getApiRouter
 from fastapi import HTTPException, Path, Query
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 router = getApiRouter("/activation-functions")
 
@@ -83,4 +83,35 @@ async def get_activation_function(
 
     return ActivationFunctionResponse(
         activations=activation_function.get_activations(list(inputs))
+    )
+
+
+class ActivationFunctionMetadata(BaseModel):
+    id: str = Field(description="Unique identifier for this activation function")
+    display_name: Annotated[
+        str, Field(description="User-friendly name to be displayed in a UI")
+    ]
+
+
+class ListActivationFunctionsResponse(BaseModel):
+    activation_functions: List[ActivationFunctionMetadata]
+
+
+@router.get(
+    "",
+    description="List available activation functions",
+    status_code=200,
+    response_model=ListActivationFunctionsResponse,
+)
+async def list_activation_functions() -> ListActivationFunctionsResponse:
+    return ListActivationFunctionsResponse(
+        activation_functions=list(
+            map(
+                lambda activation_function: ActivationFunctionMetadata(
+                    id=activation_function.id,
+                    display_name=activation_function.display_name,
+                ),
+                ACTIVATION_FUNCTIONS.values(),
+            ),
+        )
     )
