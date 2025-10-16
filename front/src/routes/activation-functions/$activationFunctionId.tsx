@@ -7,7 +7,9 @@ import {
 	useGetActivationFunction,
 } from "@/api";
 
-export const Route = createFileRoute("/activation-functions")({
+export const Route = createFileRoute(
+	"/activation-functions/$activationFunctionId",
+)({
 	component: ActivationFunction,
 	staticData: {
 		title: "Activation Functions",
@@ -62,7 +64,9 @@ function ActivationVisualization({
 }
 
 function ActivationFunction() {
-	const { data } = useGetActivationFunction("gelu", {
+	const { activationFunctionId } = Route.useParams();
+
+	const { data } = useGetActivationFunction(activationFunctionId, {
 		min: -2,
 		max: 2,
 		step: 0.01,
