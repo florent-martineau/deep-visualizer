@@ -1,11 +1,5 @@
-import {
-	type FileRoutesByPath,
-	useLoaderData,
-	useMatch,
-	useMatchRoute,
-} from "@tanstack/react-router";
+import type { FileRoutesByPath } from "@tanstack/react-router";
 import { useCurrentMatch } from "@/hooks/useCurrentMatch";
-import { useRoute } from "@/hooks/useRoute";
 import {
 	Breadcrumb,
 	BreadcrumbItem,

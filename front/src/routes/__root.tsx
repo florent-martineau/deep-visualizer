@@ -4,7 +4,6 @@ import {
 	createRootRouteWithContext,
 	HeadContent,
 	Scripts,
-	useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";

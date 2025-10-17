@@ -1,6 +1,6 @@
 import { Line, OrbitControls, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { createFileRoute, useMatch } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import {
 	type ActivationInputOutputPair,
