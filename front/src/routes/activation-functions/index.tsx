@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useListActivationFunctions } from "@/api";
-import type { BreadcrumbMetadata } from "@/components/Header";
+import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 import { H1, Muted } from "@/components/ui/typography";
 import { useRoute } from "@/hooks/useRoute";
 

@@ -1,4 +1,3 @@
-import type { FileRoutesByPath } from "@tanstack/react-router";
 import { useCurrentMatch } from "@/hooks/useCurrentMatch";
 import {
 	Breadcrumb,
@@ -7,14 +6,8 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from "./ui/breadcrumb";
-
-export type BreadcrumbMetadata = {
-	name: string;
-	navigation?: {
-		to: keyof FileRoutesByPath;
-	};
-};
+} from "../ui/breadcrumb";
+import type { BreadcrumbMetadata } from "./breadcrumbs";
 
 export default function Header() {
 	const currentMatch = useCurrentMatch();
