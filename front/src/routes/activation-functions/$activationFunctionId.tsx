@@ -6,7 +6,7 @@ import {
 	type ActivationInputOutputPair,
 	useGetActivationFunction,
 } from "@/api";
-import type { BreadcrumbMetadata } from "@/components/Header";
+import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 
 export const Route = createFileRoute(
 	"/activation-functions/$activationFunctionId",
