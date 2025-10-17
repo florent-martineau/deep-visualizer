@@ -17,9 +17,7 @@ export const WithPause = (props: WithPauseProps) => {
 				three.clock.elapsedTime = elapsedTime;
 			}
 		} else {
-			if (three.clock.running) {
-				three.clock.stop();
-			}
+			three.clock.stop();
 		}
 	}, [props.isRunning, three.clock]);
 
