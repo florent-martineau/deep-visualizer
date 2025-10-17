@@ -1,4 +1,5 @@
-import { useRouterState } from "@tanstack/react-router";
+import type { FileRoutesByPath } from "@tanstack/react-router";
+import { useCurrentMatch } from "@/hooks/useCurrentMatch";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -8,31 +9,52 @@ import {
 	BreadcrumbSeparator,
 } from "./ui/breadcrumb";
 
+export type BreadcrumbMetadata = {
+	name: string;
+	navigation?: {
+		to: keyof FileRoutesByPath;
+	};
+};
+
 export default function Header() {
-	const matches = useRouterState({ select: (state) => state.matches });
+	const currentMatch = useCurrentMatch();
+
+	if (!currentMatch) return;
+
+	const { loaderData } = currentMatch;
+
+	if (!loaderData?.breadcrumbs) return;
+
+	const breadcrumbs: BreadcrumbMetadata[] = [
+		{
+			name: "Home",
+			navigation: {
+				to: "/",
+			},
+		},
+		...loaderData.breadcrumbs,
+	];
 
 	return (
 		<Breadcrumb className="mb-6">
 			<BreadcrumbList>
-				{matches.map((match, index) => {
-					const isLastItem = index === matches.length - 1;
-
-					const name = match.staticData.title;
-					if (isLastItem) {
-						return (
-							<BreadcrumbItem>
-								<BreadcrumbPage>{name}</BreadcrumbPage>
-							</BreadcrumbItem>
-						);
-					}
+				{breadcrumbs.map((breadcrumb, index) => {
+					const isLastItem = index === breadcrumbs.length - 1;
 
 					return (
-						<>
-							<BreadcrumbItem key={match.id}>
-								<BreadcrumbLink href={match.fullPath}>{name}</BreadcrumbLink>
-							</BreadcrumbItem>
-							<BreadcrumbSeparator />
-						</>
+						<BreadcrumbItem key={breadcrumb.name}>
+							{!breadcrumb.navigation && (
+								<BreadcrumbPage>{breadcrumb.name}</BreadcrumbPage>
+							)}
+							{breadcrumb.navigation && (
+								<BreadcrumbLink href={breadcrumb.navigation?.to}>
+									{breadcrumb.name}
+								</BreadcrumbLink>
+							)}
+							{!isLastItem && (
+								<BreadcrumbSeparator key={`${breadcrumb.name}-separator`} />
+							)}
+						</BreadcrumbItem>
 					);
 				})}
 			</BreadcrumbList>

@@ -6,11 +6,30 @@ import {
 	type ActivationInputOutputPair,
 	useGetActivationFunction,
 } from "@/api";
+import type { BreadcrumbMetadata } from "@/components/Header";
 
 export const Route = createFileRoute(
 	"/activation-functions/$activationFunctionId",
 )({
 	component: RouteComponent,
+	loader: async (ctx): Promise<{ breadcrumbs: BreadcrumbMetadata[] }> => {
+		return {
+			breadcrumbs: [
+				{
+					name: "Activation Functions",
+					navigation: {
+						to: "/activation-functions/",
+					},
+				},
+				{
+					name: ctx.params.activationFunctionId,
+					navigation: {
+						to: "/activation-functions/$activationFunctionId",
+					},
+				},
+			] as BreadcrumbMetadata[],
+		};
+	},
 	staticData: {
 		title: "Activation Functions",
 		description: "How does a neuron fire?",
