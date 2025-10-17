@@ -49,18 +49,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const matches = useMatches();
-	const showBreadcrumb = matches.some(
-		(match) => match.staticData.showBreadcrumb,
-	);
-
 	return (
 		<html lang="en" className="dark h-full">
 			<head>
 				<HeadContent />
 			</head>
 			<body className="h-full py-6 px-12">
-				{showBreadcrumb && <Header />}
+				<Header />
 				{children}
 				<TanstackDevtools
 					config={{
