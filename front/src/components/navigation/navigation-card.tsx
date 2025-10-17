@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
@@ -10,25 +10,27 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useRoute } from "@/hooks/useRoute";
-import type { FileRoutesById } from "@/routeTree.gen";
+import { useCurrentMatch } from "@/hooks/useCurrentMatch";
 
 type NavigationCardProps = {
 	children: React.ReactNode;
-	onLoaded: () => void;
-	routeId: keyof FileRoutesById;
+	onLoaded?: () => void;
+	navigation: Pick<LinkProps, "to" | "params">;
 };
 
 export const NavigationCard = (props: NavigationCardProps) => {
-	const { route, staticData } = useRoute(props.routeId);
+	const currentMatch = useCurrentMatch();
 	const [ref, isHovering] = useHover();
 
+	if (!currentMatch) return;
+
+	const { staticData } = currentMatch;
 	return (
 		<Card
 			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
 			ref={ref}
 		>
-			<Link to={route.fullPath}>
+			<Link to={props.navigation.to} params={props.navigation.params}>
 				<CardHeader className="hover:underline">
 					<CardTitle>{staticData.title}</CardTitle>
 					<CardDescription>{staticData.description}</CardDescription>
@@ -42,7 +44,7 @@ export const NavigationCard = (props: NavigationCardProps) => {
 				<ThreeDimensionsCanvas
 					isRotating={isHovering}
 					isRunning={isHovering}
-					onLoaded={props.onLoaded}
+					onLoaded={() => props.onLoaded?.()}
 				>
 					{props.children}
 				</ThreeDimensionsCanvas>
