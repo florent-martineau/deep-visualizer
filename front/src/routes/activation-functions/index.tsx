@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useListActivationFunctions } from "@/api";
 import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
+import { NavigationCard } from "@/components/navigation/navigation-card";
 import { H1, Muted } from "@/components/ui/typography";
 import { useRoute } from "@/hooks/useRoute";
 
@@ -34,7 +35,22 @@ function RouteComponent() {
 				<Muted>{route.staticData.description}</Muted>
 			</div>
 
-			<p>{JSON.stringify(data)}</p>
+			<div className="grid grid-cols-4 gap-4">
+				{data?.data.activation_functions.map((activationFunction) => (
+					<NavigationCard
+						key={activationFunction.id}
+						onLoaded={() => console.log("Loaded")}
+						navigation={{
+							to: "/activation-functions/$activationFunctionId",
+							params: {
+								activationFunctionId: activationFunction.id,
+							},
+						}}
+					>
+						{JSON.stringify(activationFunction)}
+					</NavigationCard>
+				))}
+			</div>
 		</div>
 	);
 }

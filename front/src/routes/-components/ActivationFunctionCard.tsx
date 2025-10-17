@@ -30,7 +30,10 @@ export const ActivationFunctionCard = () => {
 	}, []);
 
 	return (
-		<NavigationCard onLoaded={startAnimation} routeId="/activation-functions/">
+		<NavigationCard
+			onLoaded={startAnimation}
+			navigation={{ to: "/activation-functions" }}
+		>
 			<Neuron position={firstInputNeuronPosition} ref={firstInputNeuronRef} />
 			<Neuron position={secondInputNeuronPosition} ref={secondInputNeuronRef} />
 			<Neuron
