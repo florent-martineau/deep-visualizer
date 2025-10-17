@@ -1,13 +1,9 @@
-import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { WithGlow } from "@/components/3d/with-glow";
-import { WithPause } from "@/components/3d/with-pause";
-import { WithRotation } from "@/components/3d/with-rotation";
+import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
 import { Neuron, type NeuronHandle } from "@/components/neural-network/Neuron";
 import {
 	NeuralConnection,
@@ -21,12 +17,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useRoute } from "@/hooks/useRoute";
 
 export const ActivationFunctionCard = () => {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const [loaded, setLoaded] = useState(false);
 	const { route, staticData } = useRoute("/activation-functions/");
 	const [ref, isHovering] = useHover();
 
@@ -51,12 +44,6 @@ export const ActivationFunctionCard = () => {
 		secondNeuralConnectionRef.current?.activate();
 	}, []);
 
-	useEffect(() => {
-		if (loaded) {
-			startAnimation();
-		}
-	}, [loaded, startAnimation]);
-
 	return (
 		<Card
 			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
@@ -72,65 +59,41 @@ export const ActivationFunctionCard = () => {
 				</CardHeader>
 			</Link>
 			<CardContent className="relative w-full h-48">
-				<div className="relative h-full w-full">
-					<Canvas
-						ref={canvasRef}
-						camera={{ position: [0, 0, 10], fov: 50 }}
-						onCreated={() => setLoaded(true)}
-						className="cursor-pointer"
-					>
-						<ambientLight intensity={0.3} />
-						<directionalLight
-							position={[5, 5, 5]}
-							intensity={1}
-							castShadow
-							shadow-mapSize-width={2048}
-							shadow-mapSize-height={2048}
-						/>
-						<pointLight position={[-5, 5, -5]} intensity={0.5} />
-						<WithPause isRunning={isHovering}>
-							<WithGlow>
-								<WithRotation
-									isRotating={isHovering}
-									timeForFullRotationInSeconds={2}
-								>
-									<Neuron
-										position={firstInputNeuronPosition}
-										ref={firstInputNeuronRef}
-									/>
-									<Neuron
-										position={secondInputNeuronPosition}
-										ref={secondInputNeuronRef}
-									/>
-									<Neuron
-										position={outputNeuronPosition}
-										ref={outputNeuronRef}
-										onActivationEnd={startAnimation}
-									/>
+				<ThreeDimensionsCanvas
+					isRotating={isHovering}
+					isRunning={isHovering}
+					onLoaded={startAnimation}
+				>
+					<Neuron
+						position={firstInputNeuronPosition}
+						ref={firstInputNeuronRef}
+					/>
+					<Neuron
+						position={secondInputNeuronPosition}
+						ref={secondInputNeuronRef}
+					/>
+					<Neuron
+						position={outputNeuronPosition}
+						ref={outputNeuronRef}
+						onActivationEnd={startAnimation}
+					/>
 
-									<NeuralConnection
-										start={firstInputNeuronPosition}
-										end={outputNeuronPosition}
-										midOffset={-1.5}
-										lineWidth={firstInputNeuronToOutputNeuronWeight}
-										ref={firstNeuralConnectionRef}
-									/>
-									<NeuralConnection
-										start={secondInputNeuronPosition}
-										end={outputNeuronPosition}
-										midOffset={1.5}
-										lineWidth={secondInputNeuronToOutputNeuronWeight}
-										ref={secondNeuralConnectionRef}
-										onActivationEnd={() => outputNeuronRef.current?.activate()}
-									/>
-								</WithRotation>
-							</WithGlow>
-						</WithPause>
-						<OrbitControls />
-					</Canvas>
-
-					{!loaded && <Skeleton className="absolute inset-0 w-full h-full" />}
-				</div>
+					<NeuralConnection
+						start={firstInputNeuronPosition}
+						end={outputNeuronPosition}
+						midOffset={-1.5}
+						lineWidth={firstInputNeuronToOutputNeuronWeight}
+						ref={firstNeuralConnectionRef}
+					/>
+					<NeuralConnection
+						start={secondInputNeuronPosition}
+						end={outputNeuronPosition}
+						midOffset={1.5}
+						lineWidth={secondInputNeuronToOutputNeuronWeight}
+						ref={secondNeuralConnectionRef}
+						onActivationEnd={() => outputNeuronRef.current?.activate()}
+					/>
+				</ThreeDimensionsCanvas>
 			</CardContent>
 		</Card>
 	);
