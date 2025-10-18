@@ -8,7 +8,7 @@ import { WithRotation } from "./with-rotation";
 
 type ThreeDimensionsCanvasProps = {
 	children: React.ReactNode;
-	onLoaded: () => void;
+	onLoaded?: () => void;
 	isRotating: boolean;
 	isRunning: boolean;
 };
@@ -18,7 +18,7 @@ export const ThreeDimensionsCanvas = (props: ThreeDimensionsCanvasProps) => {
 
 	useEffect(() => {
 		if (loaded) {
-			props.onLoaded();
+			props.onLoaded?.();
 		}
 	}, [loaded, props.onLoaded]);
 
