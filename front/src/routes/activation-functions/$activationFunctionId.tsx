@@ -1,11 +1,8 @@
-import { Line, OrbitControls, Text } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo } from "react";
-import {
-	type ActivationInputOutputPair,
-	useGetActivationFunction,
-} from "@/api";
+import { Vector3 } from "three";
+import { useGetActivationFunction } from "@/api";
+import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
+import { Scene3dChart } from "@/components/3d/scenes/chart";
 import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 
 export const Route = createFileRoute(
@@ -36,52 +33,6 @@ export const Route = createFileRoute(
 	},
 });
 
-function ActivationVisualization({
-	data,
-}: {
-	data: ActivationInputOutputPair[];
-}) {
-	const points: [number, number, number][] = useMemo(() => {
-		if (!data?.values) return [];
-		return data.map((point) => [point.pre_activation, point.activation, 0]);
-	}, [data]);
-
-	return (
-		<>
-			{/* Draw the activation function curve */}
-			{points.length > 0 && (
-				<Line points={points} color="hotpink" lineWidth={3} />
-			)}
-
-			{/* Add axes */}
-			<Line
-				points={[
-					[-2, 0, 0],
-					[2, 0, 0],
-				]}
-				color="gray"
-				lineWidth={1}
-			/>
-			<Line
-				points={[
-					[0, -2, 0],
-					[0, 2, 0],
-				]}
-				color="gray"
-				lineWidth={1}
-			/>
-
-			{/* Add labels */}
-			<Text position={[0, 2.2, 0]} fontSize={0.2} color="white">
-				y
-			</Text>
-			<Text position={[2.2, 0, 0]} fontSize={0.2} color="white">
-				x
-			</Text>
-		</>
-	);
-}
-
 function RouteComponent() {
 	const { activationFunctionId } = Route.useParams();
 
@@ -94,14 +45,28 @@ function RouteComponent() {
 	if (data) {
 		return (
 			<div className="w-full h-screen">
-				<Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
-					<ambientLight intensity={0.5} />
-					<pointLight position={[10, 10, 10]} />
-
-					<ActivationVisualization data={data.data.activations} />
-
-					<OrbitControls enableDamping />
-				</Canvas>
+				<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
+					<Scene3dChart
+						points={data.data.activations.map(
+							(activation) =>
+								new Vector3(activation.pre_activation, activation.activation),
+						)}
+						axes={{
+							x: {
+								label: "Pre-activation",
+								from: new Vector3(-2, 0, 0),
+								to: new Vector3(-2, 0, 0),
+								labelOffset: new Vector3(0.2, 0, 0),
+							},
+							y: {
+								label: "Activation",
+								from: new Vector3(0, -2, 0),
+								to: new Vector3(0, 2, 0),
+								labelOffset: new Vector3(0, 0.2, 0),
+							},
+						}}
+					/>
+				</ThreeDimensionsCanvas>
 			</div>
 		);
 	}
