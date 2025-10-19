@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
-import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
 import { Scene3dChart } from "@/components/3d/chart";
 import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 
