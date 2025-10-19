@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
-import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
-import { Scene3dChart } from "@/components/3d/scenes/chart";
+import { Scene3dChart } from "@/components/3d/chart";
 import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 
 export const Route = createFileRoute(
@@ -44,30 +43,12 @@ function RouteComponent() {
 
 	if (data) {
 		return (
-			<div className="w-full h-screen">
-				<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
-					<Scene3dChart
-						points={data.data.activations.map(
-							(activation) =>
-								new Vector3(activation.pre_activation, activation.activation),
-						)}
-						axes={{
-							x: {
-								label: "Pre-activation",
-								from: new Vector3(-2, 0, 0),
-								to: new Vector3(-2, 0, 0),
-								labelOffset: new Vector3(0.2, 0, 0),
-							},
-							y: {
-								label: "Activation",
-								from: new Vector3(0, -2, 0),
-								to: new Vector3(0, 2, 0),
-								labelOffset: new Vector3(0, 0.2, 0),
-							},
-						}}
-					/>
-				</ThreeDimensionsCanvas>
-			</div>
+			<Scene3dChart
+				points={data.data.activations.map(
+					(activation) =>
+						new Vector3(activation.pre_activation, activation.activation),
+				)}
+			/>
 		);
 	}
 

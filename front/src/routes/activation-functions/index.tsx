@@ -39,7 +39,6 @@ function RouteComponent() {
 				{data?.data.activation_functions.map((activationFunction) => (
 					<NavigationCard
 						key={activationFunction.id}
-						onLoaded={() => console.log("Loaded")}
 						navigation={{
 							to: "/activation-functions/$activationFunctionId",
 							params: {
