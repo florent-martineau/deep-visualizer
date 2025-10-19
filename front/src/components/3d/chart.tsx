@@ -12,9 +12,22 @@ export const Scene3dChart = (props: ThreeDimensionsChartProps) => {
 				{
 					x: props.points.map((point) => point.x),
 					y: props.points.map((point) => point.y),
+					z: props.points.map((point) => point.z),
 				},
 			]}
-			layout={{}}
+			layout={{
+				paper_bgcolor: "transparent",
+				plot_bgcolor: "transparent",
+				font: { color: "#dddddd" },
+				xaxis: {
+					gridcolor: "transparent",
+					zerolinecolor: "#283442",
+				},
+				yaxis: {
+					gridcolor: "transparent",
+					zerolinecolor: "#283442",
+				},
+			}}
 		/>
 	);
 };
