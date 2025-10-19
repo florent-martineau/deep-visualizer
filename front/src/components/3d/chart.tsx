@@ -1,8 +1,5 @@
-import tailwindcss from "@tailwindcss/vite";
-import Plotly from "plotly.js";
 import Plot from "react-plotly.js";
 import type { Vector3 } from "three";
-import config from "vite.config";
 
 type ThreeDimensionsChartProps = {
 	points: Vector3[];
