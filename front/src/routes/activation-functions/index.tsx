@@ -2,7 +2,7 @@ import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { useListActivationFunctions } from "@/api";
 import { NavigationCard } from "@/components/navigation/navigation-card";
 import { H1, Muted } from "@/components/ui/typography";
-import type { LoaderData } from "@/lib/loader-data";
+import type { LoaderData } from "@/lib/router/types";
 
 export const Route = createFileRoute("/activation-functions/")({
 	component: RouteComponent,
@@ -42,6 +42,8 @@ function RouteComponent() {
 								activationFunctionId: activationFunction.id,
 							},
 						}}
+						title={activationFunction.display_name}
+						description={`Learn more about ${activationFunction.display_name}`}
 					>
 						{JSON.stringify(activationFunction)}
 					</NavigationCard>

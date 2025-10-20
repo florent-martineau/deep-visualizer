@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { H1, Lead } from "@/components/ui/typography";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
-import type { LoaderData } from "@/lib/loader-data";
+import type { LoaderData } from "@/lib/router/types";
 import { ActivationFunctionCard } from "./-components/ActivationFunctionCard";
 
 export const Route = createFileRoute("/")({

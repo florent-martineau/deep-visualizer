@@ -10,21 +10,20 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useCurrentMatch } from "@/hooks/useCurrentMatch";
 
 type NavigationCardProps = {
 	children: React.ReactNode;
 	onLoaded?: () => void;
-	navigation: Pick<LinkProps, "to" | "params">;
+	navigation: Pick<LinkProps, "to" | "params"> & {
+		to: "/activation-functions" | "/activation-functions/$activationFunctionId";
+	};
+	title: string;
+	description: string;
 };
 
 export const NavigationCard = (props: NavigationCardProps) => {
-	const currentMatch = useCurrentMatch();
 	const [ref, isHovering] = useHover();
 
-	if (!currentMatch) return;
-
-	const { loaderData } = currentMatch;
 	return (
 		<Card
 			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
@@ -32,8 +31,8 @@ export const NavigationCard = (props: NavigationCardProps) => {
 		>
 			<Link to={props.navigation.to} params={props.navigation.params}>
 				<CardHeader className="hover:underline">
-					<CardTitle>{loaderData?.title}</CardTitle>
-					<CardDescription>{loaderData?.description}</CardDescription>
+					<CardTitle>{props.title}</CardTitle>
+					<CardDescription>{props.description}</CardDescription>
 					<CardAction>
 						<ArrowRight />
 					</CardAction>
