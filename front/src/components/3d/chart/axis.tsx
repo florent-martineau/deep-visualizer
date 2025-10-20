@@ -13,8 +13,6 @@ export const Axis = (props: AxisMetadata) => {
 	const direction = props.to.clone().sub(props.from);
 	const length = props.from.length() + props.to.length();
 
-	console.log(props.from, props.to, direction, length);
-
 	return (
 		<>
 			<primitive
