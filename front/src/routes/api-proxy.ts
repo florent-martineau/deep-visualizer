@@ -28,10 +28,6 @@ const proxy = async ({ request }: { request: Request }) => {
 };
 
 export const Route = createFileRoute("/api-proxy")({
-	staticData: {
-		title: "API Proxy",
-		description: "Proxy to the API",
-	},
 	server: {
 		handlers: {
 			ALL: proxy,

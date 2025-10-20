@@ -3,14 +3,16 @@ import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
 import { ThreeDimensionsChart } from "@/components/3d/chart";
-import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
+import type { LoaderData } from "@/lib/loader-data";
 
 export const Route = createFileRoute(
 	"/activation-functions/$activationFunctionId",
 )({
 	component: RouteComponent,
-	loader: async (ctx): Promise<{ breadcrumbs: BreadcrumbMetadata[] }> => {
+	loader: async (ctx): Promise<LoaderData> => {
 		return {
+			title: ctx.params.activationFunctionId,
+			description: ctx.params.activationFunctionId,
 			breadcrumbs: [
 				{
 					name: "Activation Functions",
@@ -24,12 +26,8 @@ export const Route = createFileRoute(
 						to: "/activation-functions/$activationFunctionId",
 					},
 				},
-			] as BreadcrumbMetadata[],
+			],
 		};
-	},
-	staticData: {
-		title: "Activation Functions",
-		description: "How does a neuron fire?",
 	},
 });
 
