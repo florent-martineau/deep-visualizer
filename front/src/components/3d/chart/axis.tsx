@@ -32,6 +32,11 @@ export const Axis = (props: AxisMetadata) => {
 				fontSize={0.2}
 				color="white"
 			>
+				<meshStandardMaterial
+					color="#dddddd"
+					emissive="#dddddd"
+					emissiveIntensity={0.9}
+				/>
 				{props.label}
 			</Text>
 		</>
