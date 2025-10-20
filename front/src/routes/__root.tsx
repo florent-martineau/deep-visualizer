@@ -40,10 +40,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 	}),
-	staticData: {
-		title: PROJECT_NAME,
-		description: PROJECT_DESCRIPTION,
-	},
 	shellComponent: RootDocument,
 });
 

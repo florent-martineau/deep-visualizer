@@ -1,13 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { useListActivationFunctions } from "@/api";
-import type { BreadcrumbMetadata } from "@/components/navigation/breadcrumbs";
 import { NavigationCard } from "@/components/navigation/navigation-card";
 import { H1, Muted } from "@/components/ui/typography";
-import { useRoute } from "@/hooks/useRoute";
+import type { LoaderData } from "@/lib/loader-data";
 
 export const Route = createFileRoute("/activation-functions/")({
 	component: RouteComponent,
-	loader: async () => ({
+	loader: async (): Promise<LoaderData> => ({
+		title: "Activation Functions",
+		description: "How does a neuron fire?",
 		breadcrumbs: [
 			{
 				name: "Activation Functions",
@@ -15,24 +16,20 @@ export const Route = createFileRoute("/activation-functions/")({
 					to: "/activation-functions/",
 				},
 			},
-		] as BreadcrumbMetadata[],
+		],
 	}),
-
-	staticData: {
-		title: "Activation Functions",
-		description: "How does a neuron fire?",
-	},
 });
 
 function RouteComponent() {
-	const route = useRoute("/activation-functions/");
+	const loaderData = useLoaderData({ from: "/activation-functions/" });
+
 	const { data } = useListActivationFunctions();
 
 	return (
 		<div className="flex flex-col gap-8 py-32">
 			<div className="flex flex-col items-center">
-				<H1>{route.staticData.title}</H1>
-				<Muted>{route.staticData.description}</Muted>
+				<H1>{loaderData.title}</H1>
+				<Muted>{loaderData.description}</Muted>
 			</div>
 
 			<div className="grid grid-cols-4 gap-4">

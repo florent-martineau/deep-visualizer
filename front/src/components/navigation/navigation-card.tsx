@@ -24,7 +24,7 @@ export const NavigationCard = (props: NavigationCardProps) => {
 
 	if (!currentMatch) return;
 
-	const { staticData } = currentMatch;
+	const { loaderData } = currentMatch;
 	return (
 		<Card
 			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
@@ -32,8 +32,8 @@ export const NavigationCard = (props: NavigationCardProps) => {
 		>
 			<Link to={props.navigation.to} params={props.navigation.params}>
 				<CardHeader className="hover:underline">
-					<CardTitle>{staticData.title}</CardTitle>
-					<CardDescription>{staticData.description}</CardDescription>
+					<CardTitle>{loaderData?.title}</CardTitle>
+					<CardDescription>{loaderData?.description}</CardDescription>
 					<CardAction>
 						<ArrowRight />
 					</CardAction>
