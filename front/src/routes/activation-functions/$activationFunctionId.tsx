@@ -3,7 +3,7 @@ import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
 import { ThreeDimensionsChart } from "@/components/3d/chart";
-import type { LoaderData } from "@/lib/loader-data";
+import type { LoaderData } from "@/lib/router/types";
 
 export const Route = createFileRoute(
 	"/activation-functions/$activationFunctionId",

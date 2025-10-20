@@ -33,6 +33,8 @@ export const ActivationFunctionCard = () => {
 		<NavigationCard
 			onLoaded={startAnimation}
 			navigation={{ to: "/activation-functions" }}
+			title="Activation Functions"
+			description="How does a neuron fire?"
 		>
 			<Neuron position={firstInputNeuronPosition} ref={firstInputNeuronRef} />
 			<Neuron position={secondInputNeuronPosition} ref={secondInputNeuronRef} />
