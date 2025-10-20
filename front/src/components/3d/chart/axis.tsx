@@ -1,5 +1,6 @@
-import { Line, Text } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 import type { Vector3 } from "three";
+import * as THREE from "three";
 
 export type AxisMetadata = {
 	label: string;
@@ -9,9 +10,19 @@ export type AxisMetadata = {
 };
 
 export const Axis = (props: AxisMetadata) => {
+	const direction = props.to.clone().sub(props.from);
+	const length = props.from.length() + props.to.length();
+
+	console.log(props.from, props.to, direction, length);
+
 	return (
 		<>
-			<Line points={[props.from, props.to]} color="gray" lineWidth={1} />
+			<primitive
+				object={
+					new THREE.ArrowHelper(direction, props.from, length, "gray", 0.2, 0.1)
+				}
+			/>
+
 			<Text
 				position={[
 					props.to.x + props.labelOffset.x,
