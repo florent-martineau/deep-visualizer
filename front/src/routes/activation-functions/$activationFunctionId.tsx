@@ -56,12 +56,14 @@ function RouteComponent() {
 							from: new Vector3(-2, 0, 0),
 							to: new Vector3(2, 0, 0),
 							labelOffset: new Vector3(0.2, 0, 0),
+							anchorX: "left",
 						},
 						y: {
 							label: "Activation",
 							from: new Vector3(0, -2, 0),
 							to: new Vector3(0, 2, 0),
 							labelOffset: new Vector3(0, 0.2, 0),
+							anchorY: "middle",
 						},
 					}}
 				/>

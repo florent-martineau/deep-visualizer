@@ -7,6 +7,8 @@ export type AxisMetadata = {
 	from: Vector3;
 	to: Vector3;
 	labelOffset: Vector3;
+	anchorX?: "left";
+	anchorY?: "middle";
 };
 
 export const Axis = (props: AxisMetadata) => {
@@ -27,6 +29,8 @@ export const Axis = (props: AxisMetadata) => {
 					props.to.y + props.labelOffset.y,
 					props.to.z + props.labelOffset.z,
 				]}
+				anchorX={props.anchorX}
+				anchorY={props.anchorY}
 				fontSize={0.2}
 				color="white"
 			>
