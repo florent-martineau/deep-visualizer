@@ -49,9 +49,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="h-full py-6 px-12">
-				<Header />
-				{children}
+			<body className="h-full pl-12 pt-6">
+				<Header className="absolute" />
+
+				<div className="h-full pt-10">{children}</div>
+
 				<TanstackDevtools
 					config={{
 						position: "bottom-left",
