@@ -1,8 +1,9 @@
+import { Vector3 } from "three";
 import {
 	type ActivationFunctionMetadata,
 	useGetActivationFunction,
 } from "@/api";
-import { ActivationFunctionChart } from "@/components/neural-network/activation-function-chart";
+import { Curve } from "@/components/3d/chart/curve";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NavigationCard } from ".";
 
@@ -16,8 +17,8 @@ export const ActivationFunctionNavigationCard = (
 	const { data } = useGetActivationFunction(
 		props.activationFunctionMetadata.id,
 		{
-			min: -2,
-			max: 2,
+			min: -5,
+			max: 5,
 			step: 0.01,
 		},
 	);
@@ -34,7 +35,12 @@ export const ActivationFunctionNavigationCard = (
 				title={props.activationFunctionMetadata.display_name}
 				description={`Learn more about ${props.activationFunctionMetadata.display_name}`}
 			>
-				<ActivationFunctionChart activations={data.data.activations} />
+				<Curve
+					points={data.data.activations.map(
+						(activation) =>
+							new Vector3(activation.pre_activation, activation.activation, 0),
+					)}
+				/>
 			</NavigationCard>
 		);
 	}
