@@ -1,3 +1,4 @@
+import type { PerspectiveCameraProps } from "@react-three/drei";
 import { Link, type LinkProps } from "@tanstack/react-router";
 import { useHover } from "@uidotdev/usehooks";
 import { ArrowRight } from "lucide-react";
@@ -19,6 +20,7 @@ type NavigationCardProps = {
 	};
 	title: string;
 	description: string;
+	camera?: PerspectiveCameraProps;
 };
 
 export const NavigationCard = (props: NavigationCardProps) => {
@@ -44,6 +46,7 @@ export const NavigationCard = (props: NavigationCardProps) => {
 					isRotating={isHovering}
 					isRunning={isHovering}
 					onLoaded={() => props.onLoaded?.()}
+					camera={props.camera}
 				>
 					{props.children}
 				</ThreeDimensionsCanvas>
