@@ -44,6 +44,7 @@ export const NavigationCard = (props: NavigationCardProps) => {
 					isRotating={isHovering}
 					isRunning={isHovering}
 					onLoaded={() => props.onLoaded?.()}
+					fitCamera={true}
 				>
 					{props.children}
 				</ThreeDimensionsCanvas>
