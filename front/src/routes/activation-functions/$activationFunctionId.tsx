@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
-import { ThreeDimensionsChart } from "@/components/3d/chart";
+import { ActivationFunctionChart } from "@/components/neural-network/activation-function-chart";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { LoaderData } from "@/lib/router/types";
 
 export const Route = createFileRoute(
@@ -43,31 +43,10 @@ function RouteComponent() {
 	if (data) {
 		return (
 			<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
-				<ThreeDimensionsChart
-					points={data.data.activations.map(
-						(activation) =>
-							new Vector3(activation.pre_activation, activation.activation),
-					)}
-					axes={{
-						x: {
-							label: "Pre-activation",
-							from: new Vector3(-2, 0, 0),
-							to: new Vector3(2, 0, 0),
-							labelOffset: new Vector3(0.2, 0, 0),
-							anchorX: "left",
-						},
-						y: {
-							label: "Activation",
-							from: new Vector3(0, -2, 0),
-							to: new Vector3(0, 2, 0),
-							labelOffset: new Vector3(0, 0.2, 0),
-							anchorY: "middle",
-						},
-					}}
-				/>
+				<ActivationFunctionChart activations={data.data.activations} />
 			</ThreeDimensionsCanvas>
 		);
 	}
 
-	return <p>Loading...</p>;
+	return <Skeleton className="w-full h-full" />;
 }

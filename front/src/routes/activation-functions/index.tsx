@@ -1,6 +1,6 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { useListActivationFunctions } from "@/api";
-import { NavigationCard } from "@/components/navigation/navigation-card";
+import { ActivationFunctionNavigationCard } from "@/components/navigation/card/activation-function";
 import { H1, Muted } from "@/components/ui/typography";
 import type { LoaderData } from "@/lib/router/types";
 
@@ -34,19 +34,10 @@ function RouteComponent() {
 
 			<div className="grid grid-cols-4 gap-4">
 				{data?.data.activation_functions.map((activationFunction) => (
-					<NavigationCard
+					<ActivationFunctionNavigationCard
+						activationFunctionMetadata={activationFunction}
 						key={activationFunction.id}
-						navigation={{
-							to: "/activation-functions/$activationFunctionId",
-							params: {
-								activationFunctionId: activationFunction.id,
-							},
-						}}
-						title={activationFunction.display_name}
-						description={`Learn more about ${activationFunction.display_name}`}
-					>
-						{JSON.stringify(activationFunction)}
-					</NavigationCard>
+					/>
 				))}
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { NavigationCard } from "@/components/navigation/navigation-card";
+import { NavigationCard } from "@/components/navigation/card";
 import { Neuron, type NeuronHandle } from "@/components/neural-network/Neuron";
 import {
 	NeuralConnection,
