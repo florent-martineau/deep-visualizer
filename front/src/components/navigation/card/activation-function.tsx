@@ -3,7 +3,7 @@ import {
 	type ActivationFunctionMetadata,
 	useGetActivationFunction,
 } from "@/api";
-import { Curve } from "@/components/3d/chart/curve";
+import { Curve } from "@/components/3d/curve";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NavigationCard } from ".";
 
@@ -17,8 +17,8 @@ export const ActivationFunctionNavigationCard = (
 	const { data } = useGetActivationFunction(
 		props.activationFunctionMetadata.id,
 		{
-			min: -5,
-			max: 5,
+			min: -2,
+			max: 2,
 			step: 0.01,
 		},
 	);
