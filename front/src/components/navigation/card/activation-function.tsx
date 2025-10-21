@@ -1,4 +1,3 @@
-import { Bounds } from "@react-three/drei";
 import { Vector3 } from "three";
 import {
 	type ActivationFunctionMetadata,
@@ -29,10 +28,14 @@ export const ActivationFunctionNavigationCard = (
 			(activation) =>
 				new Vector3(activation.pre_activation, activation.activation, 0),
 		);
+
 		const Ys = points.map((point) => point.y);
-		const centerY = (Math.max(...Ys) - Math.min(...Ys)) / 2;
+		const minY = Math.min(...Ys);
+		const maxY = Math.max(...Ys);
+		const centerY = (maxY - minY) / 2;
+
 		const centeredPoints = points.map(
-			(point) => new Vector3(point.x, point.y - centerY, point.z),
+			(point) => new Vector3(point.x, point.y - centerY, 0),
 		);
 
 		return (
@@ -45,6 +48,7 @@ export const ActivationFunctionNavigationCard = (
 				}}
 				title={props.activationFunctionMetadata.display_name}
 				description={`Learn more about ${props.activationFunctionMetadata.display_name}`}
+				camera={{ position: new Vector3(0, 0, 5) }}
 			>
 				<Curve points={centeredPoints} />
 			</NavigationCard>
