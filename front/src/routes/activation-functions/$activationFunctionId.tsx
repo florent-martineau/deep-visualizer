@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Vector3 } from "three";
 import { useGetActivationFunction } from "@/api";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
-import { ThreeDimensionsChart } from "@/components/3d/chart";
 import { ActivationFunctionChart } from "@/components/neural-network/activation-function-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { LoaderData } from "@/lib/router/types";
