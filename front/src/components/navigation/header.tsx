@@ -9,7 +9,11 @@ import {
 } from "../ui/breadcrumb";
 import type { BreadcrumbMetadata } from "./breadcrumbs";
 
-export default function Header() {
+type HeaderProps = {
+	className: string;
+};
+
+export default function Header(props: HeaderProps) {
 	const currentMatch = useCurrentMatch();
 
 	if (!currentMatch) return;
@@ -29,7 +33,7 @@ export default function Header() {
 	];
 
 	return (
-		<Breadcrumb className="mb-6">
+		<Breadcrumb className={props.className}>
 			<BreadcrumbList>
 				{breadcrumbs.map((breadcrumb, index) => {
 					const isLastItem = index === breadcrumbs.length - 1;
