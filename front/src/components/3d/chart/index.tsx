@@ -1,5 +1,5 @@
-import { Line } from "@react-three/drei";
 import type { Vector3 } from "three";
+import { Curve } from "../curve";
 import { Axis, type AxisMetadata } from "./axis";
 
 type ThreeDimensionsChartProps = {
@@ -13,14 +13,12 @@ type ThreeDimensionsChartProps = {
 
 export const ThreeDimensionsChart = (props: ThreeDimensionsChartProps) => {
 	return (
-		<>
-			{props.points.length > 0 && (
-				<Line points={props.points} color="hotpink" lineWidth={3} />
-			)}
+		<group>
+			<Curve points={props.points} />
 
 			{Object.values(props.axes).map((axisMetadata) => (
 				<Axis key={axisMetadata.label} {...axisMetadata} />
 			))}
-		</>
+		</group>
 	);
 };
