@@ -105,6 +105,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="PReLU: Parametric Rectified Linear Unit",
     ),
     ActivationFunction(
+        id="sigmoid",
+        module=torch.nn.Sigmoid(),
+        display_name="Sigmoid (aka Logistic, Soft Step)",
+    ),
+    ActivationFunction(
         id="softplus",
         module=torch.nn.Softplus(),
         display_name="Softplus",
