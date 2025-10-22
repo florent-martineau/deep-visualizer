@@ -58,7 +58,14 @@ class ActivationFunction(BaseModel):
 
 _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
     ActivationFunction(
-        id="identity", module=torch.nn.Identity(), display_name="Identity"
+        id="approximate-gelu",
+        module=NewGELUActivation(),
+        display_name="Approximate GELU: Approximate Gaussian Error Linear Unit",
+    ),
+    ActivationFunction(
+        id="elish",
+        module=ELiSH(),
+        display_name="ELiSH: Exponential Linear Sigmoid SquasHing",
     ),
     ActivationFunction(
         id="elu",
@@ -71,33 +78,17 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="GELU: Gaussian Error Linear Unit",
     ),
     ActivationFunction(
-        id="relu",
-        module=torch.nn.ReLU(),
-        display_name="ReLU: Rectified Linear Unit",
-    ),
-    ActivationFunction(
-        id="approximate-gelu",
-        module=NewGELUActivation(),
-        display_name="Approximate GELU: Approximate Gaussian Error Linear Unit",
-    ),
-    ActivationFunction(
-        id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
-    ),
-    ActivationFunction(
-        id="selu",
-        module=torch.nn.SELU(),
-        display_name="SELU: Scaled Exponential Linear Unit",
-    ),
-    ActivationFunction(id="sinusoid", module=Sinusoid(), display_name="Sinusoid"),
-    ActivationFunction(
-        id="elish",
-        module=ELiSH(),
-        display_name="ELiSH: Exponential Linear Sigmoid SquasHing",
-    ),
-    ActivationFunction(
         id="heavyside-step-function",
         module=HeavysideStepFunction(),
         display_name="Heavyside step function (aka Binary Step)",
+    ),
+    ActivationFunction(
+        id="identity", module=torch.nn.Identity(), display_name="Identity"
+    ),
+    ActivationFunction(
+        id="leaky-relu",
+        module=torch.nn.LeakyReLU(),
+        display_name="Leaky ReLU: Leaky Rectified Linear Unit",
     ),
     ActivationFunction(
         id="prelu",
@@ -105,10 +96,24 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="PReLU: Parametric Rectified Linear Unit",
     ),
     ActivationFunction(
+        id="relu",
+        module=torch.nn.ReLU(),
+        display_name="ReLU: Rectified Linear Unit",
+    ),
+    ActivationFunction(
+        id="selu",
+        module=torch.nn.SELU(),
+        display_name="SELU: Scaled Exponential Linear Unit",
+    ),
+    ActivationFunction(
         id="sigmoid",
         module=torch.nn.Sigmoid(),
         display_name="Sigmoid (aka Logistic, Soft Step)",
     ),
+    ActivationFunction(
+        id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
+    ),
+    ActivationFunction(id="sinusoid", module=Sinusoid(), display_name="Sinusoid"),
     ActivationFunction(
         id="softplus",
         module=torch.nn.Softplus(),
@@ -123,11 +128,6 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         id="tanh",
         module=torch.nn.Tanh(),
         display_name="Tanh: Hyperbolic tangent",
-    ),
-    ActivationFunction(
-        id="leaky-relu",
-        module=torch.nn.LeakyReLU(),
-        display_name="Leaky ReLU: Leaky Rectified Linear Unit",
     ),
 ]
 
