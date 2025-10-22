@@ -68,6 +68,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="GELU: Gaussian Error Linear Unit",
     ),
     ActivationFunction(
+        id="relu",
+        module=torch.nn.ReLU(),
+        display_name="ReLU: Rectified Linear Unit",
+    ),
+    ActivationFunction(
         id="approximate-gelu",
         module=NewGELUActivation(),
         display_name="Approximate GELU: Approximate Gaussian Error Linear Unit",

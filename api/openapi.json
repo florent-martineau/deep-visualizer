@@ -110,6 +110,7 @@
                 "identity",
                 "elu",
                 "gelu",
+                "relu",
                 "approximate-gelu",
                 "silu",
                 "selu",
