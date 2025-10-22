@@ -110,7 +110,8 @@
                 "identity",
                 "gelu",
                 "approximate-gelu",
-                "silu"
+                "silu",
+                "sinusoid"
               ],
               "title": "Activation Function Id"
             },
