@@ -51,6 +51,9 @@ class ActivationFunction(BaseModel):
 
 
 _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
+    ActivationFunction(
+        id="identity", module=torch.nn.Identity(), display_name="Identity"
+    ),
     ActivationFunction(id="gelu", module=GELUActivation(), display_name="GELU"),
     ActivationFunction(
         id="approximate-gelu",
