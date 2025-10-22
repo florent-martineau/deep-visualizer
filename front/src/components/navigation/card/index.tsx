@@ -19,7 +19,7 @@ type NavigationCardProps = {
 		to: "/activation-functions" | "/activation-functions/$activationFunctionId";
 	};
 	title: string;
-	description: string;
+	description?: string;
 	camera?: PerspectiveCameraProps;
 };
 
@@ -34,7 +34,9 @@ export const NavigationCard = (props: NavigationCardProps) => {
 			<Link to={props.navigation.to} params={props.navigation.params}>
 				<CardHeader className="hover:underline">
 					<CardTitle>{props.title}</CardTitle>
-					<CardDescription>{props.description}</CardDescription>
+					{props.description && (
+						<CardDescription>{props.description}</CardDescription>
+					)}
 					<CardAction>
 						<ArrowRight />
 					</CardAction>

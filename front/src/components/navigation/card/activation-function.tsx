@@ -47,7 +47,6 @@ export const ActivationFunctionNavigationCard = (
 					},
 				}}
 				title={props.activationFunctionMetadata.display_name}
-				description={`Learn more about ${props.activationFunctionMetadata.display_name}`}
 				camera={{ position: new Vector3(0, 0, 5) }}
 			>
 				<Curve points={centeredPoints} />

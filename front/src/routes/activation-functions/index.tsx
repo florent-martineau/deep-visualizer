@@ -25,6 +25,11 @@ function RouteComponent() {
 
 	const { data } = useListActivationFunctions();
 
+	const activationFunctionsSortedByDisplayName =
+		data?.data.activation_functions.sort((a, b) =>
+			a.display_name.localeCompare(b.display_name),
+		);
+
 	return (
 		<div className="flex flex-col gap-8 py-32">
 			<div className="flex flex-col items-center">
@@ -33,7 +38,7 @@ function RouteComponent() {
 			</div>
 
 			<div className="grid grid-cols-4 gap-4">
-				{data?.data.activation_functions.map((activationFunction) => (
+				{activationFunctionsSortedByDisplayName?.map((activationFunction) => (
 					<ActivationFunctionNavigationCard
 						activationFunctionMetadata={activationFunction}
 						key={activationFunction.id}
