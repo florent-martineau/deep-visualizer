@@ -11,6 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type NavigationCardProps = {
 	children: React.ReactNode;
@@ -21,6 +22,7 @@ type NavigationCardProps = {
 	title: string;
 	description?: string;
 	camera?: PerspectiveCameraProps;
+	className?: string;
 };
 
 export const NavigationCard = (props: NavigationCardProps) => {
@@ -28,7 +30,10 @@ export const NavigationCard = (props: NavigationCardProps) => {
 
 	return (
 		<Card
-			className="w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300"
+			className={cn(
+				"w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300",
+				props.className,
+			)}
 			ref={ref}
 		>
 			<Link to={props.navigation.to} params={props.navigation.params}>
