@@ -51,13 +51,19 @@ class ActivationFunction(BaseModel):
 
 
 _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
-    ActivationFunction(id="gelu", module=GELUActivation(), display_name="GELU"),
+    ActivationFunction(
+        id="gelu",
+        module=GELUActivation(),
+        display_name="GELU: Gaussian Error Linear Unit",
+    ),
     ActivationFunction(
         id="approximate-gelu",
         module=NewGELUActivation(),
-        display_name="Approximate GELU",
+        display_name="Approximate GELU: Approximate Gaussian Error Linear Unit",
     ),
-    ActivationFunction(id="silu", module=torch.nn.SiLU(), display_name="SiLU"),
+    ActivationFunction(
+        id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
+    ),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {
