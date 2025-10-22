@@ -111,7 +111,8 @@
                 "gelu",
                 "approximate-gelu",
                 "silu",
-                "sinusoid"
+                "sinusoid",
+                "elish"
               ],
               "title": "Activation Function Id"
             },
