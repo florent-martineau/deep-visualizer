@@ -5,6 +5,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
 
 from api.core.custom_activation_functions.elish import ELiSH
+from api.core.custom_activation_functions.heavyside_step_function import (
+    HeavysideStepFunction,
+)
 from api.core.custom_activation_functions.sinusoid import Sinusoid
 
 
@@ -90,6 +93,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         id="elish",
         module=ELiSH(),
         display_name="ELiSH: Exponential Linear Sigmoid SquasHing",
+    ),
+    ActivationFunction(
+        id="heavyside-step-function",
+        module=HeavysideStepFunction(),
+        display_name="Heavyside step function (aka Binary Step)",
     ),
     ActivationFunction(
         id="prelu",
