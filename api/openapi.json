@@ -108,9 +108,11 @@
               "description": "Id of the activation function",
               "examples": [
                 "identity",
+                "elu",
                 "gelu",
                 "approximate-gelu",
                 "silu",
+                "selu",
                 "sinusoid",
                 "elish",
                 "prelu",

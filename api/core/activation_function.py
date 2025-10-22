@@ -58,6 +58,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         id="identity", module=torch.nn.Identity(), display_name="Identity"
     ),
     ActivationFunction(
+        id="elu",
+        module=torch.nn.ELU(),
+        display_name="ELU: Exponential Linear Unit",
+    ),
+    ActivationFunction(
         id="gelu",
         module=GELUActivation(),
         display_name="GELU: Gaussian Error Linear Unit",
@@ -69,6 +74,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
     ),
     ActivationFunction(
         id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
+    ),
+    ActivationFunction(
+        id="selu",
+        module=torch.nn.SELU(),
+        display_name="SELU: Scaled Exponential Linear Unit",
     ),
     ActivationFunction(id="sinusoid", module=Sinusoid(), display_name="Sinusoid"),
     ActivationFunction(
