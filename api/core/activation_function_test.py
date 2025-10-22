@@ -28,6 +28,18 @@ class IsSupportedActivationTypeGuardTest:
         assert is_supported_activation(activation_function_id)
 
 
+class ActivationFunctionListTest:
+    def should_be_ordered_by_id(self):
+        actual_keys = list(
+            map(
+                lambda activation_function: activation_function.id,
+                _ACTIVATION_FUNCTIONS,
+            )
+        )
+        sorted_keys = sorted(actual_keys)
+        assert actual_keys == sorted_keys
+
+
 class ActivationFunctionsDictTest:
     def should_contain_exactly_activations_defined_in_config(self):
         assert len(_ACTIVATION_FUNCTIONS) == len(ACTIVATION_FUNCTIONS)
