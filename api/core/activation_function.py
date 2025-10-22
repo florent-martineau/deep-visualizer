@@ -102,6 +102,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="Softplus",
     ),
     ActivationFunction(
+        id="tanh",
+        module=torch.nn.Tanh(),
+        display_name="Tanh: Hyperbolic tangent",
+    ),
+    ActivationFunction(
         id="leaky-relu",
         module=torch.nn.LeakyReLU(),
         display_name="Leaky ReLU: Leaky Rectified Linear Unit",
