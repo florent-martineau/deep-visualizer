@@ -9,6 +9,7 @@ import { NavigationCard } from ".";
 
 type ActivationFunctionNavigationCardProps = {
 	activationFunctionMetadata: ActivationFunctionMetadata;
+	className?: string;
 };
 
 export const ActivationFunctionNavigationCard = (
@@ -48,6 +49,7 @@ export const ActivationFunctionNavigationCard = (
 				}}
 				title={props.activationFunctionMetadata.display_name}
 				camera={{ position: new Vector3(0, 0, 5) }}
+				className={props.className}
 			>
 				<Curve points={centeredPoints} />
 			</NavigationCard>

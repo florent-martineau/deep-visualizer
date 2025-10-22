@@ -31,17 +31,18 @@ function RouteComponent() {
 		);
 
 	return (
-		<div className="flex flex-col gap-8 py-32">
+		<div className="flex flex-col gap-8 py-32 items-center">
 			<div className="flex flex-col items-center">
 				<H1>{loaderData.title}</H1>
 				<Muted>{loaderData.description}</Muted>
 			</div>
 
-			<div className="grid grid-cols-4 gap-4">
+			<div className="grid grid-cols-4 gap-0 w-fit border-l-[0.5px] border-t-[0.5px]">
 				{activationFunctionsSortedByDisplayName?.map((activationFunction) => (
 					<ActivationFunctionNavigationCard
 						activationFunctionMetadata={activationFunction}
 						key={activationFunction.id}
+						className="border-r-[0.5px] border-b-[0.5px] border-l-0 border-t-0"
 					/>
 				))}
 			</div>
