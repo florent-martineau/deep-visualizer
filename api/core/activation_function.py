@@ -110,6 +110,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="Softplus",
     ),
     ActivationFunction(
+        id="softsign",
+        module=torch.nn.Softsign(),
+        display_name="Softsign",
+    ),
+    ActivationFunction(
         id="tanh",
         module=torch.nn.Tanh(),
         display_name="Tanh: Hyperbolic tangent",
