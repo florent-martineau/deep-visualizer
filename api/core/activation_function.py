@@ -76,6 +76,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         module=ELiSH(),
         display_name="ELiSH: Exponential Linear Sigmoid SquasHing",
     ),
+    ActivationFunction(
+        id="prelu",
+        module=torch.nn.PReLU(),
+        display_name="PReLU: Parametric Rectified Linear Unit",
+    ),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {
