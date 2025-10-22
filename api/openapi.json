@@ -107,6 +107,7 @@
               "type": "string",
               "description": "Id of the activation function",
               "examples": [
+                "identity",
                 "gelu",
                 "approximate-gelu",
                 "silu"
