@@ -4,6 +4,7 @@ import torch
 from pydantic import BaseModel, ConfigDict, Field
 from transformers.activations import GELUActivation, NewGELUActivation
 
+from api.core.custom_activation_functions.elish import ELiSH
 from api.core.custom_activation_functions.sinusoid import Sinusoid
 
 
@@ -70,6 +71,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
     ),
     ActivationFunction(id="sinusoid", module=Sinusoid(), display_name="Sinusoid"),
+    ActivationFunction(
+        id="elish",
+        module=ELiSH(),
+        display_name="ELiSH: Exponential Linear Sigmoid SquasHing",
+    ),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {
