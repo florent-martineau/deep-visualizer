@@ -81,6 +81,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         module=torch.nn.PReLU(),
         display_name="PReLU: Parametric Rectified Linear Unit",
     ),
+    ActivationFunction(
+        id="leaky-relu",
+        module=torch.nn.LeakyReLU(),
+        display_name="Leaky ReLU: Leaky Rectified Linear Unit",
+    ),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {

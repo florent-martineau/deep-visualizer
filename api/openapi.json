@@ -113,7 +113,8 @@
                 "silu",
                 "sinusoid",
                 "elish",
-                "prelu"
+                "prelu",
+                "leaky-relu"
               ],
               "title": "Activation Function Id"
             },
