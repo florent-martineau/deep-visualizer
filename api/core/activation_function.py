@@ -50,7 +50,18 @@ class ActivationFunction(BaseModel):
         return activations
 
 
+class _Sin(torch.nn.Module):
+    def __init__(self):
+        pass
+
+    def forward(self, x: torch.Tensor):
+        return torch.sin(x)
+
+
 _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
+    ActivationFunction(
+        id="identity", module=torch.nn.Identity(), display_name="Identity"
+    ),
     ActivationFunction(
         id="gelu",
         module=GELUActivation(),
@@ -64,6 +75,7 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
     ActivationFunction(
         id="silu", module=torch.nn.SiLU(), display_name="SiLU: Sigmoid Linear Unit"
     ),
+    ActivationFunction(id="sinusoid", module=_Sin(), display_name="Sinusoid"),
 ]
 
 ACTIVATION_FUNCTIONS: Dict[str, ActivationFunction] = {
