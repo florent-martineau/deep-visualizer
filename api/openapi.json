@@ -116,8 +116,10 @@
                 "selu",
                 "sinusoid",
                 "elish",
+                "heavyside-step-function",
                 "prelu",
                 "softplus",
+                "tanh",
                 "leaky-relu"
               ],
               "title": "Activation Function Id"
