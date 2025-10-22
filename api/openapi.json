@@ -117,6 +117,7 @@
                 "sinusoid",
                 "elish",
                 "prelu",
+                "softplus",
                 "leaky-relu"
               ],
               "title": "Activation Function Id"

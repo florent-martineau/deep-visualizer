@@ -97,6 +97,11 @@ _ACTIVATION_FUNCTIONS: Final[List[ActivationFunction]] = [
         display_name="PReLU: Parametric Rectified Linear Unit",
     ),
     ActivationFunction(
+        id="softplus",
+        module=torch.nn.Softplus(),
+        display_name="Softplus",
+    ),
+    ActivationFunction(
         id="leaky-relu",
         module=torch.nn.LeakyReLU(),
         display_name="Leaky ReLU: Leaky Rectified Linear Unit",
