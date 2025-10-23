@@ -17,7 +17,7 @@ export const WithRotation = (props: WithRotationProps) => {
 			groupRef.current &&
 			props.timeForFullRotationInSeconds > 0
 		) {
-			groupRef.current.rotation.y += delta / props.timeForFullRotationInSeconds;
+			groupRef.current.rotation.y -= delta / props.timeForFullRotationInSeconds;
 		}
 	});
 
