@@ -5,6 +5,7 @@ import { GlowingBall } from "../3d/glowing-ball";
 
 export interface NeuronHandle {
 	activate: () => void;
+	position: Vector3;
 }
 
 type NeuronProps = {
@@ -25,6 +26,7 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 		activate: () => {
 			setFrameWhenActivated(three.clock.elapsedTime);
 		},
+		position: props.position,
 	}));
 
 	useFrame((state) => {
