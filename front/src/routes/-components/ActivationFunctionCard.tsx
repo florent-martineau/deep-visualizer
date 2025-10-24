@@ -12,9 +12,6 @@ export const ActivationFunctionCard = () => {
 	const firstInputNeuronRef = useRef<NeuronHandle>(null);
 	const secondInputNeuronRef = useRef<NeuronHandle>(null);
 	const outputNeuronRef = useRef<NeuronHandle>(null);
-	const firstInputNeuronPosition = new Vector3(-3, 3, 0);
-	const secondInputNeuronPosition = new Vector3(-3, -3, 0);
-	const outputNeuronPosition = new Vector3(3, 0, 0);
 
 	// Neural connections
 	const [firstInputNeuronToOutputNeuronWeight] = useState(randomWeight());
@@ -36,24 +33,24 @@ export const ActivationFunctionCard = () => {
 			title="Activation Functions"
 			description="How does a neuron fire?"
 		>
-			<Neuron position={firstInputNeuronPosition} ref={firstInputNeuronRef} />
-			<Neuron position={secondInputNeuronPosition} ref={secondInputNeuronRef} />
+			<Neuron position={new Vector3(-3, 3, 0)} ref={firstInputNeuronRef} />
+			<Neuron position={new Vector3(-3, -3, 0)} ref={secondInputNeuronRef} />
 			<Neuron
-				position={outputNeuronPosition}
+				position={new Vector3(3, 0, 0)}
 				ref={outputNeuronRef}
 				onActivationEnd={startAnimation}
 			/>
 
 			<NeuralConnection
-				start={firstInputNeuronPosition}
-				end={outputNeuronPosition}
+				start={firstInputNeuronRef}
+				end={outputNeuronRef}
 				midOffset={-1.5}
 				lineWidth={firstInputNeuronToOutputNeuronWeight}
 				ref={firstNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={secondInputNeuronPosition}
-				end={outputNeuronPosition}
+				start={secondInputNeuronRef}
+				end={outputNeuronRef}
 				midOffset={1.5}
 				lineWidth={secondInputNeuronToOutputNeuronWeight}
 				ref={secondNeuralConnectionRef}

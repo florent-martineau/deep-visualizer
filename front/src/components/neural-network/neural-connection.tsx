@@ -9,14 +9,17 @@ import {
 } from "react";
 import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
 import { GlowingBall } from "../3d/glowing-ball";
+import type { NeuronHandle } from "./neuron";
 
 export interface NeuralConnectionHandle {
 	activate: () => void;
+	start: RefObject<NeuronHandle | null>;
+	end: RefObject<NeuronHandle | null>;
 }
 
 type NeuralConnectionProps = {
-	start: Vector3;
-	end: Vector3;
+	start: RefObject<NeuronHandle | null>;
+	end: RefObject<NeuronHandle | null>;
 	lineWidth: number;
 	midOffset: number;
 	ref: RefObject<Group>;
@@ -33,22 +36,15 @@ export const NeuralConnection = forwardRef<
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
 	);
+	const pulseRef = useRef<Mesh>(null);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
 			setFrameWhenActivated(three.clock.elapsedTime);
 		},
+		start: props.start,
+		end: props.end,
 	}));
-
-	const pulseRef = useRef<Mesh>(null);
-
-	const mid = new Vector3(
-		(props.start.x + props.end.x) / 2,
-		(props.start.y + props.end.y) / 2 + props.midOffset,
-		(props.start.z + props.end.z) / 2,
-	);
-
-	const curve = new QuadraticBezierCurve3(props.start, mid, props.end);
 
 	useFrame((state) => {
 		if (frameWhenActivated === null) return;
@@ -72,11 +68,27 @@ export const NeuralConnection = forwardRef<
 		}
 	});
 
+	if (props.start.current === null) return;
+	if (props.end.current === null) return;
+
+	const mid = new Vector3(
+		(props.start.current.position.x + props.end.current.position.x) / 2,
+		(props.start.current.position.y + props.end.current.position.y) / 2 +
+			props.midOffset,
+		(props.start.current.position.z + props.end.current.position.z) / 2,
+	);
+
+	const curve = new QuadraticBezierCurve3(
+		props.start.current.position,
+		mid,
+		props.end.current.position,
+	);
+
 	return (
 		<group>
 			<QuadraticBezierLine
-				start={props.start}
-				end={props.end}
+				start={props.start.current.position}
+				end={props.end.current.position}
 				mid={mid}
 				color="gray"
 				opacity={0.3}

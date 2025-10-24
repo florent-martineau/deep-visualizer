@@ -54,10 +54,6 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 	const leftNeuronRef = useRef<NeuronHandle>(null);
 	const rightNeuronRef = useRef<NeuronHandle>(null);
 	const bottomNeuronRef = useRef<NeuronHandle>(null);
-	const topNeuronPosition = new Vector3(2, 5, 0);
-	const leftNeuronPosition = new Vector3(-2, 0, 0);
-	const rightNeuronPosition = new Vector3(2, 0, 0);
-	const bottomNeuronPosition = new Vector3(2, -3, 0);
 
 	const topToLeftNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 	const leftToRightNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
@@ -66,35 +62,35 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 
 	return (
 		<group position={props.position} rotation={props.rotation}>
-			<Neuron position={topNeuronPosition} ref={topNeuronRef} />
-			<Neuron position={leftNeuronPosition} ref={leftNeuronRef} />
-			<Neuron position={rightNeuronPosition} ref={rightNeuronRef} />
-			<Neuron position={bottomNeuronPosition} ref={bottomNeuronRef} />
+			<Neuron position={new Vector3(2, 5, 0)} ref={topNeuronRef} />
+			<Neuron position={new Vector3(-2, 0, 0)} ref={leftNeuronRef} />
+			<Neuron position={new Vector3(2, 0, 0)} ref={rightNeuronRef} />
+			<Neuron position={new Vector3(2, -3, 0)} ref={bottomNeuronRef} />
 
 			<NeuralConnection
-				start={topNeuronPosition}
-				end={leftNeuronPosition}
+				start={topNeuronRef}
+				end={leftNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={topToLeftNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={leftNeuronPosition}
-				end={rightNeuronPosition}
+				start={leftNeuronRef}
+				end={rightNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={leftToRightNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={rightNeuronPosition}
-				end={bottomNeuronPosition}
+				start={rightNeuronRef}
+				end={bottomNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={rightToBottomNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={rightNeuronPosition}
-				end={topNeuronPosition}
+				start={rightNeuronRef}
+				end={topNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={rightToTopNeuralConnectionRef}
@@ -121,10 +117,6 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 	const topRightNeuronRef = useRef<NeuronHandle>(null);
 	const bottomRightNeuronRef = useRef<NeuronHandle>(null);
 	const bottomLeftNeuronReft = useRef<NeuronHandle>(null);
-	const topLeftNeuronPosition = new Vector3(-2.5, 5, 0);
-	const topRightNeuronPosition = new Vector3(2.5, 5, 0);
-	const bottomRightNeuronPosition = new Vector3(2.5, -3, 0);
-	const bottomLeftNeuronPosition = new Vector3(-2.5, -3, 0);
 
 	const topLeftToTopRightNeuralConnectionRef =
 		useRef<NeuralConnectionHandle>(null);
@@ -137,35 +129,35 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 
 	return (
 		<group position={props.position} rotation={props.rotation}>
-			<Neuron position={topLeftNeuronPosition} ref={topLeftNeuronRef} />
-			<Neuron position={topRightNeuronPosition} ref={topRightNeuronRef} />
-			<Neuron position={bottomRightNeuronPosition} ref={bottomRightNeuronRef} />
-			<Neuron position={bottomLeftNeuronPosition} ref={bottomLeftNeuronReft} />
+			<Neuron position={new Vector3(-2.5, 5, 0)} ref={topLeftNeuronRef} />
+			<Neuron position={new Vector3(2.5, 5, 0)} ref={topRightNeuronRef} />
+			<Neuron position={new Vector3(2.5, -3, 0)} ref={bottomRightNeuronRef} />
+			<Neuron position={new Vector3(-2.5, -3, 0)} ref={bottomLeftNeuronReft} />
 
 			<NeuralConnection
-				start={topLeftNeuronPosition}
-				end={topRightNeuronPosition}
+				start={topLeftNeuronRef}
+				end={topRightNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={topLeftToTopRightNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={topRightNeuronPosition}
-				end={bottomRightNeuronPosition}
+				start={topRightNeuronRef}
+				end={bottomRightNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={topRightToBottomRightNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={bottomRightNeuronPosition}
-				end={bottomLeftNeuronPosition}
+				start={bottomRightNeuronRef}
+				end={bottomLeftNeuronReft}
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomRightToBottomLeftNeuralConnectionRef}
 			/>
 			<NeuralConnection
-				start={bottomLeftNeuronPosition}
-				end={topLeftNeuronPosition}
+				start={bottomLeftNeuronReft}
+				end={topLeftNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomLeftToTopLeftNeuralConnectionRef}
