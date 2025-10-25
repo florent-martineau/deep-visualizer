@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Euler, Vector3 } from "three";
 import { ThreeDimensionsCanvas } from "../3d/3d-canvas";
 import {
@@ -57,8 +57,12 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 
 	const topToLeftNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 	const leftToRightNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
-	const rightToBottomNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
 	const rightToTopNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
+	const rightToBottomNeuralConnectionRef = useRef<NeuralConnectionHandle>(null);
+
+	useEffect(() => {
+		topNeuronRef.current?.activate();
+	});
 
 	return (
 		<group position={props.position} rotation={props.rotation}>
@@ -73,6 +77,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topToLeftNeuralConnectionRef}
+				onActivationEnd={leftNeuronRef.current?.activate}
 			/>
 			<NeuralConnection
 				start={leftNeuronRef}
@@ -80,6 +85,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={leftToRightNeuralConnectionRef}
+				onActivationEnd={rightNeuronRef.current?.activate}
 			/>
 			<NeuralConnection
 				start={rightNeuronRef}
@@ -94,6 +100,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={rightToTopNeuralConnectionRef}
+				onActivationEnd={topNeuronRef.current?.activate}
 			/>
 		</group>
 	);
@@ -116,7 +123,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 	const topLeftNeuronRef = useRef<NeuronHandle>(null);
 	const topRightNeuronRef = useRef<NeuronHandle>(null);
 	const bottomRightNeuronRef = useRef<NeuronHandle>(null);
-	const bottomLeftNeuronReft = useRef<NeuronHandle>(null);
+	const bottomLeftNeuronRef = useRef<NeuronHandle>(null);
 
 	const topLeftToTopRightNeuralConnectionRef =
 		useRef<NeuralConnectionHandle>(null);
@@ -127,12 +134,16 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 	const bottomLeftToTopLeftNeuralConnectionRef =
 		useRef<NeuralConnectionHandle>(null);
 
+	useEffect(() => {
+		topLeftNeuronRef.current?.activate();
+	});
+
 	return (
 		<group position={props.position} rotation={props.rotation}>
 			<Neuron position={new Vector3(-2.5, 5, 0)} ref={topLeftNeuronRef} />
 			<Neuron position={new Vector3(2.5, 5, 0)} ref={topRightNeuronRef} />
 			<Neuron position={new Vector3(2.5, -3, 0)} ref={bottomRightNeuronRef} />
-			<Neuron position={new Vector3(-2.5, -3, 0)} ref={bottomLeftNeuronReft} />
+			<Neuron position={new Vector3(-2.5, -3, 0)} ref={bottomLeftNeuronRef} />
 
 			<NeuralConnection
 				start={topLeftNeuronRef}
@@ -140,6 +151,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topLeftToTopRightNeuralConnectionRef}
+				onActivationEnd={topRightNeuronRef.current?.activate}
 			/>
 			<NeuralConnection
 				start={topRightNeuronRef}
@@ -147,20 +159,23 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topRightToBottomRightNeuralConnectionRef}
+				onActivationEnd={bottomRightNeuronRef.current?.activate}
 			/>
 			<NeuralConnection
 				start={bottomRightNeuronRef}
-				end={bottomLeftNeuronReft}
+				end={bottomLeftNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomRightToBottomLeftNeuralConnectionRef}
+				onActivationEnd={bottomLeftNeuronRef.current?.activate}
 			/>
 			<NeuralConnection
-				start={bottomLeftNeuronReft}
+				start={bottomLeftNeuronRef}
 				end={topLeftNeuronRef}
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomLeftToTopLeftNeuralConnectionRef}
+				onActivationEnd={topLeftNeuronRef.current?.activate}
 			/>
 		</group>
 	);
