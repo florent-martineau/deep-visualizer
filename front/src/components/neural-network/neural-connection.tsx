@@ -3,11 +3,13 @@ import { useFrame, useThree } from "@react-three/fiber";
 import {
 	forwardRef,
 	type RefObject,
+	useEffect,
 	useImperativeHandle,
 	useRef,
 	useState,
 } from "react";
 import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
+import { isNonNullRef } from "@/utils/refs/is-non-null-ref";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuronHandle } from "./neuron";
 
@@ -37,6 +39,7 @@ export const NeuralConnection = forwardRef<
 		null,
 	);
 	const pulseRef = useRef<Mesh>(null);
+	const handleRef = useRef<NeuralConnectionHandle>(null);
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
@@ -67,6 +70,13 @@ export const NeuralConnection = forwardRef<
 			pulseRef.current.position.copy(position);
 		}
 	});
+
+	useEffect(() => {
+		if (isNonNullRef(handleRef)) {
+			props.start.current?.registerConnection("input", handleRef);
+			props.end.current?.registerConnection("input", handleRef);
+		}
+	}, [props.start, props.end]);
 
 	if (props.start.current === null) return;
 	if (props.end.current === null) return;
