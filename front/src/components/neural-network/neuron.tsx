@@ -1,11 +1,26 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import {
+	forwardRef,
+	type RefObject,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from "react";
 import type { Vector3 } from "three";
 import { GlowingBall } from "../3d/glowing-ball";
+import type { NeuralConnectionHandle } from "./neural-connection";
 
 export interface NeuronHandle {
 	activate: () => void;
+	registerConnection: (
+		type: "input" | "output",
+		handle: RefObject<NeuralConnectionHandle>,
+	) => void;
 	position: Vector3;
+	neuralConnections: {
+		input: NeuralConnectionHandle[];
+		output: NeuralConnectionHandle[];
+	};
 }
 
 type NeuronProps = {
@@ -21,12 +36,25 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 		null,
 	);
 	const [glowIntensity, setGlowIntensity] = useState(0);
+	const connectionsRef = useRef<{
+		input: NeuralConnectionHandle[];
+		output: NeuralConnectionHandle[];
+	}>({
+		input: [],
+		output: [],
+	});
 
 	useImperativeHandle(ref, () => ({
 		activate: () => {
 			setFrameWhenActivated(three.clock.elapsedTime);
 		},
+		registerConnection: (type, handle) => {
+			if (!connectionsRef.current[type].includes(handle.current)) {
+				connectionsRef.current[type].push(handle.current);
+			}
+		},
 		position: props.position,
+		neuralConnections: connectionsRef.current,
 	}));
 
 	useFrame((state) => {
