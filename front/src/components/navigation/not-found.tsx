@@ -1,4 +1,3 @@
-import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { Euler, Vector3 } from "three";
 import { ThreeDimensionsCanvas } from "../3d/3d-canvas";
