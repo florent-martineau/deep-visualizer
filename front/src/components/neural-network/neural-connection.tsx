@@ -9,7 +9,7 @@ import {
 	useState,
 } from "react";
 import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
-import { isNonNullRef } from "@/utils/refs/is-non-null-ref";
+import { isNotNullRef } from "@/utils/refs/is-not-null-ref";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuronHandle } from "./neuron";
 
@@ -41,13 +41,18 @@ export const NeuralConnection = forwardRef<
 	const pulseRef = useRef<Mesh>(null);
 	const handleRef = useRef<NeuralConnectionHandle>(null);
 
-	useImperativeHandle(ref, () => ({
-		activate: () => {
-			setFrameWhenActivated(three.clock.elapsedTime);
-		},
-		start: props.start,
-		end: props.end,
-	}));
+	useImperativeHandle(ref, () => {
+		const handle = {
+			activate: () => {
+				setFrameWhenActivated(three.clock.elapsedTime);
+			},
+			start: props.start,
+			end: props.end,
+		};
+		handleRef.current = handle;
+
+		return handle;
+	});
 
 	useFrame((state) => {
 		if (frameWhenActivated === null) return;
@@ -72,10 +77,11 @@ export const NeuralConnection = forwardRef<
 	});
 
 	useEffect(() => {
-		if (isNonNullRef(handleRef)) {
-			props.start.current?.registerConnection("input", handleRef);
-			props.end.current?.registerConnection("input", handleRef);
-		}
+		if (!props.start.current || !props.end.current) return;
+		if (!isNotNullRef(handleRef)) return;
+
+		props.start.current.registerConnection("output", handleRef);
+		props.end.current.registerConnection("input", handleRef);
 	}, [props.start, props.end]);
 
 	if (props.start.current === null) return;

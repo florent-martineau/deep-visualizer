@@ -22,7 +22,6 @@ export const ActivationFunctionCard = () => {
 	const startAnimation = useCallback(() => {
 		firstInputNeuronRef.current?.activate();
 		secondInputNeuronRef.current?.activate();
-		secondNeuralConnectionRef.current?.activate();
 	}, []);
 
 	return (
