@@ -44,6 +44,14 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 		output: [],
 	});
 
+	const onActivationEnd = () => {
+		props.onActivationEnd?.();
+
+		for (const neuralConnection of connectionsRef.current.output) {
+			neuralConnection.activate();
+		}
+	};
+
 	useImperativeHandle(ref, () => ({
 		activate: () => {
 			setFrameWhenActivated(three.clock.elapsedTime);
@@ -65,7 +73,7 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 		if (secondsSinceActivation > ANIMATION_DURATION_IN_SECONDS) {
 			setGlowIntensity(0);
 			setFrameWhenActivated(null);
-			props.onActivationEnd?.();
+			onActivationEnd();
 		} else {
 			const animationProgress =
 				secondsSinceActivation / ANIMATION_DURATION_IN_SECONDS;
