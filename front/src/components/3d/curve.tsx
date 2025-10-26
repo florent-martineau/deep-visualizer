@@ -1,4 +1,5 @@
 import { Line } from "@react-three/drei";
+import { PRIMARY } from "tailwind.config";
 import type { Vector3 } from "three";
 
 type CurveProps = {
@@ -8,5 +9,5 @@ type CurveProps = {
 export const Curve = (props: CurveProps) => {
 	if (props.points.length === 0) return;
 
-	return <Line points={props.points} color="hotpink" lineWidth={3} />;
+	return <Line points={props.points} color={PRIMARY} lineWidth={3} />;
 };
