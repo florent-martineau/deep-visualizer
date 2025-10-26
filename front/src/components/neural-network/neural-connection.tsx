@@ -9,6 +9,7 @@ import {
 	useState,
 } from "react";
 import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
+import { colors } from "@/lib/colors";
 import { isNotNullRef } from "@/utils/refs/is-not-null-ref";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuronHandle } from "./neuron";
@@ -119,8 +120,8 @@ export const NeuralConnection = forwardRef<
 				<GlowingBall
 					ref={pulseRef}
 					radius={0.2}
-					glowIntensity={5}
-					color="#00bbbb"
+					glowIntensity={10}
+					color={colors.accent}
 				/>
 			)}
 		</group>

@@ -31,7 +31,7 @@ export const NavigationCard = (props: NavigationCardProps) => {
 	return (
 		<Card
 			className={cn(
-				"max-w-92 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300",
+				"max-w-92 hover:text-white text-slate-400 hover:bg-primary/10 grayscale hover:grayscale-0 transition-all duration-300",
 				props.className,
 			)}
 			ref={ref}
