@@ -77,7 +77,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topToLeftNeuralConnectionRef}
-				onActivationEnd={leftNeuronRef.current?.activate}
+				onActivationEnd={() => leftNeuronRef.current?.activate()}
 			/>
 			<NeuralConnection
 				start={leftNeuronRef}
@@ -85,7 +85,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={leftToRightNeuralConnectionRef}
-				onActivationEnd={rightNeuronRef.current?.activate}
+				onActivationEnd={() => rightNeuronRef.current?.activate()}
 			/>
 			<NeuralConnection
 				start={rightNeuronRef}
@@ -100,7 +100,7 @@ const Four = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={rightToTopNeuralConnectionRef}
-				onActivationEnd={topNeuronRef.current?.activate}
+				onActivationEnd={() => topNeuronRef.current?.activate()}
 			/>
 		</group>
 	);
@@ -151,7 +151,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topLeftToTopRightNeuralConnectionRef}
-				onActivationEnd={topRightNeuronRef.current?.activate}
+				onActivationEnd={() => topRightNeuronRef.current?.activate()}
 			/>
 			<NeuralConnection
 				start={topRightNeuronRef}
@@ -159,7 +159,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={topRightToBottomRightNeuralConnectionRef}
-				onActivationEnd={bottomRightNeuronRef.current?.activate}
+				onActivationEnd={() => bottomRightNeuronRef.current?.activate()}
 			/>
 			<NeuralConnection
 				start={bottomRightNeuronRef}
@@ -167,7 +167,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomRightToBottomLeftNeuralConnectionRef}
-				onActivationEnd={bottomLeftNeuronRef.current?.activate}
+				onActivationEnd={() => bottomLeftNeuronRef.current?.activate()}
 			/>
 			<NeuralConnection
 				start={bottomLeftNeuronRef}
@@ -175,7 +175,7 @@ const Zero = (props: { position: Vector3; rotation?: Euler }) => {
 				midOffset={0}
 				lineWidth={4}
 				ref={bottomLeftToTopLeftNeuralConnectionRef}
-				onActivationEnd={topLeftNeuronRef.current?.activate}
+				onActivationEnd={() => topLeftNeuronRef.current?.activate()}
 			/>
 		</group>
 	);
