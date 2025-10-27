@@ -7,7 +7,7 @@ import {
 } from "@/components/neural-network/neural-connection";
 import { Neuron, type NeuronHandle } from "@/components/neural-network/neuron";
 
-export const ActivationFunctionCard = () => {
+export const ActivationFunctionsListCard = () => {
 	// Neurons
 	const firstInputNeuronRef = useRef<NeuronHandle>(null);
 	const secondInputNeuronRef = useRef<NeuronHandle>(null);

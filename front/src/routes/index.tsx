@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { H1, Lead } from "@/components/ui/typography";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
 import type { LoaderData } from "@/lib/router/types";
-import { ActivationFunctionCard } from "./-components/ActivationFunctionCard";
+import { ActivationFunctionsListCard } from "../components/navigation/card/activation-functions-list";
 
 export const Route = createFileRoute("/")({
 	loader: async (): Promise<LoaderData> => ({
@@ -20,7 +20,7 @@ function App() {
 				<Lead>{PROJECT_DESCRIPTION}</Lead>
 			</div>
 
-			<ActivationFunctionCard />
+			<ActivationFunctionsListCard />
 		</div>
 	);
 }
