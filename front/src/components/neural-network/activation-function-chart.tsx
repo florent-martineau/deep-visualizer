@@ -20,15 +20,14 @@ export const ActivationFunctionChart = (
 					label: "Pre-activation",
 					from: new Vector3(-2, 0, 0),
 					to: new Vector3(2, 0, 0),
-					labelOffset: new Vector3(0.2, 0, 0),
-					anchorX: "left",
+					labelOffset: new Vector3(0.1, 0, 0),
+					alignLeft: true,
 				},
 				y: {
 					label: "Activation",
 					from: new Vector3(0, -2, 0),
 					to: new Vector3(0, 2, 0),
-					labelOffset: new Vector3(0, 0.2, 0),
-					anchorY: "middle",
+					labelOffset: new Vector3(0, 0.1, 0),
 				},
 			}}
 		/>
