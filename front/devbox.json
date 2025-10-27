@@ -6,7 +6,8 @@
       "export PS1='[devbox-front] $ '",
       "set -a",
       "[ -f .env ] && source .env",
-      "set +a"
+      "set +a",
+      "bun dev"
     ]
   }
 }
