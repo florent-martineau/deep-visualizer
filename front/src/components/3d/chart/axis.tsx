@@ -1,6 +1,7 @@
-import { Text } from "@react-three/drei";
+import { Text3D } from "@react-three/drei";
 import type { Vector3 } from "three";
 import * as THREE from "three";
+import { TomorrowRegular } from "@/fonts/Tomorrow/regular";
 
 export type AxisMetadata = {
 	label: string;
@@ -23,16 +24,15 @@ export const Axis = (props: AxisMetadata) => {
 				}
 			/>
 
-			<Text
+			<Text3D
 				position={[
 					props.to.x + props.labelOffset.x,
 					props.to.y + props.labelOffset.y,
 					props.to.z + props.labelOffset.z,
 				]}
-				anchorX={props.anchorX}
-				anchorY={props.anchorY}
-				fontSize={0.2}
-				color="white"
+				font={TomorrowRegular}
+				size={0.1}
+				height={0.01}
 			>
 				<meshStandardMaterial
 					color="#dddddd"
@@ -40,7 +40,7 @@ export const Axis = (props: AxisMetadata) => {
 					emissiveIntensity={0.9}
 				/>
 				{props.label}
-			</Text>
+			</Text3D>
 		</>
 	);
 };
