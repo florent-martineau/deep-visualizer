@@ -17,7 +17,7 @@ export type AxisMetadata = {
 export type AxisHandle = WithHighlight<{}>;
 
 export const Axis = forwardRef<AxisHandle, AxisMetadata>((props, ref) => {
-	const [isHighlighed, setIsHighlighted] = useState(true);
+	const [isHighlighed, setIsHighlighted] = useState(false);
 	const direction = props.to.clone().sub(props.from);
 	const length = props.from.length() + props.to.length();
 
