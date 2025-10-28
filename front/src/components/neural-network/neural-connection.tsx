@@ -36,7 +36,7 @@ export const NeuralConnection = forwardRef<
 	NeuralConnectionHandle,
 	NeuralConnectionProps
 >((props, ref) => {
-	const [isHighlighed, setIsHighlighted] = useState(false);
+	const [isHighlighted, setIsHighlighted] = useState(false);
 	const three = useThree();
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
@@ -104,7 +104,7 @@ export const NeuralConnection = forwardRef<
 		props.end.current.position,
 	);
 
-	const color = isHighlighed ? colors.accent : "gray";
+	const color = isHighlighted ? colors.accent : "gray";
 
 	return (
 		<group>
@@ -113,7 +113,7 @@ export const NeuralConnection = forwardRef<
 				end={props.end.current.position}
 				mid={mid}
 				color={color}
-				opacity={isHighlighed ? 1 : 0.3}
+				opacity={isHighlighted ? 1 : 0.3}
 				dashed={true}
 				dashScale={100}
 				dashSize={80}

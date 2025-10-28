@@ -8,10 +8,11 @@ import {
 } from "react";
 import type { Vector3 } from "three";
 import { colors } from "@/lib/colors";
+import type { WithHighlight } from "@/lib/highlight/types";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuralConnectionHandle } from "./neural-connection";
 
-export interface NeuronHandle {
+export type NeuronHandle = WithHighlight<{
 	activate: () => void;
 	registerConnection: (
 		type: "input" | "output",
@@ -22,7 +23,7 @@ export interface NeuronHandle {
 		input: NeuralConnectionHandle[];
 		output: NeuralConnectionHandle[];
 	};
-}
+}>;
 
 type NeuronProps = {
 	position: Vector3;
@@ -32,6 +33,7 @@ type NeuronProps = {
 const ANIMATION_DURATION_IN_SECONDS = 0.5;
 
 export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
+	const [isHighlighted, setIsHighlighted] = useState(false);
 	const three = useThree();
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
@@ -62,6 +64,7 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 				connectionsRef.current[type].push(handle.current);
 			}
 		},
+		toggleHighlight: (highlighted) => setIsHighlighted(highlighted),
 		position: props.position,
 		neuralConnections: connectionsRef.current,
 	}));
@@ -88,9 +91,11 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 	return (
 		<GlowingBall
 			position={props.position}
-			glowIntensity={glowIntensity}
+			glowIntensity={isHighlighted ? 1 : glowIntensity}
 			radius={1}
-			color={frameWhenActivated !== null ? colors.accent : "#525252"}
+			color={
+				frameWhenActivated !== null || isHighlighted ? colors.accent : "gray"
+			}
 		/>
 	);
 });
