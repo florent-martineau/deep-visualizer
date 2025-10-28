@@ -10,15 +10,16 @@ import {
 } from "react";
 import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
 import { colors } from "@/lib/colors";
+import type { WithHighlight } from "@/lib/highlight/types";
 import { isNotNullRef } from "@/utils/refs/is-not-null-ref";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuronHandle } from "./neuron";
 
-export interface NeuralConnectionHandle {
+export type NeuralConnectionHandle = WithHighlight<{
 	activate: () => void;
 	start: RefObject<NeuronHandle | null>;
 	end: RefObject<NeuronHandle | null>;
-}
+}>;
 
 type NeuralConnectionProps = {
 	start: RefObject<NeuronHandle | null>;
@@ -35,6 +36,7 @@ export const NeuralConnection = forwardRef<
 	NeuralConnectionHandle,
 	NeuralConnectionProps
 >((props, ref) => {
+	const [isHighlighed, setIsHighlighted] = useState(false);
 	const three = useThree();
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
@@ -43,10 +45,11 @@ export const NeuralConnection = forwardRef<
 	const handleRef = useRef<NeuralConnectionHandle>(null);
 
 	useImperativeHandle(ref, () => {
-		const handle = {
+		const handle: NeuralConnectionHandle = {
 			activate: () => {
 				setFrameWhenActivated(three.clock.elapsedTime);
 			},
+			toggleHighlight: (highlighted) => setIsHighlighted(highlighted),
 			start: props.start,
 			end: props.end,
 		};
@@ -101,14 +104,16 @@ export const NeuralConnection = forwardRef<
 		props.end.current.position,
 	);
 
+	const color = isHighlighed ? colors.accent : "gray";
+
 	return (
 		<group>
 			<QuadraticBezierLine
 				start={props.start.current.position}
 				end={props.end.current.position}
 				mid={mid}
-				color="gray"
-				opacity={0.3}
+				color={color}
+				opacity={isHighlighed ? 1 : 0.3}
 				dashed={true}
 				dashScale={100}
 				dashSize={80}
