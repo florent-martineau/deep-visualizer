@@ -17,7 +17,7 @@ export type AxisMetadata = {
 export type AxisHandle = WithHighlight<{}>;
 
 export const Axis = forwardRef<AxisHandle, AxisMetadata>((props, ref) => {
-	const [isHighlighed, setIsHighlighted] = useState(false);
+	const [isHighlighted, setIsHighlighted] = useState(false);
 	const direction = props.to.clone().sub(props.from);
 	const length = props.from.length() + props.to.length();
 
@@ -25,7 +25,7 @@ export const Axis = forwardRef<AxisHandle, AxisMetadata>((props, ref) => {
 		toggleHighlight: (highlighted) => setIsHighlighted(highlighted),
 	}));
 
-	const color = isHighlighed ? colors.accent : "gray";
+	const color = isHighlighted ? colors.accent : "gray";
 
 	return (
 		<group>
