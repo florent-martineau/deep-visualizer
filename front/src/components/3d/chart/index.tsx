@@ -14,7 +14,10 @@ type ThreeDimensionsChartProps = {
 export const ThreeDimensionsChart = (props: ThreeDimensionsChartProps) => {
 	return (
 		<group>
-			<Curve points={props.points} />
+			<Curve
+				points={props.points}
+				onHover={(position) => console.log("Hovering", position)}
+			/>
 
 			{Object.values(props.axes).map((axisMetadata) => (
 				<Axis key={axisMetadata.label} {...axisMetadata} />
