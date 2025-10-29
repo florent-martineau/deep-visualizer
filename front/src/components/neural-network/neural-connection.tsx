@@ -101,7 +101,7 @@ export const NeuralConnection = forwardRef<
 		props.end.current.position,
 	);
 
-	const color = isHighlighted ? colors.accent : "gray";
+	const color = isHighlighted ? colors.accent : colors.neutral;
 
 	return (
 		<group>

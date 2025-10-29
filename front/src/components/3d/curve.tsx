@@ -19,6 +19,6 @@ export const Curve = forwardRef<CurveHandle, CurveProps>((props, ref) => {
 
 	if (props.points.length === 0) return;
 
-	const color = isHighlighted ? colors.accent : "gray";
+	const color = isHighlighted ? colors.accent : colors.neutral;
 	return <Line points={props.points} color={color} lineWidth={3} />;
 });

@@ -25,7 +25,7 @@ export const Axis = forwardRef<AxisHandle, AxisMetadata>((props, ref) => {
 		toggleHighlight: (highlighted) => setIsHighlighted(highlighted),
 	}));
 
-	const color = isHighlighted ? colors.accent : "gray";
+	const color = isHighlighted ? colors.accent : colors.neutral;
 
 	return (
 		<group>

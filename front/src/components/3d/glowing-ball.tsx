@@ -20,7 +20,7 @@ export const GlowingBall = forwardRef<GlowingBallHandle, GlowingBallProps>(
 		}));
 
 		const color =
-			isHighlighted || props.glowIntensity > 0 ? colors.accent : "gray";
+			isHighlighted || props.glowIntensity > 0 ? colors.accent : colors.neutral;
 
 		return (
 			<mesh position={props.position}>
