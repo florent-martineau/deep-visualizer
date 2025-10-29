@@ -3,6 +3,7 @@ import type { Vector3 } from "three";
 import { Curve } from "../curve";
 import { GlowingBall } from "../glowing-ball";
 import { Axis, type AxisMetadata } from "./axis";
+import { SpikeLine } from "./spike-line";
 
 type ThreeDimensionsChartProps = {
 	points: Vector3[];
@@ -25,11 +26,21 @@ export const ThreeDimensionsChart = (props: ThreeDimensionsChartProps) => {
 			/>
 
 			{hoveredPosition && (
-				<GlowingBall
-					position={hoveredPosition}
-					radius={0.02}
-					glowIntensity={15}
-				/>
+				<>
+					<GlowingBall
+						position={hoveredPosition}
+						radius={0.02}
+						glowIntensity={15}
+					/>
+
+					{Object.values(props.axes).map((axisMetadata) => (
+						<SpikeLine
+							key={axisMetadata.label}
+							point={hoveredPosition}
+							axis={axisMetadata}
+						/>
+					))}
+				</>
 			)}
 
 			{Object.values(props.axes).map((axisMetadata) => (
