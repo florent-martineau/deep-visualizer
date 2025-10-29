@@ -8,6 +8,7 @@ import { isNonEmpty } from "@/utils/arrays/is-non-empty";
 type CurveProps = {
 	points: Vector3[];
 	onHover?: (position: Vector3) => void;
+	onHoverEnd?: () => void;
 };
 
 export type CurveHandle = WithHighlight<{}>;
@@ -34,7 +35,7 @@ export const Curve = forwardRef<CurveHandle, CurveProps>((props, ref) => {
 				<Line
 					points={props.points}
 					visible={false}
-					lineWidth={lineWidth * 7}
+					lineWidth={lineWidth * 20}
 					onPointerMove={(e) =>
 						props.onHover?.(
 							getPositionAlongCurve({
@@ -43,6 +44,7 @@ export const Curve = forwardRef<CurveHandle, CurveProps>((props, ref) => {
 							}),
 						)
 					}
+					onPointerOut={() => props.onHoverEnd?.()}
 				/>
 			)}
 

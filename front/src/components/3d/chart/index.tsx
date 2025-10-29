@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Vector3 } from "three";
 import { Curve } from "../curve";
+import { GlowingBall } from "../glowing-ball";
 import { Axis, type AxisMetadata } from "./axis";
 
 type ThreeDimensionsChartProps = {
@@ -12,12 +14,23 @@ type ThreeDimensionsChartProps = {
 };
 
 export const ThreeDimensionsChart = (props: ThreeDimensionsChartProps) => {
+	const [hoveredPosition, setHoveredPosition] = useState<Vector3 | null>(null);
+
 	return (
 		<group>
 			<Curve
 				points={props.points}
-				onHover={(position) => console.log("Hovering", position)}
+				onHover={(position) => setHoveredPosition(position)}
+				onHoverEnd={() => setHoveredPosition(null)}
 			/>
+
+			{hoveredPosition && (
+				<GlowingBall
+					position={hoveredPosition}
+					radius={0.02}
+					glowIntensity={15}
+				/>
+			)}
 
 			{Object.values(props.axes).map((axisMetadata) => (
 				<Axis key={axisMetadata.label} {...axisMetadata} />
