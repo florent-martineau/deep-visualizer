@@ -8,7 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { type Group, type Mesh, QuadraticBezierCurve3, Vector3 } from "three";
+import { type Group, QuadraticBezierCurve3, Vector3 } from "three";
 import { colors } from "@/lib/colors";
 import type { WithHighlight } from "@/lib/highlight/types";
 import { isNotNullRef } from "@/utils/refs/is-not-null-ref";
@@ -22,8 +22,8 @@ export type NeuralConnectionHandle = WithHighlight<{
 }>;
 
 type NeuralConnectionProps = {
-	start: RefObject<NeuronHandle | null>;
-	end: RefObject<NeuronHandle | null>;
+	start: RefObject<NeuronHandle>;
+	end: RefObject<NeuronHandle>;
 	lineWidth: number;
 	midOffset: number;
 	ref: RefObject<Group>;
@@ -41,7 +41,7 @@ export const NeuralConnection = forwardRef<
 	const [frameWhenActivated, setFrameWhenActivated] = useState<number | null>(
 		null,
 	);
-	const pulseRef = useRef<Mesh>(null);
+	const [pulsePosition, setPulsePosition] = useState<Vector3>();
 	const handleRef = useRef<NeuralConnectionHandle>(null);
 
 	useImperativeHandle(ref, () => {
@@ -68,16 +68,13 @@ export const NeuralConnection = forwardRef<
 			props.onActivationEnd?.();
 		}
 
-		// Set position of the glowing ball along the curve
-		if (pulseRef.current) {
-			const position = curve.getPoint(
-				Math.max(
-					Math.min(secondsSinceActivation / ANIMATION_DURATION_IN_SECONDS, 1),
-					0,
-				),
-			);
-			pulseRef.current.position.copy(position);
-		}
+		const position = curve.getPoint(
+			Math.max(
+				Math.min(secondsSinceActivation / ANIMATION_DURATION_IN_SECONDS, 1),
+				0,
+			),
+		);
+		setPulsePosition(position);
 	});
 
 	useEffect(() => {
@@ -121,13 +118,8 @@ export const NeuralConnection = forwardRef<
 				lineWidth={props.lineWidth}
 			/>
 
-			{frameWhenActivated && (
-				<GlowingBall
-					ref={pulseRef}
-					radius={0.2}
-					glowIntensity={10}
-					color={colors.accent}
-				/>
+			{frameWhenActivated && pulsePosition && (
+				<GlowingBall position={pulsePosition} radius={0.2} glowIntensity={10} />
 			)}
 		</group>
 	);

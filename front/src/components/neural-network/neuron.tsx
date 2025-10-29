@@ -7,7 +7,6 @@ import {
 	useState,
 } from "react";
 import type { Vector3 } from "three";
-import { colors } from "@/lib/colors";
 import type { WithHighlight } from "@/lib/highlight/types";
 import { GlowingBall } from "../3d/glowing-ball";
 import type { NeuralConnectionHandle } from "./neural-connection";
@@ -93,9 +92,6 @@ export const Neuron = forwardRef<NeuronHandle, NeuronProps>((props, ref) => {
 			position={props.position}
 			glowIntensity={isHighlighted ? 1 : glowIntensity}
 			radius={1}
-			color={
-				frameWhenActivated !== null || isHighlighted ? colors.accent : "gray"
-			}
 		/>
 	);
 });

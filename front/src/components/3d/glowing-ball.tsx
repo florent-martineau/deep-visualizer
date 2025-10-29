@@ -1,23 +1,36 @@
-import type { RefObject } from "react";
-import type { Mesh, Vector3 } from "three";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import type { Vector3 } from "three";
+import { colors } from "@/lib/colors";
+import type { WithHighlight } from "@/lib/highlight/types";
 
-type GlowingBallRef = {
+type GlowingBallProps = {
 	radius: number;
 	glowIntensity: number;
-	color: string;
-	ref?: RefObject<Mesh | null>;
-	position?: Vector3;
+	position: Vector3;
 };
 
-export const GlowingBall = (props: GlowingBallRef) => {
-	return (
-		<mesh ref={props.ref} position={props.position ?? undefined}>
-			<sphereGeometry args={[props.radius, 32, 32]} />
-			<meshStandardMaterial
-				color={props.color}
-				emissive={props.color}
-				emissiveIntensity={props.glowIntensity}
-			/>
-		</mesh>
-	);
-};
+export type GlowingBallHandle = WithHighlight<{}>;
+
+export const GlowingBall = forwardRef<GlowingBallHandle, GlowingBallProps>(
+	(props, ref) => {
+		const [isHighlighted, setIsHighlighted] = useState(false);
+
+		useImperativeHandle(ref, () => ({
+			toggleHighlight: (highlighted) => setIsHighlighted(highlighted),
+		}));
+
+		const color =
+			isHighlighted || props.glowIntensity > 0 ? colors.accent : "gray";
+
+		return (
+			<mesh position={props.position}>
+				<sphereGeometry args={[props.radius, 32, 32]} />
+				<meshStandardMaterial
+					color={color}
+					emissive={color}
+					emissiveIntensity={isHighlighted ? 1 : props.glowIntensity}
+				/>
+			</mesh>
+		);
+	},
+);
