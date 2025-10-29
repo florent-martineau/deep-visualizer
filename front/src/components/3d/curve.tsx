@@ -79,7 +79,7 @@ const getPositionAlongCurve = (args: {
 	for (const point of otherPoints) {
 		const line = new Line3(previousPoint, point);
 		const closestPointOnLine = new Vector3(0, 0, 0);
-		line.closestPointToPoint(point, true, closestPointOnLine);
+		line.closestPointToPoint(args.point, true, closestPointOnLine);
 		const distance = closestPointOnLine.distanceTo(args.point);
 
 		if (distance < lowestDistance) {
