@@ -22,8 +22,8 @@ export type NeuralConnectionHandle = WithHighlight<{
 }>;
 
 type NeuralConnectionProps = {
-	start: RefObject<NeuronHandle>;
-	end: RefObject<NeuronHandle>;
+	start: RefObject<NeuronHandle | null>;
+	end: RefObject<NeuronHandle | null>;
 	lineWidth: number;
 	midOffset: number;
 	ref: RefObject<Group>;
