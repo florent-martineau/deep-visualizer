@@ -9,6 +9,12 @@ type SpikeLineProps = {
 	axis: Pick<AxisMetadata, "from" | "to">;
 };
 
+/**
+ * A Spike Line is a line orthogonal to an axis, generally used when hovering on a point.
+ *
+ * You can look at the definition on [Plotly's website](https://plotly.com/python/v3/3d-hover/)
+ * or on [this permalink](https://github.com/plotly/graphing-library-docs/blob/master/_posts/python-v3/3d/3d-hover/2015-06-30-3d-hover-options.html#L46) in case their website changes.
+ */
 export const SpikeLine = (props: SpikeLineProps) => {
 	const pointOnAxis = getProjectionOnCurve({
 		curvePoints: [props.axis.from, props.axis.to],
