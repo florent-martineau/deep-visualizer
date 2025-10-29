@@ -36,7 +36,7 @@ export const Axis = forwardRef<AxisHandle, AxisMetadata>((props, ref) => {
 			/>
 
 			<Center
-				position={props.to.add(props.labelOffset)}
+				position={props.to.clone().add(props.labelOffset)}
 				right={props.alignLeft}
 			>
 				<Text3D font={TomorrowRegular} size={0.1} height={0.01}>
