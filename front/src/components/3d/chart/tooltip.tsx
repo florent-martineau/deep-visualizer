@@ -7,17 +7,37 @@ type TooltipProps = {
 	point: Vector3;
 	lines: string[];
 };
+
+/**
+ * The Tooltip looks like this:
+ *
+ *     Line 1               }
+ *     Line 2               } <- Content
+ *     Line 3               }
+ *   ____________________   <--- Horizontal Line
+ *            |
+ *            |
+ *            |  <---- Vertical Line
+ *            |
+ *            |
+ *   Point P of interest
+ */
 export const Tooltip = (props: TooltipProps) => {
 	const offset = new Vector3(0, 0.3, 0);
 	const offsettedPoint = props.point.clone().add(offset);
+	const textSize = 0.1;
+	const lineHeight = 1.5 * textSize;
 
 	return (
 		<group>
+			{/* Vertical Line */}
 			<Line
 				points={[props.point, offsettedPoint]}
 				color={colors.accent}
 				lineWidth={0.5}
 			/>
+
+			{/* Horizontal Line */}
 			<Line
 				points={[
 					new Vector3(
@@ -35,17 +55,22 @@ export const Tooltip = (props: TooltipProps) => {
 				lineWidth={0.5}
 			/>
 
+			{/* Content */}
 			<Center
-				position={offsettedPoint.clone().add(new Vector3(0, 0.05, 0))}
+				position={offsettedPoint
+					.clone()
+					.add(new Vector3(0, 0.33 * lineHeight, 0))}
 				top={true}
 			>
 				{props.lines.map((line, idx) => (
 					<Text3D
 						key={line}
 						font={TomorrowRegular}
-						size={0.1}
+						size={textSize}
 						height={0.01}
-						position={new Vector3(0, (props.lines.length - idx) * 0.15, 0)}
+						position={
+							new Vector3(0, (props.lines.length - idx) * lineHeight, 0)
+						}
 					>
 						<meshStandardMaterial
 							color={colors.accent}
