@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as ApiProxyRouteImport } from './routes/api-proxy'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActivationFunctionsIndexRouteImport } from './routes/activation-functions/index'
 import { Route as ActivationFunctionsActivationFunctionIdRouteImport } from './routes/activation-functions/$activationFunctionId'
 
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiProxyRoute = ApiProxyRouteImport.update({
   id: '/api-proxy',
   path: '/api-proxy',
@@ -40,12 +46,14 @@ const ActivationFunctionsActivationFunctionIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
+  '/learn': typeof LearnRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
   '/activation-functions': typeof ActivationFunctionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
+  '/learn': typeof LearnRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
   '/activation-functions': typeof ActivationFunctionsIndexRoute
 }
@@ -53,6 +61,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-proxy': typeof ApiProxyRoute
+  '/learn': typeof LearnRoute
   '/activation-functions/$activationFunctionId': typeof ActivationFunctionsActivationFunctionIdRoute
   '/activation-functions/': typeof ActivationFunctionsIndexRoute
 }
@@ -61,18 +70,21 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/api-proxy'
+    | '/learn'
     | '/activation-functions/$activationFunctionId'
     | '/activation-functions'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api-proxy'
+    | '/learn'
     | '/activation-functions/$activationFunctionId'
     | '/activation-functions'
   id:
     | '__root__'
     | '/'
     | '/api-proxy'
+    | '/learn'
     | '/activation-functions/$activationFunctionId'
     | '/activation-functions/'
   fileRoutesById: FileRoutesById
@@ -80,12 +92,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiProxyRoute: typeof ApiProxyRoute
+  LearnRoute: typeof LearnRoute
   ActivationFunctionsActivationFunctionIdRoute: typeof ActivationFunctionsActivationFunctionIdRoute
   ActivationFunctionsIndexRoute: typeof ActivationFunctionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api-proxy': {
       id: '/api-proxy'
       path: '/api-proxy'
@@ -120,6 +140,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiProxyRoute: ApiProxyRoute,
+  LearnRoute: LearnRoute,
   ActivationFunctionsActivationFunctionIdRoute:
     ActivationFunctionsActivationFunctionIdRoute,
   ActivationFunctionsIndexRoute: ActivationFunctionsIndexRoute,

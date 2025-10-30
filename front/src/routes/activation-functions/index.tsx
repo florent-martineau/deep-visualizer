@@ -39,7 +39,7 @@ function RouteComponent() {
 				<Muted>{loaderData.description}</Muted>
 			</div>
 
-			<Link to={"/"}>
+			<Link to={"/learn"}>
 				<Button>
 					Learn <GraduationCap />
 				</Button>
