@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { OrSeparator } from "@/components/ui/or-separator";
 import { H1, Lead } from "@/components/ui/typography";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
 import type { LoaderData } from "@/lib/router/types";
@@ -14,11 +15,13 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<div className="flex items-center justify-center h-full flex-col gap-8">
+		<div className="flex items-center justify-center h-full flex-col gap-16">
 			<div className="space-y-2">
 				<H1>{PROJECT_NAME}</H1>
 				<Lead>{PROJECT_DESCRIPTION}</Lead>
 			</div>
+
+			<OrSeparator />
 
 			<ActivationFunctionsListCard />
 		</div>
