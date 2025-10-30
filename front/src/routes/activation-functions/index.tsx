@@ -1,6 +1,8 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
+import { GraduationCap } from "lucide-react";
 import { useListActivationFunctions } from "@/api";
 import { ActivationFunctionNavigationCard } from "@/components/navigation/card/activation-function";
+import { Button } from "@/components/ui/button";
 import { H1, Muted } from "@/components/ui/typography";
 import type { LoaderData } from "@/lib/router/types";
 
@@ -36,6 +38,20 @@ function RouteComponent() {
 				<H1>{loaderData.title}</H1>
 				<Muted>{loaderData.description}</Muted>
 			</div>
+
+			<Link to={"/"}>
+				<Button>
+					Learn <GraduationCap />
+				</Button>
+			</Link>
+
+			<div className="flex gap-8 items-center w-fit">
+				<div className="w-48 h-px bg-border" />
+				<span>OR</span>
+				<div className="w-48 h-px bg-border" />
+			</div>
+
+			<Muted>Become an expert on a specific activation function</Muted>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 w-fit border-l-[0.5px] border-t-[0.5px]">
 				{activationFunctionsSortedByDisplayName?.map((activationFunction) => (
