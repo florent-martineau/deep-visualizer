@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ChatBox } from "@/components/chat/box";
 import { OrSeparator } from "@/components/ui/or-separator";
 import { H1, Lead } from "@/components/ui/typography";
 import { PROJECT_DESCRIPTION, PROJECT_NAME } from "@/constants";
@@ -20,6 +21,8 @@ function App() {
 				<H1>{PROJECT_NAME}</H1>
 				<Lead>{PROJECT_DESCRIPTION}</Lead>
 			</div>
+
+			<ChatBox onSubmit={(values) => console.log("Submitted form", values)} />
 
 			<OrSeparator />
 
