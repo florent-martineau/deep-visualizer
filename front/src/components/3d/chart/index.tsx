@@ -4,6 +4,7 @@ import { Curve } from "../curve";
 import { GlowingBall } from "../glowing-ball";
 import { Axis, type AxisMetadata } from "./axis";
 import { SpikeLine } from "./spike-line";
+import { Tooltip } from "./tooltip";
 
 type ThreeDimensionsChartProps = {
 	points: Vector3[];
@@ -31,6 +32,14 @@ export const ThreeDimensionsChart = (props: ThreeDimensionsChartProps) => {
 						position={hoveredPosition}
 						radius={0.02}
 						glowIntensity={15}
+					/>
+
+					<Tooltip
+						point={hoveredPosition}
+						lines={[
+							`Pre-activation (X): ${hoveredPosition.x.toFixed(2)}`,
+							`Activation (Y): ${hoveredPosition.y.toFixed(2)}`,
+						]}
 					/>
 
 					{Object.values(props.axes).map((axisMetadata) => (
