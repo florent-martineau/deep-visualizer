@@ -3,6 +3,7 @@ import { GraduationCap } from "lucide-react";
 import { useListActivationFunctions } from "@/api";
 import { ActivationFunctionNavigationCard } from "@/components/navigation/card/activation-function";
 import { Button } from "@/components/ui/button";
+import { OrSeparator } from "@/components/ui/or-separator";
 import { H1, Muted } from "@/components/ui/typography";
 import type { LoaderData } from "@/lib/router/types";
 
@@ -45,11 +46,7 @@ function RouteComponent() {
 				</Button>
 			</Link>
 
-			<div className="flex gap-8 items-center w-fit">
-				<div className="w-48 h-px bg-border" />
-				<span>OR</span>
-				<div className="w-48 h-px bg-border" />
-			</div>
+			<OrSeparator />
 
 			<Muted>Become an expert on a specific activation function</Muted>
 
