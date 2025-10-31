@@ -26,7 +26,7 @@ export const ChatBox = (props: ChatBoxProps) => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(props.onSubmit)}
-				className="flex gap-2 w-full items-center justify-center"
+				className="flex gap-2 w-full max-w-[800px] items-center justify-center relative"
 			>
 				<FormField
 					control={form.control}
@@ -34,7 +34,7 @@ export const ChatBox = (props: ChatBoxProps) => {
 					render={({ field }) => (
 						<FormControl>
 							<Textarea
-								className="max-w-[800px]"
+								className="pb-12"
 								placeholder="Teach me how GPT-5 works"
 								{...field}
 							/>
@@ -42,14 +42,16 @@ export const ChatBox = (props: ChatBoxProps) => {
 					)}
 				/>
 
-				<Button
-					type="submit"
-					variant="outline"
-					className="h-full"
-					disabled={!form.formState.isValid || form.formState.isSubmitting}
-				>
-					<Send />
-				</Button>
+				<div className="absolute bottom-2 right-2">
+					<Button
+						type="submit"
+						variant="ghost"
+						className="h-full"
+						disabled={!form.formState.isValid || form.formState.isSubmitting}
+					>
+						<Send />
+					</Button>
+				</div>
 			</form>
 		</Form>
 	);
