@@ -1,7 +1,7 @@
 "use client";
 
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { Vector3 } from "three";
+import { useMediaQuery } from "usehooks-ts";
 import { ThreeDimensionsCanvas } from "../3d/3d-canvas";
 import { Curve } from "../3d/curve";
 import {
