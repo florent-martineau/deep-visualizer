@@ -27,7 +27,7 @@ export const Route = createFileRoute("/learn")({
 
 function RouteComponent() {
 	return (
-		<ResizablePanelGroup direction="horizontal" className="h-full flex gap-12">
+		<ResizablePanelGroup direction="horizontal">
 			<ResizablePanel defaultSize={75}>
 				<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
 					<Curve points={[new Vector3(-1, 0, 0), new Vector3(1, 0, 0)]} />
@@ -36,7 +36,12 @@ function RouteComponent() {
 
 			<ResizableHandle />
 
-			<ResizablePanel defaultSize={25} minSize={15} maxSize={75}>
+			<ResizablePanel
+				defaultSize={25}
+				minSize={15}
+				maxSize={75}
+				className="pl-6"
+			>
 				Foo
 			</ResizablePanel>
 		</ResizablePanelGroup>
