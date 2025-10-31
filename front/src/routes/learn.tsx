@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Vector3 } from "three";
 import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
 import { Curve } from "@/components/3d/curve";
-import { Separator } from "@/components/ui/separator";
+import {
+	ResizableHandle,
+	ResizablePanel,
+	ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import type { LoaderData } from "@/lib/router/types";
 
 export const Route = createFileRoute("/learn")({
@@ -23,14 +27,16 @@ export const Route = createFileRoute("/learn")({
 
 function RouteComponent() {
 	return (
-		<div className="h-full flex gap-12">
-			<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
-				<Curve points={[new Vector3(-1, 0, 0), new Vector3(1, 0, 0)]} />
-			</ThreeDimensionsCanvas>
+		<ResizablePanelGroup direction="horizontal" className="h-full flex gap-12">
+			<ResizablePanel defaultSize={75}>
+				<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
+					<Curve points={[new Vector3(-1, 0, 0), new Vector3(1, 0, 0)]} />
+				</ThreeDimensionsCanvas>
+			</ResizablePanel>
 
-			<Separator orientation="vertical" />
+			<ResizableHandle />
 
-			<div className="w-1/4">Foo</div>
-		</div>
+			<ResizablePanel defaultSize={25}>Foo</ResizablePanel>
+		</ResizablePanelGroup>
 	);
 }
