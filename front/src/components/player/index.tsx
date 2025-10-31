@@ -9,6 +9,7 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "../ui/resizable";
+import { Transcript } from "./transcript";
 
 /**
  * A Player is a component that can take as input, play and synchronize various media, such as:
@@ -36,7 +37,7 @@ export const Player = () => {
 					maxSize={75}
 					className="pt-6"
 				>
-					Foo
+					<Transcript />
 				</ResizablePanel>
 			</ResizablePanelGroup>
 		);
@@ -58,7 +59,7 @@ export const Player = () => {
 				maxSize={75}
 				className="pl-6"
 			>
-				Foo
+				<Transcript />
 			</ResizablePanel>
 		</ResizablePanelGroup>
 	);
