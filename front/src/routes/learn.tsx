@@ -1,16 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Vector3 } from "three";
-import { ThreeDimensionsCanvas } from "@/components/3d/3d-canvas";
-import { Curve } from "@/components/3d/curve";
-import {
-	ResizableHandle,
-	ResizablePanel,
-	ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { Player } from "@/components/player";
 import type { LoaderData } from "@/lib/router/types";
 
 export const Route = createFileRoute("/learn")({
 	component: RouteComponent,
+	ssr: false,
 	loader: async (): Promise<LoaderData> => ({
 		title: "Learn",
 		description: "Learn about neural networks and deep learning",
@@ -26,24 +20,5 @@ export const Route = createFileRoute("/learn")({
 });
 
 function RouteComponent() {
-	return (
-		<ResizablePanelGroup direction="horizontal">
-			<ResizablePanel defaultSize={75}>
-				<ThreeDimensionsCanvas isRotating={false} isRunning={true}>
-					<Curve points={[new Vector3(-1, 0, 0), new Vector3(1, 0, 0)]} />
-				</ThreeDimensionsCanvas>
-			</ResizablePanel>
-
-			<ResizableHandle />
-
-			<ResizablePanel
-				defaultSize={25}
-				minSize={15}
-				maxSize={75}
-				className="pl-6"
-			>
-				Foo
-			</ResizablePanel>
-		</ResizablePanelGroup>
-	);
+	return <Player />;
 }
