@@ -36,7 +36,9 @@ function RouteComponent() {
 
 			<ResizableHandle />
 
-			<ResizablePanel defaultSize={25}>Foo</ResizablePanel>
+			<ResizablePanel defaultSize={25} minSize={15} maxSize={75}>
+				Foo
+			</ResizablePanel>
 		</ResizablePanelGroup>
 	);
 }
