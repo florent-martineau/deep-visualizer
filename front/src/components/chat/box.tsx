@@ -42,7 +42,12 @@ export const ChatBox = (props: ChatBoxProps) => {
 					)}
 				/>
 
-				<Button type="submit" className="h-full">
+				<Button
+					type="submit"
+					variant="outline"
+					className="h-full"
+					disabled={!form.formState.isValid || form.formState.isSubmitting}
+				>
 					<Send />
 				</Button>
 			</form>
