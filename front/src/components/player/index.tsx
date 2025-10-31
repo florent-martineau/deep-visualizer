@@ -10,6 +10,12 @@ import {
 	ResizablePanelGroup,
 } from "../ui/resizable";
 
+/**
+ * A Player is a component that can take as input, play and synchronize various media, such as:
+ * - A 3D scene
+ * - Audio
+ * - Text
+ */
 export const Player = () => {
 	const isMobile = useMediaQuery("(max-width: 767px)");
 
