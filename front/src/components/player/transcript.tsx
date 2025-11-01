@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { colors } from "@/lib/colors";
+import rehypeSanitize from "rehype-sanitize";
 import { H1, H2, P } from "../ui/typography";
 
 /**
@@ -11,6 +11,8 @@ export const Transcript = () => {
 
 Foo <mark>bar</mark>	
 
+<script>alert('foo')</script>
+
 ## Subtitle
 
 * This is
@@ -20,13 +22,19 @@ Foo <mark>bar</mark>
 	`;
 	return (
 		<ReactMarkdown
-			rehypePlugins={[rehypeRaw]}
+			rehypePlugins={[
+				rehypeRaw,
+				() =>
+					rehypeSanitize({
+						tagNames: ["h1", "h2", "p", "mark", "ul", "li", "a"],
+					}),
+			]}
 			components={{
 				h1: ({ node, ...props }) => <H1 {...props}>{props.children}</H1>,
 				h2: ({ node, ...props }) => <H2 {...props}>{props.children}</H2>,
 				p: ({ node, ...props }) => <P {...props}>{props.children}</P>,
 				mark: ({ node, ...props }) => (
-					<span style={{ color: colors.accent }} {...props}>
+					<span className="text-pink-500" {...props}>
 						{props.children}
 					</span>
 				),
