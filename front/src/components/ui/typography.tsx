@@ -41,7 +41,11 @@ export function Blockquote({ children }: { children: React.ReactNode }) {
 }
 
 export function UL({ children }: { children: React.ReactNode }) {
-	return <ul className="my-6 ml-6 list-disc [&>li]:mt-2">{children}</ul>;
+	return <ul className="my-2 ml-6 list-disc">{children}</ul>;
+}
+
+export function OL({ children }: { children: React.ReactNode }) {
+	return <ol className="my-2 ml-6 list-decimal">{children}</ol>;
 }
 
 export function InlineCode({ children }: { children: React.ReactNode }) {
